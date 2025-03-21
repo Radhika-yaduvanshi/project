@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Categories</title>
+  </head>
+  <body>
+    <h3>Manage Categories</h3>
+
+    <!-- <nav>
+      <button routerLink="add-user">Add User</button>
+      <button routerLink="view-user">View Users</button>
+      <button routerLink="delete-user">Delete User</button>
+    </nav> -->
+
+    <a mat-raised-button color="accent" routerLink="add-categories"
+      >Add Categories</a
+    >
+    <a mat-raised-button color="warn" routerLink="view-categories"
+      >View All Categories</a
+    >
+    <a mat-raised-button color="primary" routerLink="delete-categories"
+      >Delete Categories</a
+    >
+    <a mat-raised-button color="accent" routerLink="update-categories"
+      >Update Categories</a
+    >
+
+    <!-- Child Routes Render Here -->
+    <router-outlet></router-outlet>
+  </body>
+</html>
+
+<!-- Load child components dynamically
+<router-outlet></router-outlet> -->

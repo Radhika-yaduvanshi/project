@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Create a New Blog Post</h2>
+
+    <editor
+      apiKey="your-api-key-here"
+      [(ngModel)]="postContent"
+      [init]="{
+        height: 500,
+        menubar: true,
+        plugins:
+          'lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help',
+        toolbar:
+          'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | preview code'
+      }"
+    ></editor>
+
+    <button (click)="submitPost()">Submit</button>
+  </body>
+</html>

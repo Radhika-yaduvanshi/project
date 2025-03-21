@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Posts</title>
+  </head>
+  <body>
+    <h3>Manage Posts</h3>
+    <!-- 
+    <nav>
+      <button routerLink="create-post">Create Post</button>
+      <button routerLink="view-post">View Posts</button>
+      <button routerLink="delete-post">Delete Post</button>
+    </nav> -->
+
+    <a mat-raised-button color="accent" routerLink="create-post">Create Post</a>
+    <a mat-raised-button color="warn" routerLink="view-post">View All Post</a>
+    <a mat-raised-button color="primary" routerLink="delete-post"
+      >Delete Post</a
+    >
+
+    <!-- Child Routes Render Here -->
+    <router-outlet></router-outlet>
+  </body>
+</html>

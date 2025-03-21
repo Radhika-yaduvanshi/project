@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage users</title>
+  </head>
+  <body>
+    <h3>Manage Users</h3>
+
+    <!-- <nav>
+      <button routerLink="add-user">Add User</button>
+      <button routerLink="view-user">View Users</button>
+      <button routerLink="delete-user">Delete User</button>
+    </nav> -->
+
+    <a mat-raised-button color="accent" routerLink="add-user">Add user</a>
+    <a mat-raised-button color="warn" routerLink="view-user">View All Users</a>
+    <a mat-raised-button color="primary" routerLink="delete-user"
+      >Delete user</a
+    >
+
+    <!-- Child Routes Render Here -->
+    <router-outlet></router-outlet>
+  </body>
+</html>
+
+<!-- Load child components dynamically
+<router-outlet></router-outlet> -->

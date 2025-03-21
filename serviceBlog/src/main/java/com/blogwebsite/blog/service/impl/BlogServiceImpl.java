@@ -3,7 +3,13 @@ package com.blogwebsite.blog.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+
+import com.blogwebsite.blog.paging.BlogResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -77,9 +83,21 @@ public class BlogServiceImpl implements BlogService
 	}
 
 	@Override
-	public List<BlogProxy> getAllBlogs() {
-		List<BlogEntity> all = blogRepo.findAll();
-		return helper.convertBlogListEntityToProxy(all);
+	public BlogResponse getAllBlogs(Integer pageNumber, Integer pageSize,String sortBy) {
+
+		Pageable p= PageRequest.of(pageNumber,pageSize, Sort.by(sortBy));
+		Page<BlogEntity> pageBlog=this.blogRepo.findAll(p);
+		List<BlogEntity>allblogs=pageBlog.getContent();
+		List<BlogProxy> blogProxy = helper.convertBlogListEntityToProxy(allblogs);
+		BlogResponse blogResponse=new BlogResponse();
+		blogResponse.setContent(blogProxy);
+		blogResponse.setPageNumber((long) pageBlog.getNumber());
+		blogResponse.setPageSize((long) pageBlog.getSize());
+		blogResponse.setTotalElements(pageBlog.getTotalElements());
+		blogResponse.setTotalPages((long) pageBlog.getTotalPages());
+		blogResponse.setLastPage(pageBlog.isLast());
+//		List<BlogEntity> all = blogRepo.findAll();
+		return blogResponse;
 	}
 	
 	public UserProxy getUserByUserId(Integer id)
