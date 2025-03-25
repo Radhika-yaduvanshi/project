@@ -34,5 +34,9 @@ public interface AdminService {
 	public String deleteBlog(Integer id);
 	
 	public List<AdminEntity> findAdminByName(String name);
+
+//	public String deleteCategory(Integer id);
+//
+//	public String updateCategory(CatgoryProxy catgoryProxy);
 	
 }

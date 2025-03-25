@@ -1,9 +1,18 @@
 package com.blogwebsite.user.service.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import com.blogwebsite.user.FeignClient.BlogClient;
@@ -15,6 +24,7 @@ import com.blogwebsite.user.proxy.UserProxy;
 import com.blogwebsite.user.repository.UserRepo;
 import com.blogwebsite.user.service.UserService;
 import com.blogwebsite.user.utils.Helper;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserServiceImpl implements UserService
@@ -33,11 +43,37 @@ public class UserServiceImpl implements UserService
 	private BlogClient blogClient;
 	
 	//private final String blogUrl="http://localhost:8088/blog/";
-	
+
+
+	//commenting for trying another
 	@Override
 	public String registerUser(UserProxy user) {
 		userRepo.save(helper.convert(user, UserEntity.class));
 		return "register successfully";
+	}
+
+	public String registerUserWithProfile(String name, String email, String password, MultipartFile profilePhoto) {
+		// Here, create a new UserEntity and save the data, along with the profile photo
+		UserEntity userEntity = new UserEntity();
+		userEntity.setUserName(name);
+		userEntity.setEmail(email);
+		userEntity.setPassword(password);
+
+		// Handle file upload (save profilePhoto if available)
+		if (profilePhoto != null && !profilePhoto.isEmpty()) {
+			try {
+				// Instead of saving the path, you now save the image as a byte array
+				byte[] imageBytes = uploadProfileImage(profilePhoto); // Now returns byte[]
+				userEntity.setProfilePhoto(imageBytes); // Assuming profilePhoto is byte[] in UserEntity
+			} catch (IOException e) {
+				e.printStackTrace();
+				return "Error uploading profile photo.";
+			}
+		}
+
+		// Save the user to the database
+		userRepo.save(userEntity);
+		return "User registered successfully!";
 	}
 
 	@Override
@@ -66,8 +102,26 @@ public class UserServiceImpl implements UserService
 
 	@Override
 	public List<UserProxy> getAllUser() {
-		return helper.convertList(userRepo.findAll(), UserProxy.class);
+//		return helper.convertList(userRepo.findAll(), UserProxy.class);
+		List<UserEntity> users = userRepo.findAll();
+
+		return users.stream().map(userEntity -> {
+			UserProxy userProxy = new UserProxy();
+			userProxy.setId(userEntity.getId());
+			userProxy.setUserName(userEntity.getUserName());
+			userProxy.setEmail(userEntity.getEmail());
+
+			// Convert profile photo to Base64 string if it exists
+			if (userEntity.getProfilePhoto() != null) {
+				String base64Image = Base64.getEncoder().encodeToString(userEntity.getProfilePhoto());
+				userProxy.setProfilePhoto("data:image/jpeg;base64," + base64Image);  // Assuming JPEG image type
+			}
+
+			return userProxy;
+		}).collect(Collectors.toList());
+
 	}
+
 
 	@Override
 	public UserProxy getUserByUserName(String userName) {
@@ -124,6 +178,185 @@ public class UserServiceImpl implements UserService
 	public List<BlogProxy> searchByBlogTitleAndCategoryName(BlogProxy blogProxy) {
 		return blogClient.searchByBlogTitleAndCategoryName(blogProxy);
 	}
-	
-	
+
+	@Override
+	public String uploadProfileImage(Integer id, MultipartFile image) {
+		String originalFileName=null;
+		UserEntity userprofile=null;
+		try {
+			Optional<UserEntity> optionalUser = userRepo.findById(id);
+			System.err.println(optionalUser);
+			String urlpath=new ClassPathResource("").getFile().getAbsolutePath()+File.separator+"static"+File.separator+"documents";
+			System.err.println("This is uerl path====>"+urlpath);
+			if (optionalUser.isPresent()) {
+				UserEntity userEntity = optionalUser.get();
+				// Create the directory if it doesn't exist
+				File directory = new File(urlpath);
+
+				if (!directory.exists()) {
+					directory.mkdirs();
+				}
+				System.err.println("if directory exists : ====>"+directory.exists());
+				 originalFileName = image.getOriginalFilename();
+
+				System.err.println("original file name : ======>"+originalFileName);
+
+				String absolutePath = urlpath+File.separator +originalFileName;
+
+				System.err.println("absolute path :=====>"+absolutePath);
+				// Copy the file to the destination directory
+				Files.copy(image.getInputStream(), Paths.get(absolutePath), StandardCopyOption.REPLACE_EXISTING);
+
+//				UserEntity user = new UserEntity();
+//				System.out.println("usr is here ================>"+user);
+
+//				byte[] imageBytes = Files.readAllBytes(Paths.get(absolutePath));
+//				UserEntity user=new UserEntity();
+
+//				System.out.println("Image byte array length: " + imageBytes.length);
+				// Save the relative path to the image in the database
+//				userEntity.setProfilePhotoPath("/images/" + newFileName); // Store the relative path in DB
+//				System.out.println("user is :===>"+user);
+				userprofile= userRepo.save(userEntity);
+
+				System.err.println(userprofile);
+
+//				return "Image uploaded successfully.";
+				return "Image uploaded successfully! File saved at: " + absolutePath;
+
+			}
+//			return "User not found.";
+		} catch (IOException e) {
+			e.printStackTrace();
+//			return "Failed to upload image.";
+		}
+		return "File is saved "+"\n"+" File id is : "+(Objects.isNull(userprofile) ? "Image not found":userprofile.getId());
+	}
+
+@Override
+public byte[] uploadProfileImage(MultipartFile image) throws IOException {
+    String originalFileName = null;
+	byte[] imageBytes = null;
+    UserEntity userprofile = null;
+    String absolutePath = null;
+    try {
+//		Optional<UserEntity> optionalUser = userRepo.findById(id);
+//		System.err.println(optionalUser);
+        String urlpath = new ClassPathResource("").getFile().getAbsolutePath() + File.separator + "static" + File.separator + "documents";
+        System.err.println("This is uerl path====>" + urlpath);
+//		if (optionalUser.isPresent()) {
+//			UserEntity userEntity = optionalUser.get();
+        // Create the directory if it doesn't exist
+        File directory = new File(urlpath);
+
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        System.err.println("if directory exists : ====>" + directory.exists());
+        originalFileName = image.getOriginalFilename();
+
+        System.err.println("original file name : ======>" + originalFileName);
+
+        absolutePath = urlpath + File.separator + originalFileName;
+
+        System.err.println("absolute path :=====>" + absolutePath);
+        // Copy the file to the destination directory
+        Files.copy(image.getInputStream(), Paths.get(absolutePath), StandardCopyOption.REPLACE_EXISTING);
+
+//				UserEntity user = new UserEntity();
+//				System.out.println("usr is here ================>"+user);
+
+//				byte[] imageBytes = Files.readAllBytes(Paths.get(absolutePath));
+//				UserEntity user=new UserEntity();
+
+//			userEntity.setProfilePhoto(absolutePath);
+
+        // Save the relative path to the image in the database
+//				userEntity.setProfilePhotoPath("/images/" + newFileName); // Store the relative path in DB
+//				System.out.println("user is :===>"+user);
+//			userprofile= userRepo.save(userEntity);
+
+		imageBytes=Files.readAllBytes(Paths.get(absolutePath));
+
+        System.err.println(userprofile);
+
+//				return "Image uploaded successfully.";
+
+//			return "User not found.";
+    } catch (IOException e) {
+        e.printStackTrace();
+//			return "Failed to upload image.";
+    }
+//	return "File is saved "+"\n"+" File id is : "+(Objects.isNull(userprofile) ? "Image not found":userprofile.getId());
+    return imageBytes;
 }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/// image store===>
+//@Override
+//public String uploadProfileImage(Integer id, MultipartFile image) {
+//	String originalFileName=null;
+//	UserEntity userprofile=null;
+//	try {
+//		Optional<UserEntity> optionalUser = userRepo.findById(id);
+//		System.err.println(optionalUser);
+//		String urlpath=new ClassPathResource("").getFile().getAbsolutePath()+File.separator+"static"+File.separator+"documents";
+//		System.err.println("This is uerl path====>"+urlpath);
+//		if (optionalUser.isPresent()) {
+//			UserEntity userEntity = optionalUser.get();
+//			// Create the directory if it doesn't exist
+//			File directory = new File(urlpath);
+//
+//			if (!directory.exists()) {
+//				directory.mkdirs();
+//			}
+//			System.err.println("if directory exists : ====>"+directory.exists());
+//			originalFileName = image.getOriginalFilename();
+//
+//			System.err.println("original file name : ======>"+originalFileName);
+//
+//			String absolutePath = urlpath+File.separator +originalFileName;
+//
+//			System.err.println("absolute path :=====>"+absolutePath);
+//			// Copy the file to the destination directory
+//			Files.copy(image.getInputStream(), Paths.get(absolutePath), StandardCopyOption.REPLACE_EXISTING);
+//
+////				UserEntity user = new UserEntity();
+////				System.out.println("usr is here ================>"+user);
+//
+////				byte[] imageBytes = Files.readAllBytes(Paths.get(absolutePath));
+////				UserEntity user=new UserEntity();
+//
+//			userEntity.setProfilePhoto(absolutePath);
+//
+//			// Save the relative path to the image in the database
+////				userEntity.setProfilePhotoPath("/images/" + newFileName); // Store the relative path in DB
+////				System.out.println("user is :===>"+user);
+//			userprofile= userRepo.save(userEntity);
+//
+//			System.err.println(userprofile);
+//
+////				return "Image uploaded successfully.";
+//		}
+////			return "User not found.";
+//	} catch (IOException e) {
+//		e.printStackTrace();
+////			return "Failed to upload image.";
+//	}
+//	return "File is saved "+"\n"+" File id is : "+(Objects.isNull(userprofile) ? "Image not found":userprofile.getId());
+//}

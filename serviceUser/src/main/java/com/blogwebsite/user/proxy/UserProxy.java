@@ -20,6 +20,6 @@ public class UserProxy {
 
 	private Date updateAt;
 	
-	private byte[] profilePhoto;
+	private String profilePhoto;
 	
 }

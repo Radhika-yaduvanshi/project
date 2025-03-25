@@ -16,7 +16,10 @@ export class UserServicesService {
   }
 
   registerUser(userData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData, {
+    // return this.http.post(`${this.apiUrl}/register`, userData, {
+    //   responseType: 'text',
+    // });
+    return this.http.post(`${this.apiUrl}/register-with-image`, userData, {
       responseType: 'text',
     });
   }
@@ -24,4 +27,18 @@ export class UserServicesService {
   deleteUser(userId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/deleteById/${userId}`);
   }
+
+  // uploadProfilePhoto(profilePhoto: File,id:number): Observable<any> {
+  //   const formData = new FormData();
+  //   formData.append('file', profilePhoto, profilePhoto.name);
+    
+  //   return this.http.post(`${this.apiUrl}/id/uploadProfilePhoto`, formData);
+  // }
+
+
+  uploadProfilePhoto(formData: FormData): Observable<any> {
+    const url = `${this.apiUrl}/user/uploadProfileImage/`; // Adjust URL as needed
+    return this.http.post(url, formData); // Send the FormData object containing the file and userId
+  }
+
 }

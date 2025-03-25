@@ -3,19 +3,13 @@ package com.blogwebsite.user.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.blogwebsite.user.proxy.BlogProxy;
 import com.blogwebsite.user.proxy.CommentProxy;
 import com.blogwebsite.user.proxy.UserProxy;
 import com.blogwebsite.user.service.impl.UserServiceImpl;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/user")
@@ -119,4 +113,26 @@ public class UserController {
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(userImpl.searchByBlogTitleAndCategoryName(blogProxy));
 	}
+
+	@PostMapping("/uploadProfileImage/{id}")
+	public ResponseEntity<String> uploadProfileImage(@PathVariable Integer id, @RequestParam("image") MultipartFile image) {
+		try {
+			userImpl.uploadProfileImage(id, image);
+			return ResponseEntity.ok("Image uploaded successfully.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed.");
+		}
+	}
+
+
+	@PostMapping("/register-with-image")
+	public String registerUser(@RequestParam("name") String name,
+							   @RequestParam("email") String email,
+							   @RequestParam("password") String password,
+							   @RequestParam("profilePhoto") MultipartFile profilePhoto) {
+		// Handle registration logic
+		// Here you can save the user and upload the profile photo as needed
+		return userImpl.registerUserWithProfile(name, email, password, profilePhoto);
+	}
+
  }

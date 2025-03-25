@@ -2,14 +2,10 @@ package com.blogwebsite.user.domain;
 
 import java.util.Date;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,7 +29,8 @@ public class UserEntity {
 	
 	@UpdateTimestamp
 	private Date updateAt;
-	
+
+	@Lob
 	private byte[] profilePhoto;
 	
 	//@OneToMany(cascade=CascadeType.ALL)

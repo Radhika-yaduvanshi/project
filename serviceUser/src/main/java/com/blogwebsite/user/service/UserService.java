@@ -1,5 +1,6 @@
 package com.blogwebsite.user.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.blogwebsite.user.proxy.BlogProxy;
 import com.blogwebsite.user.proxy.CommentProxy;
 import com.blogwebsite.user.proxy.UserProxy;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
@@ -51,4 +53,9 @@ public interface UserService {
 	public String addComment(@PathVariable("id") Integer id,@RequestBody CommentProxy commentProxy); //working
 	
 	public List<BlogProxy> searchByBlogTitleAndCategoryName(BlogProxy blogProxy);
+//	public String uploadProfileImage(Integer id, MultipartFile image);
+	public String registerUserWithProfile(String name, String email, String password, MultipartFile profilePhoto);
+	public String uploadProfileImage(Integer id, MultipartFile image);
+
+	byte[] uploadProfileImage(MultipartFile image) throws IOException;
 }

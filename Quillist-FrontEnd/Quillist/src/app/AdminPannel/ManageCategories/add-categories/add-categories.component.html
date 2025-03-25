@@ -10,33 +10,41 @@
     />
   </head>
   <body>
-    <div class="container mt-4">
-      <div class="card shadow-lg p-4">
-        <h3 class="text-center">Add Category</h3>
-        <form>
-          <div class="mb-3">
-            <label class="form-label">Category Name:</label>
-            <input
-              type="text"
-              class="form-control"
-              name="categoryName"
-              required
-            />
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Description:</label>
-            <textarea
-              class="form-control"
-              name="description"
-              rows="3"
-              required
-            ></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary w-100">Submit</button>
-        </form>
+<!-- add-category.component.html -->
+<div class="container mt-4">
+  <div class="card shadow-lg p-4">
+    <h3 class="text-center">Add Category</h3>
+    <form #categorydata="ngForm"  (ngSubmit)="addCategory(categorydata.value)">
+      <div class="mb-3">
+        <label class="form-label">Category Name:</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="category.categoryName"
+          name="categoryName"
+          required
+        />
       </div>
-    </div>
+
+      <!-- <div class="mb-3">
+        <label class="form-label">Description:</label>
+        <textarea
+          class="form-control"
+          [(ngModel)]="category.description"
+          name="description"
+          rows="3"
+          required
+        ></textarea>
+      </div> -->
+
+      <button type="submit" class="btn btn-primary w-100">Submit</button>
+    </form>
+
+    <!-- Success and error messages -->
+    <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+  </div>
+</div>
+
   </body>
 </html>
