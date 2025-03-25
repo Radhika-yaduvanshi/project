@@ -75,6 +75,8 @@
             "development": {
               "buildTarget": "Quillist:build:development"
             }
+          },  "options": {
+            "proxyConfig": "angular.config.json"
           },
           "defaultConfiguration": "development"
         },

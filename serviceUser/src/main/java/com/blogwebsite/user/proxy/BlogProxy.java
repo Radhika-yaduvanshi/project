@@ -1,5 +1,7 @@
 package com.blogwebsite.user.proxy;
 
+import java.util.List;
+
 import com.blogwebsite.user.enumeration.BlogStatus;
 
 import lombok.AllArgsConstructor;
@@ -15,4 +17,10 @@ public class BlogProxy {
 	private String content;
 	
 	private BlogStatus blogstatus;
+	
+	private Integer user_id;
+	
+	private CategoryProxy category;
+	
+	private List<CommentProxy> comments;
 }

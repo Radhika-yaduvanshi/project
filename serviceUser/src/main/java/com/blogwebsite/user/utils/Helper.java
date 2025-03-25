@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.blogwebsite.user.domain.UserEntity;
-import com.blogwebsite.user.proxy.UserProxy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component

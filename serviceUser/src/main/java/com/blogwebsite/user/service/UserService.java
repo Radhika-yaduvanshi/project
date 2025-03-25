@@ -3,8 +3,12 @@ package com.blogwebsite.user.service;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.blogwebsite.user.proxy.BlogProxy;
+import com.blogwebsite.user.proxy.CommentProxy;
 import com.blogwebsite.user.proxy.UserProxy;
 
 public interface UserService {
@@ -40,4 +44,11 @@ public interface UserService {
 	public UserProxy getUserByUserId(Integer id); //working
 	
 	public List<BlogProxy> getAllBlogs(); //working
+	
+	//filter blog by category
+	public List<BlogProxy> searchBlogByCategory(@PathVariable("category") String category); //working
+	
+	public String addComment(@PathVariable("id") Integer id,@RequestBody CommentProxy commentProxy); //working
+	
+	public List<BlogProxy> searchByBlogTitleAndCategoryName(BlogProxy blogProxy);
 }

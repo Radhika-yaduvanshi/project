@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blogwebsite.user.proxy.BlogProxy;
+import com.blogwebsite.user.proxy.CommentProxy;
 import com.blogwebsite.user.proxy.UserProxy;
 import com.blogwebsite.user.service.impl.UserServiceImpl;
 
@@ -99,5 +100,23 @@ public class UserController {
 	public ResponseEntity<?> getAllBlogs()
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(userImpl.getAllBlogs());
+	}
+	
+	//filter blog by category 
+	@GetMapping("/searchBlogByCategory/{category}") //working
+	public ResponseEntity<?> searchBlogByCategory(@PathVariable("category") String category)
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(userImpl.searchBlogByCategory(category));
+	}
+	
+	@PostMapping("/AddComment/{id}")
+	public ResponseEntity<?> addComment(@PathVariable("id") Integer id,@RequestBody CommentProxy commentProxy)
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(userImpl.addComment(id, commentProxy));
+	}
+	@PostMapping("/searchBlogByTitleAndCategory") //working [added- 22-03-2025]
+	public ResponseEntity<?> searchByBlogTitleAndCategoryName(@RequestBody BlogProxy blogProxy)
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(userImpl.searchByBlogTitleAndCategoryName(blogProxy));
 	}
  }

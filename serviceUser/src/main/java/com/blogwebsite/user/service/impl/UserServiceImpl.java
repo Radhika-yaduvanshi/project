@@ -5,11 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.blogwebsite.user.FeignClient.BlogClient;
+import com.blogwebsite.user.FeignClient.CategoryClient;
 import com.blogwebsite.user.domain.UserEntity;
 import com.blogwebsite.user.proxy.BlogProxy;
+import com.blogwebsite.user.proxy.CommentProxy;
 import com.blogwebsite.user.proxy.UserProxy;
 import com.blogwebsite.user.repository.UserRepo;
 import com.blogwebsite.user.service.UserService;
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService
 	private Helper helper;
 	
 	@Autowired
-	private RestTemplate restTemplate;
+	private CategoryClient categoryClient;
 	
 	@Autowired
 	private BlogClient blogClient;
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService
 	@Override
 	public String deleteBlog(Integer id) {
 		blogClient.deleteBlog(id);
-		return "Blog Deleted Sucessfully";
+		return null;
 	}
 
 	@Override
@@ -96,13 +97,32 @@ public class UserServiceImpl implements UserService
 	}
 
 	@Override
-	public UserProxy getUserByUserId(Integer id) {
+	public UserProxy getUserByUserId(Integer id) //working
+	{
 		return helper.convert(userRepo.findById(id), UserProxy.class);
 	}
 
 	@Override
-	public List<BlogProxy> getAllBlogs() {
+	public List<BlogProxy> getAllBlogs() //working
+	{
 		return 	blogClient.getAllBlogs();
+	}
+
+	@Override
+	public List<BlogProxy> searchBlogByCategory(String category) //working
+	{
+		return categoryClient.searchBlogByCategory(category);
+	}
+
+	@Override
+	public String addComment(Integer id, CommentProxy commentProxy) {
+		blogClient.addComment(id, commentProxy);
+		return "comment added successfully";
+	}
+
+	@Override
+	public List<BlogProxy> searchByBlogTitleAndCategoryName(BlogProxy blogProxy) {
+		return blogClient.searchByBlogTitleAndCategoryName(blogProxy);
 	}
 	
 	

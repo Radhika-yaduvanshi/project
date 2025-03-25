@@ -3,9 +3,17 @@ package com.blogwebsite.blog.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.blogwebsite.blog.proxy.BlogProxy;
+import com.blogwebsite.blog.proxy.CommentProxy;
 import com.blogwebsite.blog.service.impl.BlogServiceImpl;
 
 @RestController
@@ -45,13 +53,9 @@ public class BlogController {
 	
 	//get all blogs
 	@GetMapping("/getAllBlogs") //working -user
-	public ResponseEntity<?> getAllBlog(
-			@RequestParam(value = "pageNumber",defaultValue ="1",required = false ) Integer pageNumber,
-			@RequestParam(value = "pageSize",defaultValue ="3",required = false ) Integer pageSize,
-			@RequestParam(value = "sortBy",defaultValue ="id",required = false ) String sortBy
-			)
+	public ResponseEntity<?> getAllBlog()
 	{
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(blogImpl.getAllBlogs( pageNumber,pageSize,sortBy));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(blogImpl.getAllBlogs());
 	}
 	
 	
@@ -60,5 +64,34 @@ public class BlogController {
 	public ResponseEntity<?> getUserById(@PathVariable("id") Integer id)
 	{
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(blogImpl.getUserByUserId(id));
+	}
+	
+	//add comment on blog - working
+	@PostMapping("/AddComment/{id}")
+	public ResponseEntity<?> addComment(@PathVariable("id") Integer id,@RequestBody CommentProxy commentProxy)
+	{
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(blogImpl.addCommentToBlog(id, commentProxy));
+	}
+	
+	
+	//get only comment by blog id - working
+	@GetMapping("/getCommentsByBlogId/{id}")
+	public ResponseEntity<?> getCommentsByBlogId(@PathVariable("id") Integer id)
+	{
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(blogImpl.getCommentsByBlogId(id));
+	}
+	
+
+	//get blog by id - working
+	@GetMapping("/getBlogById/{id}") //show all comments on blog by id
+	public ResponseEntity<?> getBlogById1(@PathVariable("id") Integer id)
+	{
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(blogImpl.getBlogById(id));
+	}
+	
+	@PostMapping("/searchBlogByTitleAndCategory") //working [added- 22-03-2025]
+	public ResponseEntity<?> searchByBlogTitleAndCategoryName(@RequestBody BlogProxy blogProxy)
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(blogImpl.searchBlogByTitleAndCategory(blogProxy));
 	}
 }

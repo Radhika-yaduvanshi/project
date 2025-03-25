@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,11 +27,15 @@ import { UpdatePostComponent } from './AdminPannel/ManagePosts/update-post/updat
 import { DeletePostComponent } from './AdminPannel/ManagePosts/delete-post/delete-post.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { EditorModule } from '@tinymce/tinymce-angular'; // TinyMCE Module
-import { FormsModule } from '@angular/forms';
 import { AddCategoriesComponent } from './AdminPannel/ManageCategories/add-categories/add-categories.component';
 import { ViewCategoriesComponent } from './AdminPannel/ManageCategories/view-categories/view-categories.component';
 import { UpdateCategoriesComponent } from './AdminPannel/ManageCategories/update-categories/update-categories.component';
 import { DeleteCategoriesComponent } from './AdminPannel/ManageCategories/delete-categories/delete-categories.component';
+import { AddUserComponent } from './AdminPannel/ManageUsers/add-user/add-user.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+// import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,9 +57,12 @@ import { DeleteCategoriesComponent } from './AdminPannel/ManageCategories/delete
     ViewCategoriesComponent,
     UpdateCategoriesComponent,
     DeleteCategoriesComponent,
+    AddUserComponent,
+    ViewUserComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     MatSlideToggleModule,
     BrowserAnimationsModule,
@@ -66,7 +74,10 @@ import { DeleteCategoriesComponent } from './AdminPannel/ManageCategories/delete
     RouterModule,
     CKEditorModule,
     EditorModule,
-    FormsModule,
+    HttpClientModule,
+    NgxPaginationModule,
+
+    // ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

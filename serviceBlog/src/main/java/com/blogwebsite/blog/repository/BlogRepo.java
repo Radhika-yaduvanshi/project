@@ -10,4 +10,6 @@ public interface BlogRepo extends JpaRepository<BlogEntity,Integer>
 {
 	List<BlogEntity> findByTitle(String title);
 	
+//	List<BlogEntity> findByComments(List<Comment> comments);
+
 }

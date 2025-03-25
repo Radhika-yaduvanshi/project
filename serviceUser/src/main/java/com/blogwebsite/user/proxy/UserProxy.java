@@ -1,7 +1,6 @@
 package com.blogwebsite.user.proxy;
 
 import java.util.Date;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +22,4 @@ public class UserProxy {
 	
 	private byte[] profilePhoto;
 	
-	private List<BlogProxy> blog;
 }

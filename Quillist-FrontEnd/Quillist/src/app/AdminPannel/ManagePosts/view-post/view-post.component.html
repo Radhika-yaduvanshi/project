@@ -3,14 +3,146 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Blog Posts</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <style>
+      /* Search Bar Styling */
+      .search-container {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto 20px;
+      }
+      .search-bar {
+        padding-left: 40px;
+        border-radius: 25px;
+        height: 45px;
+        font-size: 16px;
+      }
+      .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: gray;
+      }
+
+      /* Blog Card Styling */
+      .blog-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        background: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        position: relative;
+      }
+      .blog-image {
+        width: 150px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+      .blog-content {
+        flex-grow: 1;
+      }
+
+      /* Delete Button */
+      .btn-delete {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .btn-delete:hover {
+        background: #c82333;
+      }
+    </style>
   </head>
   <body>
-    <h3>All Posts</h3>
-    <ul>
-      <li>Post 1 <button>View</button></li>
-      <li>Post 2 <button>View</button></li>
-      <li>Post 3 <button>View</button></li>
-    </ul>
+    <div class="container mt-4">
+      <h2 class="text-center mb-4">Blog Posts</h2>
+
+      <!-- 🔍 Search Bar -->
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input
+          type="text"
+          class="form-control search-bar"
+          placeholder="Search..."
+          [(ngModel)]="searchQuery"
+          (input)="filterBlogs()"
+        />
+      </div>
+
+      <!-- Display message if no blogs are found -->
+      <div
+        *ngIf="filteredBlogs.length === 0"
+        class="alert alert-warning text-center"
+      >
+        No blog posts found.
+      </div>
+
+      <!-- Blog Posts List -->
+      <div class="row">
+        <div class="col-12" *ngFor="let blog of filteredBlogs; let i = index">
+          <div class="blog-card">
+            <!-- Blog Image -->
+            <img
+              [src]="blog.imageUrl || 'https://via.placeholder.com/150x100'"
+              alt="Blog Image"
+              class="blog-image"
+            />
+
+            <!-- Blog Content -->
+            <div class="blog-content">
+              <h5 class="card-title">{{ blog.title }}</h5>
+              <p class="badge bg-primary">{{ blog.categoryName }}</p>
+
+              <!-- ✅ Render rich text from the editor -->
+              <!-- <p class="card-text" [innerHTML]="blog.content"></p> -->
+              <p class="card-text" [innerHTML]="blog.safeContent"></p>
+
+              <p class="text-muted">
+                <small
+                  >By {{ blog.authorName }} on
+                  {{ blog.createdAt | date }}</small
+                >
+              </p>
+
+              <!-- Read More -->
+              <a
+                [routerLink]="['/blog', blog.id]"
+                class="btn btn-outline-primary btn-sm"
+              >
+                Read More
+              </a>
+            </div>
+
+            <!-- Delete Button -->
+            <button
+              class="btn btn-sm btn-delete"
+              (click)="deleteBlog(blog.id, i)"
+            >
+              <i class="fas fa-trash delete-icon"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

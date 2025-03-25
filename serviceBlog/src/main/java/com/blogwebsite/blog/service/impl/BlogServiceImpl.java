@@ -1,23 +1,21 @@
 package com.blogwebsite.blog.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-
-import com.blogwebsite.blog.paging.BlogResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.blogwebsite.blog.FeignClient.UserClient;
 import com.blogwebsite.blog.domain.BlogEntity;
+import com.blogwebsite.blog.domain.Category;
+import com.blogwebsite.blog.domain.Comment;
 import com.blogwebsite.blog.proxy.BlogProxy;
+import com.blogwebsite.blog.proxy.CommentProxy;
 import com.blogwebsite.blog.proxy.UserProxy;
 import com.blogwebsite.blog.repository.BlogRepo;
+import com.blogwebsite.blog.repository.CategoryRepo;
 import com.blogwebsite.blog.service.BlogService;
 import com.blogwebsite.blog.utils.Helper;
 
@@ -25,32 +23,35 @@ import com.blogwebsite.blog.utils.Helper;
 public class BlogServiceImpl implements BlogService
 {
 	
-	private static final String USER_SERVICE_URL = "http://localhost:8087/user/";
 	
 	@Autowired
 	private BlogRepo blogRepo;
 
 	@Autowired
+	private CategoryRepo categoryRepo;
+	
+	@Autowired
 	private Helper helper;
 
-	@Autowired
-	private RestTemplate restTemplate;
 	
 	@Autowired
 	private UserClient userClient;
 	
 	@Override
 	public String createBlog(BlogProxy blogproxy,Integer userid) {
-		BlogEntity convertBlogProxyToEntity = helper.convertBlogProxyToEntity(blogproxy);
-//		UserProxy user = restTemplate.getForObject(USER_SERVICE_URL+"/getById/"+userid, UserProxy.class);
 		
+		BlogEntity convertBlogProxyToEntity = helper.convert(blogproxy,BlogEntity.class);
+		
+		Optional<Category> categoryId = categoryRepo.findById(blogproxy.getCategory().getId());
+		
+		System.err.println(categoryId);
 		UserProxy user = userClient.getUserByUserId(userid);
-		System.err.println(user);
 		
 		if(user!=null)
 		{
-			System.out.println(userid);
 			convertBlogProxyToEntity.setUser_id(userid);
+			convertBlogProxyToEntity.getCategory().setId(categoryId.get().getId());
+			System.err.println("------------------"+categoryId.get().getId());
 			blogRepo.save(convertBlogProxyToEntity);
 		}
 		return "saved successfully";
@@ -65,11 +66,13 @@ public class BlogServiceImpl implements BlogService
 	@Override
 	public String updateBlog(BlogProxy blogProxy, Integer id) {
 		Optional<BlogEntity> byId = blogRepo.findById(id);
+		
 		if(byId.isPresent())
 		{
 			BlogEntity blogEntity = byId.get();
 			blogEntity.setTitle(blogProxy.getTitle());
 			blogEntity.setContent(blogProxy.getContent());
+//			blogProxy.getCategory_id().setId(blogEntity.getCategory_id().getId());
 			blogRepo.save(blogEntity);
 		}
 		return "updated successfully";
@@ -79,29 +82,69 @@ public class BlogServiceImpl implements BlogService
 	@Override
 	public List<BlogProxy> searchByBlogTitle(String title) {
 		List<BlogEntity> byTitle = blogRepo.findByTitle(title);
-		return helper.convertBlogListEntityToProxy(byTitle);
+		return helper.convertList(byTitle,BlogProxy.class);
 	}
 
 	@Override
-	public BlogResponse getAllBlogs(Integer pageNumber, Integer pageSize,String sortBy) {
-
-		Pageable p= PageRequest.of(pageNumber,pageSize, Sort.by(sortBy));
-		Page<BlogEntity> pageBlog=this.blogRepo.findAll(p);
-		List<BlogEntity>allblogs=pageBlog.getContent();
-		List<BlogProxy> blogProxy = helper.convertBlogListEntityToProxy(allblogs);
-		BlogResponse blogResponse=new BlogResponse();
-		blogResponse.setContent(blogProxy);
-		blogResponse.setPageNumber((long) pageBlog.getNumber());
-		blogResponse.setPageSize((long) pageBlog.getSize());
-		blogResponse.setTotalElements(pageBlog.getTotalElements());
-		blogResponse.setTotalPages((long) pageBlog.getTotalPages());
-		blogResponse.setLastPage(pageBlog.isLast());
-//		List<BlogEntity> all = blogRepo.findAll();
-		return blogResponse;
+	public List<BlogProxy> getAllBlogs() {
+		
+		List<BlogEntity> all = blogRepo.findAll();
+	
+		return helper.convertList(all, BlogProxy.class);
 	}
 	
 	public UserProxy getUserByUserId(Integer id)
 	{
 	return	userClient.getUserByUserId(id);
+	}
+	
+	//add comment on blog
+	@Override // working
+	public String addCommentToBlog(Integer blogId,CommentProxy commentProxy)
+	{
+		Optional<BlogEntity> blogbyId = blogRepo.findById(blogId);
+		blogbyId.get().setUser_id(commentProxy.getUserId());
+		blogbyId.get().getComments().add(helper.convert(commentProxy, Comment.class));
+		blogRepo.save(blogbyId.get());
+		return "add comment succefully";
+	}
+	
+	//get comments by Blog id
+	@Override
+	public List<CommentProxy> getCommentsByBlogId(Integer blogId)
+	{
+		Optional<BlogEntity> byId = blogRepo.findById(blogId);
+//		 List<Comment> byBlogId = commentRepo.findByBlogId(blogId);
+		List<Comment> comments = byId.get().getComments();
+		return helper.convertList(comments, CommentProxy.class);
+		
+	}
+	
+	//get blog by id - working
+	@Override
+	public BlogProxy getBlogById(Integer id)
+	{
+		Optional<BlogEntity> byId = blogRepo.findById(id);
+		return helper.convert(byId, BlogProxy.class);			
+	}
+
+	@Override
+	public List<BlogProxy> searchBlogByTitleAndCategory(BlogProxy blogProxy)  {//working
+		//get title if exists in db
+		List<BlogEntity> byTitle = blogRepo.findByTitle(blogProxy.getTitle());
+		
+		//get category name if exists in db
+		Category byCategoryName = categoryRepo.findByCategoryName(blogProxy.getCategory().getCategoryName());
+
+		//get verify both title and category exist 
+//		boolean equals = byTitle.get(0).getCategory().getCategoryName().equals(byCategoryName.getCategoryName());
+//		
+//		if(equals)
+//		{
+//		List<BlogProxy> convertList = helper.convertList(byTitle,BlogProxy.class);
+//		return convertList;
+//		}
+		List<BlogProxy> convertList = helper.convertList(byTitle,BlogProxy.class);
+		return convertList;
 	}
 }
