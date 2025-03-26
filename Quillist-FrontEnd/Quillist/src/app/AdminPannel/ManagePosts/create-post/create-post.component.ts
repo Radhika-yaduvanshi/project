@@ -16,6 +16,7 @@ interface Category {
 export class CreatePostComponent implements OnInit {
   postTitle: string = '';
   postContent: string = ''; // Store content from TinyMCE editor
+
   selectedCategory: number | string = ''; // Selected category ID
   categories: Category[] = []; // Categories array
   userId = 1; // Assuming this is coming from a logged-in user
@@ -75,13 +76,16 @@ export class CreatePostComponent implements OnInit {
         title: this.postTitle,
         content: this.postContent,
         category: {
-          id: this.selectedCategory, // Send only the category ID here
+          id: this.selectedCategory,
+          // Send only the category ID here
         },
         user_id: this.userId, // Assuming userId is 1
-        blogstatus: 'Approved', // Make sure the status is an enum value
+        // blogstatus: 'Approved', // Make sure the status is an enum value
       };
+
       this.blogService.createBlog(blogData, this.userId).subscribe(
         (response) => {
+          console.log(blogData,this.userId);
           console.log('Blog created successfully:', response);
           this.submissionSuccess = true; // Set success flag
           this.submissionError = false; // Reset error flag

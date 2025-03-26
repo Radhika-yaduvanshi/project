@@ -32,8 +32,8 @@ public class BlogEntity {
 	private String title;
 	private String content;
 	//private String category;
-	@Enumerated(EnumType.STRING)
-	private BlogStatus blogstatus;
+//	@Enumerated(EnumType.STRING)
+//	private BlogStatus blogstatus=BlogStatus.pending;;
 	
 	//blog have multiple images [ one to many ] - one blog can have multiple images
 	//blog category [ one to one] -one blog can relate to one category

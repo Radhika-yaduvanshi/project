@@ -36,13 +36,14 @@
                   />
                   <!-- Fallback image if no URL is found -->
                   <img
-                    *ngIf="!user.profilePhotoUrl"
-                    src="https://via.placeholder.com/80"
-                    alt="User Profile"
-                    class="rounded-circle img-fluid"
-                    width="80"
-                    height="80"
-                  />
+                  *ngIf="user.profilePhoto"
+                  [src]="user.profilePhoto"
+                  alt="User Profile"
+                  class="rounded-circle img-fluid"
+                  width="80"
+                  height="80"
+                />
+                
                 </div>
               </div>
               <!-- User Info Column -->

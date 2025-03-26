@@ -19,7 +19,7 @@ export class AddUserComponent {
     name: '',
     email: '',
     password: '',
-    profilePhoto: null as File | null,
+    profilePhoto: null as File | null,  
   };
   profilePhoto: File | null = null; // Initialize properly
 
@@ -99,10 +99,7 @@ export class AddUserComponent {
     }
   }
   
-
-
-
-      // new code from here
+  // new code from here
 
       // Updated onSubmitUserData method to not send user id
       onSubmitUserData(formData: any) {

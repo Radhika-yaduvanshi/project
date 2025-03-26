@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Base64;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,9 +106,13 @@ public class UserServiceImpl implements UserService
 			UserProxy userProxy = new UserProxy();
 			userProxy.setId(userEntity.getId());
 			userProxy.setUserName(userEntity.getUserName());
+			userProxy.setPassword(userEntity.getPassword());
 			userProxy.setEmail(userEntity.getEmail());
+			userProxy.setCreatedAt(userEntity.getCreatedAt());
+			userProxy.setUpdateAt(userEntity.getUpdateAt());
+//			userProxy.setProfilePhoto(Arrays.toString(userEntity.getProfilePhoto()));
 
-			// Convert profile photo to Base64 string if it exists
+//			 Convert profile photo to Base64 string if it exists
 			if (userEntity.getProfilePhoto() != null) {
 				String base64Image = Base64.getEncoder().encodeToString(userEntity.getProfilePhoto());
 				userProxy.setProfilePhoto("data:image/jpeg;base64," + base64Image);  // Assuming JPEG image type

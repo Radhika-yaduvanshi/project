@@ -46,6 +46,13 @@ public class BlogServiceImpl implements BlogService
 		
 		System.err.println(categoryId);
 		UserProxy user = userClient.getUserByUserId(userid);
+		if (categoryId.isPresent()) {
+			convertBlogProxyToEntity.setCategory(categoryId.get());
+		} else {
+			// Log or throw an exception if category is not found
+			System.err.println("Category not found for ID: " + blogproxy.getCategory().getId());
+			return "Category not found.";
+		}
 		
 		if(user!=null)
 		{
@@ -53,6 +60,10 @@ public class BlogServiceImpl implements BlogService
 			convertBlogProxyToEntity.getCategory().setId(categoryId.get().getId());
 			System.err.println("------------------"+categoryId.get().getId());
 			blogRepo.save(convertBlogProxyToEntity);
+		}else {
+			// Log or throw an exception if user is not found
+			System.err.println("User not found for ID: " + userid);
+			return "User not found.";
 		}
 		return "saved successfully";
 	}
