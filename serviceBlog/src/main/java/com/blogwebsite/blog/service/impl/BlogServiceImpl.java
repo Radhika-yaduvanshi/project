@@ -1,9 +1,13 @@
 package com.blogwebsite.blog.service.impl;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.blogwebsite.blog.domain.BlogImage;
+import com.blogwebsite.blog.repository.BlogImageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +22,7 @@ import com.blogwebsite.blog.repository.BlogRepo;
 import com.blogwebsite.blog.repository.CategoryRepo;
 import com.blogwebsite.blog.service.BlogService;
 import com.blogwebsite.blog.utils.Helper;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class BlogServiceImpl implements BlogService
@@ -36,7 +41,12 @@ public class BlogServiceImpl implements BlogService
 	
 	@Autowired
 	private UserClient userClient;
-	
+
+	@Autowired
+	private BlogImageRepo blogImageRepo;
+
+
+
 	@Override
 	public String createBlog(BlogProxy blogproxy,Integer userid) {
 		
@@ -158,4 +168,44 @@ public class BlogServiceImpl implements BlogService
 		List<BlogProxy> convertList = helper.convertList(byTitle,BlogProxy.class);
 		return convertList;
 	}
+
+	@Override
+	public void createBlogWithImages(String title, String content, Integer userId, Integer categoryId, List<MultipartFile> images) throws IOException {
+
+		Category category = null;
+		if (categoryId != null) {
+			Optional<Category> categoryOptional = categoryRepo.findById(categoryId);
+			if (categoryOptional.isPresent()) {
+				category = categoryOptional.get();
+			}
+		}
+
+
+		BlogEntity blog = new BlogEntity();
+		blog.setTitle(title);
+		blog.setContent(content);
+		blog.setUser_id(userId);
+		blog.setCategory(category);
+
+
+
+
+		// Save Blog First
+		BlogEntity savedBlog = blogRepo.save(blog);
+
+		List<BlogImage> blogImages = new ArrayList<>();
+
+		for (MultipartFile image : images) {
+			if (!image.isEmpty()) {
+				BlogImage blogImage = new BlogImage();
+				blogImage.setBlogId(savedBlog.getId());
+				blogImage.setImageData(image.getBytes());  // Store in DB as bytes
+				blogImages.add(blogImage);
+			}
+		}
+
+		// Save Images
+		blogImageRepo.saveAll(blogImages);
+	}
+
 }

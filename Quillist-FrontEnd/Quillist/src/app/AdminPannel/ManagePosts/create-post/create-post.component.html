@@ -28,6 +28,7 @@
               placeholder="Enter blog title"
               required
             />
+
             <div *ngIf="blogForm.submitted && !postTitle" class="text-danger">
               Title is required.
             </div>

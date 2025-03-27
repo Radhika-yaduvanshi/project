@@ -13,8 +13,13 @@ export class PostServiceService {
 
   private caturl = '/category';
 
-  createBlog(blogData: any, userId: number) {
-    return this.http.post(`${this.apiUrl}/save/${userId}`, blogData, {
+  // createBlog(blogData: any, userId: number) {
+  //   return this.http.post(`${this.apiUrl}/save/${userId}`, blogData, {
+  //     responseType: 'text',
+  //   });
+  // }
+  createBlog(blogData: FormData) {
+    return this.http.post(`${this.apiUrl}/create`, blogData, {
       responseType: 'text',
     });
   }
@@ -59,36 +64,30 @@ export class PostServiceService {
     return this.http.get<any>(`${this.apiUrl}/getUserById/${id}`);
   }
 
-
-
-
-
-
   // all about categories
 
-    // Get all categories
-    getCategories() {
-      return this.http.get<any[]>(`${this.caturl}/getAllCategory`);
-    }
-  
-  
-    addcategories(category:Category){
-      return this.http.post(`${this.caturl}/add`,category, {
-        responseType: 'text',
-      });
-    }
-  
-    // Delete a category by ID
-    deleteCategory(id: number): Observable<any> {
-      return this.http.delete(`${this.caturl}/delete/${id}`, {
-        responseType: 'text',
-      });
-    }
-  
-    // Update a category by ID
-    updateCategory(id: number, category: Category): Observable<any> {
-      return this.http.put(`${this.apiUrl}/update/${id}`, category, { responseType: 'text' });
-    }
+  // Get all categories
+  getCategories() {
+    return this.http.get<any[]>(`${this.caturl}/getAllCategory`);
+  }
 
+  addcategories(category: Category) {
+    return this.http.post(`${this.caturl}/add`, category, {
+      responseType: 'text',
+    });
+  }
 
+  // Delete a category by ID
+  deleteCategory(id: number): Observable<any> {
+    return this.http.delete(`${this.caturl}/delete/${id}`, {
+      responseType: 'text',
+    });
+  }
+
+  // Update a category by ID
+  updateCategory(id: number, category: Category): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update/${id}`, category, {
+      responseType: 'text',
+    });
+  }
 }

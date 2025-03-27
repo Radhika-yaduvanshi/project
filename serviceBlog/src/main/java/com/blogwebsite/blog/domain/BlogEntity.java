@@ -4,17 +4,8 @@ import java.util.List;
 
 import com.blogwebsite.blog.enumeration.BlogStatus;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,5 +42,9 @@ public class BlogEntity {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "blog_id")
 	private List<Comment> comments;
+
+	@OneToMany(mappedBy = "blogId", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@JsonIgnore
+	private List<BlogImage> images;
 
 }

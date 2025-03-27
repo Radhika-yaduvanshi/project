@@ -1,10 +1,13 @@
 package com.blogwebsite.blog.service;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.blogwebsite.blog.domain.BlogImage;
 import com.blogwebsite.blog.proxy.BlogProxy;
 import com.blogwebsite.blog.proxy.CommentProxy;
 import com.blogwebsite.blog.proxy.UserProxy;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface BlogService {
 	//crud on blog
@@ -32,4 +35,11 @@ public interface BlogService {
 	String addCommentToBlog(Integer blogId, CommentProxy commentProxy);
 	
 	public List<BlogProxy> searchBlogByTitleAndCategory(BlogProxy blogProxy);
+
+//	public String createBlogWithImages(BlogImage blog, List<MultipartFile> images);
+//
+//	public BlogResponse getBlogWithImages(Integer blogId);
+
+	void createBlogWithImages(String title, String content, Integer userId, Integer categoryId, List<MultipartFile> images) throws IOException;
+
 }
