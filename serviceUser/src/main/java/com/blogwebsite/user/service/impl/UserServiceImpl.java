@@ -1,9 +1,20 @@
 package com.blogwebsite.user.service.impl;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.blogwebsite.user.FeignClient.BlogClient;
@@ -15,6 +26,7 @@ import com.blogwebsite.user.proxy.UserProxy;
 import com.blogwebsite.user.repository.UserRepo;
 import com.blogwebsite.user.service.UserService;
 import com.blogwebsite.user.utils.Helper;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserServiceImpl implements UserService
@@ -33,12 +45,65 @@ public class UserServiceImpl implements UserService
 	private BlogClient blogClient;
 	
 	//private final String blogUrl="http://localhost:8088/blog/";
+
+	@Value("${file.upload-dir}")
+	private String uploadDir;
+
+	public String saveImage(MultipartFile file) throws IOException {
+
+		Path uploadpath= Paths.get(uploadDir);
+		if(!Files.exists(uploadpath)){
+			Files.createDirectories(uploadpath);
+		}
+		String fileName=file.getOriginalFilename();
+        assert fileName != null;
+        Path filepath=uploadpath.resolve(fileName);
+		System.err.println("FIle path is : "+filepath);
+		Files.copy(file.getInputStream(),filepath, StandardCopyOption.REPLACE_EXISTING);
+		return  filepath.toString();
+	}
+
+
+	public ResponseEntity<Resource> getImage(String filename) throws IOException {
+
+		Path filePath = Paths.get(uploadDir).resolve(filename);
+		Resource resource = new UrlResource(filePath.toUri());
+		if (resource.exists()) {
+			return ResponseEntity.ok()
+					.contentType(MediaType.IMAGE_JPEG)
+					.body(resource);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
+
+
+
 	
 	@Override
 	public String registerUser(UserProxy user) {
 		userRepo.save(helper.convert(user, UserEntity.class));
 		return "register successfully";
 	}
+
+	public String registerUserwithImage(UserProxy user, MultipartFile file) throws IOException {
+		// Save the image and get its path
+		String imagePath = saveImage(file);
+
+		// Convert UserProxy to UserEntity
+		UserEntity userEntity = helper.convert(user, UserEntity.class);
+
+		// Store image as a byte array (if storing in DB)
+		userEntity.setProfilePhoto(Files.readAllBytes(Paths.get(imagePath)));
+
+		// Save user to database
+		userRepo.save(userEntity);
+
+		return "User registered successfully with profile photo";
+	}
+
+
 
 	@Override
 	public String deleteUser(Integer id) {

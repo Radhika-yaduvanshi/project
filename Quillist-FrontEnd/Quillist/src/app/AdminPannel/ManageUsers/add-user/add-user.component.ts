@@ -38,7 +38,13 @@ export class AddUserComponent {
     formDataObj.append('name', this.user.name);
     formDataObj.append('email', this.user.email);
     formDataObj.append('password', this.user.password);
-    formDataObj.append('profilePhoto', this.user.profilePhoto);
+    // formDataObj.append('profilePhoto', this.user.profilePhoto);
+    if (this.user.profilePhoto) {
+      formData.append('profilePhoto', this.user.profilePhoto);
+    } else {
+      console.log('No file selected');
+      return;
+    }
 
     // Simulate form submission (Replace this with actual API call)
 

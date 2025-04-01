@@ -15,8 +15,14 @@ export class UserServicesService {
     return this.http.get<any[]>(`${this.apiUrl}/getAll`);
   }
 
+  // registerUser(userData: FormData): Observable<any> {
+  //   return this.http.post(`${this.apiUrl}/register`, userData, {
+  //     responseType: 'text',
+  //   });
+  // }
+
   registerUser(userData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData, {
+    return this.http.post(`${this.apiUrl}/register-with-image`, userData, {
       responseType: 'text',
     });
   }

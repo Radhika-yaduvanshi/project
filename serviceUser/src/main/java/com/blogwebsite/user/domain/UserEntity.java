@@ -35,6 +35,8 @@ public class UserEntity {
 	private Date updateAt;
 	
 	private byte[] profilePhoto;
+
+//	private String profilePhoto;
 	
 	//@OneToMany(cascade=CascadeType.ALL)
 	//@JoinColumn(name="user_id")

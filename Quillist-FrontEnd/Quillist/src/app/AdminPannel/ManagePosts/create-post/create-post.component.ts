@@ -78,7 +78,7 @@ export class CreatePostComponent implements OnInit {
           id: this.selectedCategory, // Send only the category ID here
         },
         user_id: this.userId, // Assuming userId is 1
-        blogstatus: 'Approved', // Make sure the status is an enum value
+        // blogstatus: 'Approved', // Make sure the status is an enum value
       };
       this.blogService.createBlog(blogData, this.userId).subscribe(
         (response) => {
