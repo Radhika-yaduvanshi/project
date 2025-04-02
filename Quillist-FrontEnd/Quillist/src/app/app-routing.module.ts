@@ -19,7 +19,7 @@ import { UpdateCategoriesComponent } from './AdminPannel/ManageCategories/update
 import { AddCategoriesComponent } from './AdminPannel/ManageCategories/add-categories/add-categories.component';
 import { ViewCategoriesComponent } from './AdminPannel/ManageCategories/view-categories/view-categories.component';
 import { DeleteCategoriesComponent } from './AdminPannel/ManageCategories/delete-categories/delete-categories.component';
-
+import { BlogDetailsComponent } from './AdminPannel/ManagePosts/blog-details/blog-details.component';
 const routes: Routes = [
   {
     path: '',
@@ -42,6 +42,7 @@ const routes: Routes = [
           { path: '', redirectTo: 'view-post', pathMatch: 'full' },
           { path: 'create-post', component: CreatePostComponent },
           { path: 'view-post', component: ViewPostComponent },
+          { path: 'view-post/:id', component: BlogDetailsComponent },
           { path: 'delete-post', component: DeletePostComponent },
         ],
       },

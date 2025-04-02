@@ -34,6 +34,7 @@ import { DeleteCategoriesComponent } from './AdminPannel/ManageCategories/delete
 import { AddUserComponent } from './AdminPannel/ManageUsers/add-user/add-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { BlogDetailsComponent } from './AdminPannel/ManagePosts/blog-details/blog-details.component';
 
 // import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
@@ -59,6 +60,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     DeleteCategoriesComponent,
     AddUserComponent,
     ViewUserComponent,
+    BlogDetailsComponent,
   ],
   imports: [
     BrowserModule,

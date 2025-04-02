@@ -18,7 +18,7 @@ export class CreatePostComponent implements OnInit {
   postContent: string = ''; // Store content from TinyMCE editor
   selectedCategory: number | string = ''; // Selected category ID
   categories: Category[] = []; // Categories array
-  userId = 1; // Assuming this is coming from a logged-in user
+  userId = 11; // Assuming this is coming from a logged-in user
   submissionSuccess: boolean = false; // Track submission success
   submissionError: boolean = false; // Track submission error
 

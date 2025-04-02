@@ -31,6 +31,10 @@ export class UserServicesService {
     return this.http.delete(`${this.apiUrl}/deleteById/${userId}`);
   }
 
+  getUserById(userId:number):Observable<any>{
+    return this.http.get(`${this.apiUrl}/getById/${userId}`)
+  }
+
   // uploadProfilePhoto(profilePhoto: File,id:number): Observable<any> {
   //   const formData = new FormData();
   //   formData.append('file', profilePhoto, profilePhoto.name);

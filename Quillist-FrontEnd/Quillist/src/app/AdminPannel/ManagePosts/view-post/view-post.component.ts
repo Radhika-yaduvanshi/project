@@ -30,6 +30,7 @@ export class ViewPostComponent {
         this.filteredBlogs = data.map((blog) => ({
           ...blog,
           safeContent: this.sanitizer.bypassSecurityTrustHtml(blog.content),
+          showFullContent: false, // Initially, only show the truncated version
         }));
       },
       (error) => {
@@ -62,4 +63,15 @@ export class ViewPostComponent {
       );
     }
   }
+
+    // Toggle the showFullContent flag when clicking "Read More" or "Show Less"
+    toggleContent(blog: any): void {
+      blog.showFullContent = !blog.showFullContent;
+    }
+
+    getPreviewContent(content: string): string {
+      // Get the first 200 characters (adjust as needed)
+      return content.length > 200 ? content.substring(0, 200) + '...' : content;
+    }
+    
 }
