@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Category } from '../AdminPannel/ManageCategories/add-categories/add-categories.component';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,11 @@ export class PostServiceService {
       responseType: 'text',
     });
   }
+  // createBlog(blogData: FormData) {
+  //   return this.http.post(`${this.apiUrl}/create`, blogData, {
+  //     responseType: 'text',
+  //   });
+  // }
 
   // Get all blogs
   getAllBlogs(): Observable<any[]> {
@@ -58,7 +64,30 @@ export class PostServiceService {
     return this.http.get<any>(`${this.apiUrl}/getUserById/${id}`);
   }
 
+  // all about categories
+
+  // Get all categories
   getCategories() {
     return this.http.get<any[]>(`${this.caturl}/getAllCategory`);
+  }
+
+  addcategories(category: Category) {
+    return this.http.post(`${this.caturl}/add`, category, {
+      responseType: 'text',
+    });
+  }
+
+  // Delete a category by ID
+  deleteCategory(id: number): Observable<any> {
+    return this.http.delete(`${this.caturl}/delete/${id}`, {
+      responseType: 'text',
+    });
+  }
+
+  // Update a category by ID
+  updateCategory(id: number, category: Category): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update/${id}`, category, {
+      responseType: 'text',
+    });
   }
 }

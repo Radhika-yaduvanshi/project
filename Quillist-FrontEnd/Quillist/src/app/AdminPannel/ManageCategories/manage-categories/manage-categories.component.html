@@ -4,33 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manage Categories</title>
+    <style>
+      /* Space between sidebar and content */
+      .content-container {
+        margin-left: 270px; /* More space from sidebar */
+        padding: 30px;
+        height: 100vh;
+        overflow-y: auto;
+        background: #f8f9fa; /* Light, clean background */
+        border-radius: 10px;
+      }
+
+      h3 {
+        margin-bottom: 20px;
+        color: #343a40;
+        font-size: 24px;
+      }
+
+      /* Button container */
+      .nav-buttons {
+        display: flex;
+        gap: 20px; /* Increased spacing */
+        margin-bottom: 20px;
+      }
+
+      /* Common button styling */
+      .nav-buttons a {
+        text-decoration: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        border: none;
+        cursor: pointer;
+      }
+
+      /* Classy Gradient Buttons */
+      .accent-button {
+        background: linear-gradient(135deg, #ff7eb3, #ff4081);
+        color: white;
+      }
+
+      .warn-button {
+        background: linear-gradient(135deg, #ff7b72, #f44336);
+        color: white;
+      }
+
+      /* Hover Effect */
+      .nav-buttons a:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      }
+    </style>
   </head>
   <body>
-    <h3>Manage Categories</h3>
+    <div class="content-container">
+      <h3>Manage Categories</h3>
 
-    <!-- <nav>
-      <button routerLink="add-user">Add User</button>
-      <button routerLink="view-user">View Users</button>
-      <button routerLink="delete-user">Delete User</button>
-    </nav> -->
+      <div class="nav-buttons">
+        <a class="accent-button" routerLink="add-categories">Add Categories</a>
+        <a class="warn-button" routerLink="view-categories"
+          >View All Categories</a
+        >
+      </div>
 
-    <a mat-raised-button color="accent" routerLink="add-categories"
-      >Add Categories</a
-    >
-    <a mat-raised-button color="warn" routerLink="view-categories"
-      >View All Categories</a
-    >
-    <a mat-raised-button color="primary" routerLink="delete-categories"
-      >Delete Categories</a
-    >
-    <a mat-raised-button color="accent" routerLink="update-categories"
-      >Update Categories</a
-    >
-
-    <!-- Child Routes Render Here -->
-    <router-outlet></router-outlet>
+      <!-- Child Routes Render Here -->
+      <router-outlet></router-outlet>
+    </div>
   </body>
 </html>
-
-<!-- Load child components dynamically
-<router-outlet></router-outlet> -->

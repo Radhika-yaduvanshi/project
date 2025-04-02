@@ -1,44 +1,90 @@
 .admin-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .sidebar {
-    width: 250px;
-    background: #343a40;
-    color: white;
-    padding: 20px;
-  }
-  
-  .sidebar h2 {
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar ul li {
-    margin: 15px 0;
-  }
-  
-  .sidebar ul li a {
-    text-decoration: none;
-    color: white;
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .sidebar ul li a:hover {
-    background: #495057;
-  }
-  
-  .content {
-    flex: 1;
-    padding: 20px;
-  }
-  
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: #343a40;
+  color: white;
+  padding: 20px;
+  position: fixed; /* Fix the sidebar */
+  top: 0;
+  left: 0;
+  height: 100vh; /* Full height */
+  overflow-y: auto; /* Allow scrolling inside sidebar */
+  z-index: 1000; /* Ensure it's above other elements */
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+  background: #495057;
+}
+
+/* Fix the content area to not overlap the sidebar */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 250px; /* Push content to the right */
+  height: 100vh;
+  overflow-y: auto;
+  background: white; /* Optional: Add a background color */
+  position: relative; /* Ensure it stacks properly */
+  z-index: 1; /* Keep content below sidebar */
+}
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #343a40;
+  color: white;
+  padding: 20px;
+  position: fixed;
+  top: 60px; /* Adjust this based on your navbar height */
+  left: 0;
+  height: calc(100vh - 60px); /* Ensure it fits below the navbar */
+  overflow-y: auto;
+  z-index: 1000; /* Keeps it above content but below the navbar */
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #222; /* Dark navbar */
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1100; /* Ensures it stays on top */
+}
+
+/* Main Content */
+.content-container {
+  margin-left: 270px; /* Pushes content to the right */
+  margin-top: 70px; /* Leaves space for navbar */
+  padding: 30px;
+  height: calc(100vh - 70px); /* Prevents content from going under navbar */
+  overflow-y: auto;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
