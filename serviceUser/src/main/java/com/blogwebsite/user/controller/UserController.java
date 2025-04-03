@@ -1,5 +1,7 @@
 package com.blogwebsite.user.controller;
 
+import com.blogwebsite.user.domain.LoginRequest;
+import com.blogwebsite.user.domain.LoginResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -22,6 +24,15 @@ public class UserController {
 
 	@Autowired
 	private UserServiceImpl userImpl;
+
+
+	@PostMapping("/loginReq") //working
+	public LoginResponse login(@RequestBody LoginRequest loginRequest)
+	{
+		System.out.println("THis is controller");
+		System.out.println(loginRequest.getPassword()+"\n"+loginRequest.getUserName());
+		return userImpl.login(loginRequest);
+	}
 
 
 	@PostMapping("/images")
@@ -62,7 +73,7 @@ public class UserController {
 
 
 	//working register user
-	@PostMapping("/register") //user & admin 
+	@PostMapping("/register") //user & admin
 	public ResponseEntity<?> registerUser(@RequestBody UserProxy user)
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(userImpl.registerUser(user));

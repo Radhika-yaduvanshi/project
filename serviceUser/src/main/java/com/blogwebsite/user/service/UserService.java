@@ -2,6 +2,9 @@ package com.blogwebsite.user.service;
 
 import java.util.List;
 
+import com.blogwebsite.user.domain.LoginRequest;
+import com.blogwebsite.user.domain.LoginResponse;
+import com.blogwebsite.user.domain.UserEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.blogwebsite.user.proxy.BlogProxy;
 import com.blogwebsite.user.proxy.CommentProxy;
 import com.blogwebsite.user.proxy.UserProxy;
+//import com.blogwebsite.user.proxy.UserEntity;
 
 public interface UserService {
 
@@ -51,4 +55,17 @@ public interface UserService {
 	public String addComment(@PathVariable("id") Integer id,@RequestBody CommentProxy commentProxy); //working
 	
 	public List<BlogProxy> searchByBlogTitleAndCategoryName(BlogProxy blogProxy);
+
+
+
+	//Authentication part
+
+
+	//generate jwt tocken
+	public String generateTocken(UserEntity user);
+
+	//login
+	public LoginResponse login(LoginRequest loginRequest);
+
+
 }

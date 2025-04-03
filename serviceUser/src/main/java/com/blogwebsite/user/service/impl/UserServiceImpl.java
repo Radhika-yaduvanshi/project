@@ -7,6 +7,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
+
+import com.blogwebsite.user.authConfig.JwtService;
+import com.blogwebsite.user.domain.LoginRequest;
+import com.blogwebsite.user.domain.LoginResponse;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
@@ -15,6 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.blogwebsite.user.FeignClient.BlogClient;
@@ -43,7 +52,16 @@ public class UserServiceImpl implements UserService
 	
 	@Autowired
 	private BlogClient blogClient;
-	
+
+	@Autowired
+	private AuthenticationManager authmanager;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
+	@Autowired
+	private JwtService jwtService;
+
 	//private final String blogUrl="http://localhost:8088/blog/";
 
 	@Value("${file.upload-dir}")
@@ -83,6 +101,7 @@ public class UserServiceImpl implements UserService
 	
 	@Override
 	public String registerUser(UserProxy user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepo.save(helper.convert(user, UserEntity.class));
 		return "register successfully";
 	}
@@ -95,7 +114,9 @@ public class UserServiceImpl implements UserService
 		UserEntity userEntity = helper.convert(user, UserEntity.class);
 
 		// Store image as a byte array (if storing in DB)
-		userEntity.setProfilePhoto(Files.readAllBytes(Paths.get(imagePath)));
+
+		//enable this after adding photos
+//		userEntity.setProfilePhoto(Files.readAllBytes(Paths.get(imagePath)));
 
 		// Save user to database
 		userRepo.save(userEntity);
@@ -189,6 +210,46 @@ public class UserServiceImpl implements UserService
 	public List<BlogProxy> searchByBlogTitleAndCategoryName(BlogProxy blogProxy) {
 		return blogClient.searchByBlogTitleAndCategoryName(blogProxy);
 	}
-	
-	
+
+	@Override
+	public LoginResponse login(LoginRequest loginRequest) {
+		System.out.println("login response from emp service called..");
+		Authentication authentication=new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword());
+		System.err.println("Authentication : "+authentication);
+
+		Authentication verified = authmanager.authenticate(authentication);
+
+		System.out.println("is varified : "+verified);
+		if(!verified.isAuthenticated())
+		{
+			//System.out.println("user not found");
+			//System.err.println("user not found");
+			//throw new BadCredicialException(null, null);
+			//throw new BadCredentialsException("Bad credentials...");
+			System.out.println("bad credials..");
+			//throw new ErrorResponse("bad credentials",404);
+		}
+
+		return new LoginResponse(loginRequest.getUserName(),jwtService.genearteTocken(loginRequest.getUserName()));
+
+	}
+
+	@Override
+	public String generateTocken(UserEntity user) {
+		UserEntity findByUserName = userRepo.findByUserName(user.getUserName());
+
+		System.out.println(findByUserName);
+		System.out.println(findByUserName.getPassword());
+		//System.out.println(emp.getPassword());
+		boolean matches = passwordEncoder.matches(user.getPassword(),findByUserName.getPassword());
+
+		System.out.println("Matches Password:"+matches);
+		if(!matches)
+		{
+			return "user not found";
+		}
+		return jwtService.genearteTocken(user.getUserName());
+	}
+
+
 }
