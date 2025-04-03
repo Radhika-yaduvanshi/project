@@ -9,47 +9,153 @@
       rel="stylesheet"
     />
     <style>
+      /* Global Styles */
       body {
-        background-color: #f8f9fa;
+        background-color: #f4f7fc;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Flexbox for centering the form */
+      .login-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh;
+        padding: 20px;
       }
+
       .login-card {
         width: 100%;
         max-width: 400px;
-        border-radius: 10px;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
       }
-      .login-card h3 {
+
+      /* Hover effect on card */
+      .login-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Heading style */
+      .login-header {
+        font-size: 26px;
         font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #333;
       }
+
+      /* Input field styles */
+      .form-control {
+        height: 45px;
+        font-size: 14px;
+        border-radius: 8px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-control:focus {
+        border-color: #4caf50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+      }
+
+      /* Button Styles */
       .btn-primary {
-        border-radius: 20px;
+        background-color: #007bff;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        width: 100%;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+      }
+
+      /* Error messages */
+      .text-danger {
+        font-size: 12px;
+        color: #f44336;
+      }
+
+      /* Animation for fading in the form */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .login-card {
+        animation: fadeInUp 0.8s ease-out;
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 576px) {
+        .login-card {
+          padding: 20px;
+        }
+        .login-header {
+          font-size: 22px;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="card shadow-lg p-4 login-card">
-      <h3 class="text-center mb-4">Admin Login</h3>
-      <form>
-        <div class="mb-3">
-          <label class="form-label">Email:</label>
-          <input type="email" class="form-control" name="email" required />
-        </div>
+    <div class="login-container">
+      <div class="card login-card">
+        <h3 class="login-header">Admin Login</h3>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmitUserData()">
+          <div class="mb-3">
+            <label class="form-label" for="email">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              required
+            />
+            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+              Email is required and must be a valid email address.
+            </div>
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label">Password:</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            required
-          />
-        </div>
+          <div class="mb-3">
+            <label class="form-label" for="password">Password:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              required
+            />
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+              Password is required and must be at least 6 characters long.
+            </div>
+          </div>
 
-        <button type="submit" class="btn btn-primary w-100">Login</button>
-      </form>
+          <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+            Login
+          </button>
+        </form>
+      </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@angular/core@12.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@angular/forms@12.0.0"></script>
   </body>
 </html>

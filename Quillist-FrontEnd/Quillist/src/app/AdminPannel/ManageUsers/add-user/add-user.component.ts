@@ -1,116 +1,74 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router'; // ✅ Correct import
 import { UserServicesService } from '../../../services/user-services.service';
 
 @Component({
   selector: 'app-add-user',
   standalone: false,
   templateUrl: './add-user.component.html',
-  styleUrl: './add-user.component.css',
+  styleUrls: ['./add-user.component.css'],
 })
-export class AddUserComponent {
-  constructor(private userService: UserServicesService) {}
+export class AddUserComponent implements OnInit {
+  userForm: FormGroup;
+  profilePhoto: File | null = null;
 
-  user = {
-    id: 1,
-    name: '',
-    email: '',
-    password: '',
-    profilePhoto: null as File | null,
-  };
-  profilePhoto: File | null = null; // Initialize properly
-
-  // // onFileSelected(event: Event) {
-  // //   const input = event.target as HTMLInputElement;
-  // //   if (input.files && input.files.length > 0) {
-  // //     this.user.profilePhoto = input.files[0]; // Store file
-  // //   }
-  // // }
-
-  // onFileChange(event: any): void {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     this.profilePhoto = file;
-
-  //   }
-  // }
-
-  // onSubmitUserData(formData: any) {
-  //   if (!this.profilePhoto) {
-  //     console.log('No file selected');
-  //     return;
-  //   }
-  //       const formDataObj = new FormData();
-  //       formDataObj.append('name', this.user.name);
-  //       formDataObj.append('email', this.user.email);
-  //       formDataObj.append('password', this.user.password);
-  //       // formDataObj.append('profilePhoto', this.profilePhoto, this.profilePhoto.name);
-
-  //           // Check if profilePhoto is not null and append it to FormData
-  //           // formDataObj.append('id', this.user.id); // Add user ID if needed
-  //   if (this.profilePhoto) {
-  //     // formDataObj.append('profilePhoto', this.profilePhoto, this.profilePhoto.name);
-  //     formDataObj.append('profilePhoto',  this.profilePhoto.name);
-
-  //   }
-  //   console.log('Form Submitted!', formDataObj);
-
-  //   // Simulate form submission (Replace this with actual API call)
-  //   // this.userService.uploadProfilePhoto(this.profilePhoto, this.user.id).subscribe({
-  //   //   next: (response) => {
-  //   //     console.log('User registered successfully', response);
-  //   //     alert('User registered successfully');
-  //   //   },
-
-  //       // // After uploading the photo, proceed with user registration
-  //       this.userService.registerUser(formDataObj).subscribe({
-  //         next: (response) => {
-  //           console.log('User registered successfully', response);
-  //           alert('User registered successfully');
-  //         },
-  //         error: (error) => {
-  //           console.error('Error registering user', error);
-  //           alert('Error registering user');
-  //         },
-  //       });
-  //     }
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserServicesService
+  ) {
+    // Initialize the form here
+    this.userForm = this.formBuilder.group({
+      userName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      // profilePhoto: [null, Validators.required],
+    });
+  }
+  ngOnInit() {
+    // this.userForm = this.formBuilder.group({
+    //   name: ['', Validators.required],
+    //   email: ['', [Validators.required, Validators.email]],
+    //   password: ['', [Validators.required, Validators.minLength(6)]],
+    //   profilePhoto: [null, Validators.required],
+    // });
+  }
 
   onFileChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      this.profilePhoto = file; // Assign the file to profilePhoto
-      console.log('Selected file:', file);
+      this.profilePhoto = file;
+      this.userForm.patchValue({
+        profilePhoto: this.profilePhoto,
+      });
     }
   }
 
-  // new code from here
-
-  // Updated onSubmitUserData method to not send user id
-  onSubmitUserData(formData: any) {
-    if (!this.user.name || !this.user.email || !this.user.password) {
-      console.log('Please fill all fields');
+  onSubmitUserData(): void {
+    if (this.userForm.invalid) {
       return;
     }
+    const userData = {
+      userName: this.userForm.value.userName,
+      email: this.userForm.value.email,
+      password: this.userForm.value.password,
+      // profilePhoto:this.userForm.value.profilePhoto
+    };
 
-    // Create FormData to send both the user details and the profile photo
-    const formDataObj = new FormData();
-    formDataObj.append('name', this.user.name);
-    formDataObj.append('email', this.user.email);
-    formDataObj.append('password', this.user.password);
+    // const formData = new FormData();
+    // formData.append('name', this.userForm.value.userName);
+    // formData.append('email', this.userForm.value.email);
+    // formData.append('password', this.userForm.value.password);
 
-    if (this.profilePhoto) {
-      formDataObj.append(
-        'profilePhoto',
-        this.profilePhoto,
-        this.profilePhoto.name
-      ); // Append the selected file
-    }
+    // if (this.profilePhoto) {
+    //   formData.append('profilePhoto', this.profilePhoto, this.profilePhoto.name);
+    // }
+      // Create a JSON object for the user data
 
-    // Call the service method to register the user with image
-    this.userService.registerUser(formDataObj).subscribe({
+
+    // console.log('Form Submitted!', formData);
+    // formData.append('user', JSON.stringify(userData));
+
+    this.userService.registerUser(userData).subscribe({
       next: (response) => {
         console.log('User registered successfully', response);
         alert('User registered successfully');

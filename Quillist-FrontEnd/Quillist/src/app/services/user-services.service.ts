@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,17 +15,43 @@ export class UserServicesService {
     return this.http.get<any[]>(`${this.apiUrl}/getAll`);
   }
 
+  registerUser(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, userData, {
+      responseType: 'text',
+    });
+  }
+
   // registerUser(userData: FormData): Observable<any> {
-  //   return this.http.post(`${this.apiUrl}/register`, userData, {
+  //   return this.http.post(`${this.apiUrl}/register-with-image`, userData, {
   //     responseType: 'text',
   //   });
   // }
 
-  registerUser(userData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register-with-image`, userData, {
-      responseType: 'text',
-    });
+  login(adminData:FormData):Observable<any>{
+    return this.http.post(`${this.apiUrl}/login`,adminData,{
+      responseType:'text',
+      // headers: new HttpHeaders({
+      //   'Content-Type': 'application/json'
+      // })
+    })
   }
+  // Updated registerUser method
+  // registerUser(userData: any, file: File): Observable<any> {
+  //   // Create FormData to send both JSON and file
+  //   const formData = new FormData();
+
+  //   // Append the user data as a string (JSON format)
+  //   formData.append('user', JSON.stringify(userData));
+
+  //   // Append the file (image) data
+  //   formData.append('file', file, file.name);
+
+  //   // Send the FormData as a POST request to the backend
+  //   return this.http.post(`${this.apiUrl}/register-with-image`, formData, {
+  //     responseType: 'text', // Change responseType to 'text' as it seems your backend returns a simple message
+  //   });
+  // }
+
 
   deleteUser(userId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/deleteById/${userId}`);
@@ -46,4 +72,6 @@ export class UserServicesService {
     const url = `${this.apiUrl}/user/uploadProfileImage/`; // Adjust URL as needed
     return this.http.post(url, formData); // Send the FormData object containing the file and userId
   }
+
+
 }

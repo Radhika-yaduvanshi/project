@@ -13,15 +13,13 @@
     <div class="container mt-4">
       <div class="card shadow-lg p-4">
         <h3 class="text-center">Add User</h3>
-        <form #userData="ngForm" (ngSubmit)="onSubmitUserData(userData.value)">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmitUserData()">
           <div class="mb-3">
             <label class="form-label">Username:</label>
             <input
               type="text"
               class="form-control"
-              [(ngModel)]="user.name"
-              name="userName"
-              required
+              formControlName="userName"
             />
           </div>
 
@@ -30,9 +28,7 @@
             <input
               type="email"
               class="form-control"
-              [(ngModel)]="user.email"
-              name="email"
-              required
+              formControlName="email"
             />
           </div>
 
@@ -41,25 +37,26 @@
             <input
               type="password"
               class="form-control"
-              [(ngModel)]="user.password"
-              name="password"
-              required
+              formControlName="password"
             />
           </div>
 
-          <div class="mb-3">
-            <label class="form-label">Profile Photo:</label>
+          <!-- <div class="mb-3">
+            <label for="profilePhoto" class="form-label">Profile Photo:</label>
             <input
               type="file"
-              class="form-control"
+              id="profilePhoto"
               (change)="onFileChange($event)"
-            />
-          </div>
+              formControlName="profilePhoto"
+            /> 
+            <div *ngIf="userForm.get('profilePhoto')?.invalid && userForm.get('profilePhoto')?.touched" class="error">
+              Profile photo is required
+            </div>
+         </div> -->
 
-          <button type="submit" class="btn btn-primary w-100">Submit</button>
+          <button type="submit" class="btn btn-primary w-100" [disabled]="userForm.invalid">Submit</button>
         </form>
       </div>
     </div>
-    <!--  (change)="onFileChange($event)" -->
   </body>
 </html>

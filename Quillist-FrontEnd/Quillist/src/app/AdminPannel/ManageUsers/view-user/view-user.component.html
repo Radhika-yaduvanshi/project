@@ -121,11 +121,17 @@
         >
           <div class="card">
             <div class="card-body">
-              <img
+              <!-- <img
                 src="https://via.placeholder.com/80"
                 alt="User Profile"
                 class="profile-img"
-              />
+              /> -->
+              <img 
+              *ngIf="user.profilePhoto" 
+              [src]="'data:image/jpeg;base64,' + user.profilePhoto" 
+              alt="Author's Profile Picture" 
+              class="author-profile-pic rounded-circle"
+            />
               <div>
                 <h5 class="card-title">{{ user.userName }}</h5>
                 <p class="card-text">
