@@ -21,5 +21,7 @@ public class UserProxy {
 	private Date updateAt;
 	
 	private byte[] profilePhoto;
+	private String role;
+
 //private String profilePhoto;
 }

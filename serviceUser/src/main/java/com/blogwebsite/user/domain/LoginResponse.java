@@ -14,5 +14,6 @@ public class LoginResponse {
 
 	private String userName;
 	private String tocken;
-//	private List<SimpleGrantedAuthority> role;
+
+	private List<SimpleGrantedAuthority> role;
 }

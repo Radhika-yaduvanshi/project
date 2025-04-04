@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 public class CustomUser implements UserDetails
 {
@@ -27,9 +28,12 @@ public class CustomUser implements UserDetails
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-//		SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(user.getRole());
-//		return Arrays.asList(simpleGrantedAuthority);
-		return  null;
+		SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(user.getRole());
+		System.err.println("Role is : "+user.getRole());
+		return Arrays.asList(simpleGrantedAuthority);
+
+//		return Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
+//		return  null;
 
 	}
 

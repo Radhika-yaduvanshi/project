@@ -43,8 +43,10 @@ public class Config
 	{
 		System.out.println("security filter chain called..");
 		http.csrf(csrf->csrf.disable());
-		http.authorizeHttpRequests(auth->auth.requestMatchers("/","/user/saveUser","/user/generate","/extractAll/**","/dateEx/**","/user/loginReq","/user/register",
-				"/generateOTP").permitAll().
+//		http.authorizeHttpRequests(auth->auth.requestMatchers("/","/user/saveUser","/user/generate","/extractAll/**","/dateEx/**","/user/loginReq","/user/register",
+//				"/generateOTP").permitAll().
+		http.authorizeHttpRequests(auth->auth.requestMatchers("/","/user/saveUser","/user/generate","/user/loginReq","/user/register",
+						"/generateOTP").permitAll().
 				anyRequest().authenticated());
 		http.httpBasic(Customizer.withDefaults());
 		http.exceptionHandling(auth->auth.authenticationEntryPoint(jwtEntryPoint));

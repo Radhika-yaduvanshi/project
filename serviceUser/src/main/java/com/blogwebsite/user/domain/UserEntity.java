@@ -33,6 +33,8 @@ public class UserEntity {
 	@Lob
 	private byte[] profilePhoto;
 
+	private String role;
+
 //	private String profilePhoto;
 	
 	//@OneToMany(cascade=CascadeType.ALL)

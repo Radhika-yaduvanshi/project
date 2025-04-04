@@ -219,7 +219,8 @@ public class UserServiceImpl implements UserService
 
 		Authentication verified = authmanager.authenticate(authentication);
 
-		System.out.println("is varified : "+verified);
+		System.err.println("is varified : "+verified);
+		System.err.println(verified.isAuthenticated());
 		if(!verified.isAuthenticated())
 		{
 			//System.out.println("user not found");
@@ -229,8 +230,9 @@ public class UserServiceImpl implements UserService
 			System.out.println("bad credials..");
 			//throw new ErrorResponse("bad credentials",404);
 		}
+		System.out.println("generated token is : "+jwtService.genearteTocken(loginRequest.getUserName()));
 
-		return new LoginResponse(loginRequest.getUserName(),jwtService.genearteTocken(loginRequest.getUserName()));
+		return new LoginResponse(loginRequest.getUserName(),jwtService.genearteTocken(loginRequest.getUserName()),(List<SimpleGrantedAuthority>) verified.getAuthorities());
 
 	}
 
