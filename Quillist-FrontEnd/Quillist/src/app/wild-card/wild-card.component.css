@@ -1,0 +1,16 @@
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: hwb(0 98% 2%); /* Optional background color */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Ensure the image takes up the full height of the screen */
+  .error-image {
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: contain;
+  }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './AdminPannel/admin/admin.component';
-import { AdminloginComponent } from './AdminPannel/adminlogin/adminlogin.component';
+import { AdminloginComponent } from './AdminPannel/Authentication/adminlogin/adminlogin.component';
 import { ManageUsersComponent } from './AdminPannel/ManageUsers/manage-users/manage-users.component';
 import { ManageCategoriesComponent } from './AdminPannel/ManageCategories/manage-categories/manage-categories.component';
 import { ManagePostsComponent } from './AdminPannel/ManagePosts/manage-posts/manage-posts.component';
@@ -20,6 +20,8 @@ import { AddCategoriesComponent } from './AdminPannel/ManageCategories/add-categ
 import { ViewCategoriesComponent } from './AdminPannel/ManageCategories/view-categories/view-categories.component';
 import { DeleteCategoriesComponent } from './AdminPannel/ManageCategories/delete-categories/delete-categories.component';
 import { BlogDetailsComponent } from './AdminPannel/ManagePosts/blog-details/blog-details.component';
+import { ForgotPasswordComponent } from './AdminPannel/Authentication/forgot-password/forgot-password.component';
+import { WildCardComponent } from './wild-card/wild-card.component';
 const routes: Routes = [
   {
     path: '',
@@ -84,11 +86,13 @@ const routes: Routes = [
   },
 
   { path: 'adminlogin', component: AdminloginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   // { path: 'manage-categories', component: ManageCategoriesComponent },
   // { path: 'manage-posts', component: ManagePostsComponent },
   { path: 'manage-themes', component: ManageThemesComponent },
   { path: 'manage-comments', component: ManageCommentsComponent },
   { path: 'moderation', component: ModerationComponent },
+  { path:'**',component: WildCardComponent}
 ];
 
 @NgModule({

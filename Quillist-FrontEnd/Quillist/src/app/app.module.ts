@@ -36,7 +36,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BlogDetailsComponent } from './AdminPannel/ManagePosts/blog-details/blog-details.component';
 import { ReactiveFormsModule } from '@angular/forms';  // Import ReactiveFormsModule
-import { AdminloginComponent } from './AdminPannel/adminlogin/adminlogin.component';
+import { AdminloginComponent } from './AdminPannel/Authentication/adminlogin/adminlogin.component';
+import { ForgotPasswordComponent } from './AdminPannel/Authentication/forgot-password/forgot-password.component';
+import { WildCardComponent } from './wild-card/wild-card.component';
 
 
 // import { ReactiveFormsModule } from '@angular/forms';
@@ -64,7 +66,9 @@ import { AdminloginComponent } from './AdminPannel/adminlogin/adminlogin.compone
     AddUserComponent,
     ViewUserComponent,
     BlogDetailsComponent,
-    AdminloginComponent
+    AdminloginComponent,
+    ForgotPasswordComponent,
+    WildCardComponent
   ],
   imports: [
     BrowserModule,

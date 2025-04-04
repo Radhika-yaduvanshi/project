@@ -11,10 +11,11 @@
     <style>
       /* Global Styles */
       body {
-        background-color: #f4f7fc;
+        background: linear-gradient(135deg, #1a73e8, #003e8a);
         font-family: 'Arial', sans-serif;
         margin: 0;
         padding: 0;
+        height: 100vh;
       }
 
       /* Flexbox for centering the form */
@@ -22,33 +23,35 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        height: 100%;
         padding: 20px;
       }
 
       .login-card {
         width: 100%;
         max-width: 400px;
-        padding: 30px;
-        background-color: #fff;
+        padding: 40px;
+        background-color: #ffffff;
         border-radius: 12px;
-        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
         transition: all 0.3s ease-in-out;
+        animation: fadeInUp 0.8s ease-out;
       }
 
       /* Hover effect on card */
       .login-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.15);
       }
 
       /* Heading style */
       .login-header {
-        font-size: 26px;
+        font-size: 28px;
         font-weight: bold;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         text-align: center;
         color: #333;
+        text-transform: uppercase;
       }
 
       /* Input field styles */
@@ -62,24 +65,26 @@
       }
 
       .form-control:focus {
-        border-color: #4caf50;
-        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
       }
 
       /* Button Styles */
       .btn-primary {
         background-color: #007bff;
         border: none;
-        padding: 12px;
+        padding: 14px;
         font-size: 16px;
         border-radius: 8px;
         width: 100%;
+        text-transform: uppercase;
+        font-weight: bold;
         transition: background-color 0.3s ease, transform 0.2s ease;
       }
 
       .btn-primary:hover {
         background-color: #0056b3;
-        transform: translateY(-2px);
+        transform: translateY(-3px);
       }
 
       /* Error messages */
@@ -107,10 +112,10 @@
       /* Mobile responsiveness */
       @media (max-width: 576px) {
         .login-card {
-          padding: 20px;
+          padding: 25px;
         }
         .login-header {
-          font-size: 22px;
+          font-size: 24px;
         }
       }
     </style>
@@ -129,7 +134,10 @@
               formControlName="email"
               required
             />
-            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+            <div
+              *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+              class="text-danger"
+            >
               Email is required and must be a valid email address.
             </div>
           </div>
@@ -143,14 +151,25 @@
               formControlName="password"
               required
             />
-            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+            <div
+              *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+              class="text-danger"
+            >
               Password is required and must be at least 6 characters long.
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="loginForm.invalid"
+          >
             Login
           </button>
+
+          <div class="text-center mt-3">
+            <a [routerLink]="['/forgot-password']" class="btn btn-link">Forgot Password?</a>
+          </div>
         </form>
       </div>
     </div>
