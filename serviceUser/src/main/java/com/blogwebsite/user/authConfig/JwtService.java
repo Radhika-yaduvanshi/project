@@ -29,7 +29,7 @@ public class JwtService {
 			// Prepare claims for the token
 			Map<String, Object> claims=new HashMap<>();
 			return Jwts.builder().claims().add(claims).subject(userName).issuedAt(new Date(System.currentTimeMillis()))
-	                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 3)).and().signWith(getSignKey())
+	                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)).and().signWith(getSignKey())
 	                .compact();
 		}
 		

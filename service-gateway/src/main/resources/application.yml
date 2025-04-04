@@ -1,0 +1,92 @@
+my-gateway: /gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:999/eureka/
+
+
+spring:
+  application:
+    name: service-gateway
+
+#  config:
+#    import: optional:configserver:http://localhost:8085
+
+  cloud:
+    gateway:
+      routes:
+        - id: SERVICEBLOG
+          uri: lb://SERVICEBLOG
+          predicates:
+            - Path=${my-gateway}/blog/**
+          filters:
+            - StripPrefix=1
+            - AuthenticationFilter
+
+
+        - id: SERVICEUSER
+          uri: lb://SERVICEUSER
+          predicates:
+            - Path=${my-gateway}/user/**
+          filters:
+            - StripPrefix=1
+            - AuthenticationFilter
+
+#        - id: SECURITY
+#          uri: lb://SECURITY
+#          predicates:
+#            - Path=${my-gateway}/user/**
+#          filters:
+#            - StripPrefix=1
+#            - AuthenticationFilter
+
+server:
+  port: 555
+
+  servlet:
+    context-path: /gateway
+
+#springdoc:
+#  api-docs:
+#    enabled: true
+#    path: /v3/api-docs
+#  swagger-ui:
+#    enabled: true
+#    config-url: /v3/api-docs/swagger-config
+#    urls:
+#      - name: service-gateway
+#        url: /v3/api-docs
+#      - name: SERVICE-BLOG
+#        url: ${my-gateway}/blog/v3/api-docs
+#      - name: SERVICE-COMMENT
+#        url: /product/v3/api-docs
+#      - name: SECURITY
+#        url: /product/v3/api-docs
+
+
+
+
+#//configuration for swagger here
+
+#springdoc:
+#  api-docs:
+#    enabled: true
+#    path: /v3/api-docs  # API Docs for the Gateway itself
+#  swagger-ui:
+#    enabled: true
+#    path: /swagger-ui.html  # The default path for the Swagger UI in the API Gateway
+#    config-url: /v3/api-docs/swagger-config
+#    urls:
+#      - name: service-gateway
+#        url: /v3/api-docs
+#
+#      - name: SERVICE-BLOG
+#        url: ${my-gateway}/blog/v3/api-docs
+#
+#      - name: SERVICE-COMMENT
+#        url:  ${my-gateway}/comment/v3/api-docs
+#
+#      - name: SECURITY
+#        url: ${my-gateway}/user/v3/api-docs
+##        url: ${my-gateway}/blog/v3/api-docs # Adjusted path for Service Blog API docs
+
