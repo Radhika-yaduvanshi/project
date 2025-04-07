@@ -30,7 +30,7 @@ public class UserController {
 	public LoginResponse login(@RequestBody LoginRequest loginRequest)
 	{
 		System.out.println("THis is controller");
-		System.out.println(loginRequest.getPassword()+"\n"+loginRequest.getUserName());
+		System.out.println(loginRequest.getPassword()+"\n"+loginRequest.getEmail());
 		return userImpl.login(loginRequest);
 	}
 

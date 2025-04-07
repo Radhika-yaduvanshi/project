@@ -12,8 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 public class LoginResponse {
 
-	private String userName;
-	private String tocken;
+//	private String userName;
+	private String email;
+	private String token;
 
 	private List<SimpleGrantedAuthority> role;
 }

@@ -11,6 +11,7 @@ import java.util.Optional;
 import com.blogwebsite.user.authConfig.JwtService;
 import com.blogwebsite.user.domain.LoginRequest;
 import com.blogwebsite.user.domain.LoginResponse;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
@@ -101,6 +102,10 @@ public class UserServiceImpl implements UserService
 	
 	@Override
 	public String registerUser(UserProxy user) {
+		UserEntity existingUser = userRepo.findByEmail(user.getEmail());  // Check email instead of username
+		if (existingUser.getEmail()==user.getEmail()) {
+			return "User with this email already exists!";
+		}
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepo.save(helper.convert(user, UserEntity.class));
 		return "register successfully";
@@ -214,10 +219,11 @@ public class UserServiceImpl implements UserService
 	@Override
 	public LoginResponse login(LoginRequest loginRequest) {
 		System.out.println("login response from emp service called..");
-		Authentication authentication=new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword());
+//		Authentication authentication=new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword());
+		Authentication authentication=new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
 		System.err.println("Authentication : "+authentication);
 
-		Authentication verified = authmanager.authenticate(authentication);
+		Authentication verified = authmanager	.authenticate(authentication);
 
 		System.err.println("is varified : "+verified);
 		System.err.println(verified.isAuthenticated());
@@ -230,27 +236,31 @@ public class UserServiceImpl implements UserService
 			System.out.println("bad credials..");
 			//throw new ErrorResponse("bad credentials",404);
 		}
-		System.out.println("generated token is : "+jwtService.genearteTocken(loginRequest.getUserName()));
+		System.out.println("generated token is : "+jwtService.genearteTocken(loginRequest.getEmail()));
 
-		return new LoginResponse(loginRequest.getUserName(),jwtService.genearteTocken(loginRequest.getUserName()),(List<SimpleGrantedAuthority>) verified.getAuthorities());
+		return new LoginResponse(loginRequest.getEmail(),jwtService.genearteTocken(loginRequest.getEmail()),(List<SimpleGrantedAuthority>) verified.getAuthorities());
 
 	}
 
 	@Override
 	public String generateTocken(UserEntity user) {
 		UserEntity findByUserName = userRepo.findByUserName(user.getUserName());
+		UserEntity findbyemail = userRepo.findByEmail(user.getEmail());
 
-		System.out.println(findByUserName);
-		System.out.println(findByUserName.getPassword());
+//		System.out.println(findByUserName);
+		System.out.println("user email is : "+findbyemail);
+		System.out.println("user email is : "+findbyemail.getPassword());
+//		System.out.println(findByUserName.getPassword());
 		//System.out.println(emp.getPassword());
-		boolean matches = passwordEncoder.matches(user.getPassword(),findByUserName.getPassword());
+		boolean matches = passwordEncoder.matches(user.getPassword(),findbyemail.getPassword());
 
 		System.out.println("Matches Password:"+matches);
 		if(!matches)
 		{
 			return "user not found";
 		}
-		return jwtService.genearteTocken(user.getUserName());
+//		return jwtService.genearteTocken(user.getUserName());
+		return jwtService.genearteTocken(user.getEmail());
 	}
 
 

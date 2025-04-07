@@ -1,5 +1,6 @@
 package com.blogwebsite.user.authConfig;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ public class JwtFilter extends OncePerRequestFilter
 			String authHeader= request.getHeader("Authorization");
 			String token=null;
 			String userName=null;
+			String  email=null;
 
 			System.err.println("header is here : "+authHeader);
 			
@@ -43,19 +45,20 @@ public class JwtFilter extends OncePerRequestFilter
 				System.out.println("Token in do internal : "+token);
 				
 	            // Extracting username from the token
-	            userName =applicationContext.getBean(JwtService.class).extractUserName(token);
-
+//	            userName =applicationContext.getBean(JwtService.class).extractUserName(token);
+				email= applicationContext.getBean(JwtService.class).extractUserName(token);
 				System.out.println("User name  in Dointernal : "+userName);
+				System.out.println("email in do internal filter : "+email);
 	            		//jwtService.extractUserName(token);
 			}
 			
 			// If username is extracted and there is no authentication in the current SecurityContext
-	        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+	        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 	        	
 	        	//check the username should not null and securitycontext should be null
 	        	
 	            // Loading UserDetails by username extracted from the token
-	            UserDetails userDetails = applicationContext.getBean(CustomUserService.class).loadUserByUsername(userName);
+	            UserDetails userDetails = applicationContext.getBean(CustomUserService.class).loadUserByUsername(email);
 
 				System.err.println("USer Details : "+userDetails);
 	           // System.out.println(userDetails);

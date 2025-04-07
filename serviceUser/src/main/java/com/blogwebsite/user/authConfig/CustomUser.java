@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 public class CustomUser implements UserDetails
 {
@@ -46,5 +45,9 @@ public class CustomUser implements UserDetails
 	public String getUsername() {
 		return user.getUserName();
 	}
+
+	public String getEmail(){return user.getEmail();}
+
+
 
 }
