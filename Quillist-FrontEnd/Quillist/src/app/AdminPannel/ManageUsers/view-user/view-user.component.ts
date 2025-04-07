@@ -14,6 +14,7 @@ export class ViewUserComponent implements OnInit {
 
   constructor(private userService: UserServicesService) {}
   ngOnInit(): void {
+    // debugger;
     this.userService.getUsers().subscribe({
       next: (data) => {
         console.log('Users fetched:', data); // Debug log
@@ -26,18 +27,18 @@ export class ViewUserComponent implements OnInit {
     });
   }
 
-  getUsers(): void {
-    this.userService.getUsers().subscribe({
-      next: (data) => {
-        console.log('Users fetched:', data); // Debug log
-        this.users = data;
-      },
-      error: (error) => {
-        console.error('Error fetching users:', error);
-        alert(`Error: ${error.status} - ${error.statusText}`);
-      },
-    });
-  }
+  // getUsers(): void {
+  //   this.userService.getUsers().subscribe({
+  //     next: (data) => {
+  //       console.log('Users fetched:', data); // Debug log
+  //       this.users = data;
+  //     },
+  //     error: (error) => {
+  //       console.error('Error fetching users:', error);
+  //       alert(`Error: ${error.status} - ${error.statusText}`);
+  //     },
+  //   });
+  // }
 
   deleteUser(userId: number) {
     if (confirm('Are you sure you want to delete this user?')) {

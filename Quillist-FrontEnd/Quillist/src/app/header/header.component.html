@@ -2,10 +2,10 @@
   <span class="admin-text">ADMIN</span>
   <div class="spacer"></div>
   <a mat-raised-button color="accent" routerLink="">Home</a>
-  <a mat-raised-button color="warn" routerLink="adminlogin">Login</a>
+  <a mat-raised-button color="warn" routerLink="adminlogin"  *ngIf="!isLoggedIn()">Login</a>
   <a mat-raised-button color="primary" href="https://www.google.com/"
     >Notifications</a
   >
-  <a mat-raised-button color="warn" routerLink="logout">Log-out</a>
+  <a mat-raised-button color="warn" (click)="logout()">Log-out</a>
 
 </div>

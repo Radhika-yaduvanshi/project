@@ -16,6 +16,12 @@
       "secure": false,
       "changeOrigin": true,
       "logLevel": "debug"
+    },
+    "/gateway": {
+      "target": "http://localhost:555",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
     }
   }
   

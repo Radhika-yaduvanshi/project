@@ -22,10 +22,13 @@ import { DeleteCategoriesComponent } from './AdminPannel/ManageCategories/delete
 import { BlogDetailsComponent } from './AdminPannel/ManagePosts/blog-details/blog-details.component';
 import { ForgotPasswordComponent } from './AdminPannel/Authentication/forgot-password/forgot-password.component';
 import { WildCardComponent } from './wild-card/wild-card.component';
+import { authGuard } from './services/auth.guard';
 const routes: Routes = [
   {
     path: '',
+    // component: AdminloginComponent,
     component: AdminComponent,
+    canActivate: [authGuard], 
     children: [
       {
         path: 'manage-users',
@@ -84,7 +87,7 @@ const routes: Routes = [
       },
     ],
   },
-
+  // { path: 'admin', component: AdminComponent },
   { path: 'adminlogin', component: AdminloginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   // { path: 'manage-categories', component: ManageCategoriesComponent },

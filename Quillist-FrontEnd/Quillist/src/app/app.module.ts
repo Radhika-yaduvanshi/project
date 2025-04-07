@@ -32,13 +32,14 @@ import { ViewCategoriesComponent } from './AdminPannel/ManageCategories/view-cat
 import { UpdateCategoriesComponent } from './AdminPannel/ManageCategories/update-categories/update-categories.component';
 import { DeleteCategoriesComponent } from './AdminPannel/ManageCategories/delete-categories/delete-categories.component';
 import { AddUserComponent } from './AdminPannel/ManageUsers/add-user/add-user.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BlogDetailsComponent } from './AdminPannel/ManagePosts/blog-details/blog-details.component';
 import { ReactiveFormsModule } from '@angular/forms';  // Import ReactiveFormsModule
 import { AdminloginComponent } from './AdminPannel/Authentication/adminlogin/adminlogin.component';
 import { ForgotPasswordComponent } from './AdminPannel/Authentication/forgot-password/forgot-password.component';
 import { WildCardComponent } from './wild-card/wild-card.component';
+import { customInterceptor } from './services/custom.interceptor';
 
 
 // import { ReactiveFormsModule } from '@angular/forms';
@@ -90,7 +91,10 @@ import { WildCardComponent } from './wild-card/wild-card.component';
 
     // ReactiveFormsModule,
   ],
-  providers: [],
+  // providers: [provideHttpClient(withInterceptors([customInterceptor]))],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: customInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

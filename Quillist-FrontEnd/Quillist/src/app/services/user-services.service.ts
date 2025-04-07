@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +9,11 @@ export class UserServicesService {
   constructor(private http: HttpClient) {}
 
   private apiUrl = '/user';
+  private gateway =  '/gateway/user'
+
+
+    // This is where you might save the JWT token after login
+    private tokenKey = 'auth-token';
 
   getUsers(): Observable<any[]> {
     console.log('Fetching users from:', `${this.apiUrl}/getAll`); // Debug log
@@ -27,14 +32,23 @@ export class UserServicesService {
   //   });
   // }
 
-  login(adminData:FormData):Observable<any>{
-    return this.http.post(`${this.apiUrl}/login`,adminData,{
-      responseType:'text',
-      // headers: new HttpHeaders({
-      //   'Content-Type': 'application/json'
-      // })
-    })
+  // login(adminData:FormData):Observable<any>{
+  //   return this.http.post(`${this.apiUrl}/loginReq`,adminData,{
+  //     responseType:'text',
+  //     // headers: new HttpHeaders({
+  //     //   'Content-Type': 'application/json'
+  //     // })
+  //   })
+  // }
+
+  login(adminData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/loginReq`, adminData, {
+      responseType: 'json',  // Ensure it's expecting JSON
+    }).pipe(
+      tap((response: any) => console.log('API Response:', response))  // Log the response here
+    );
   }
+  
   // Updated registerUser method
   // registerUser(userData: any, file: File): Observable<any> {
   //   // Create FormData to send both JSON and file
@@ -71,6 +85,18 @@ export class UserServicesService {
   uploadProfilePhoto(formData: FormData): Observable<any> {
     const url = `${this.apiUrl}/user/uploadProfileImage/`; // Adjust URL as needed
     return this.http.post(url, formData); // Send the FormData object containing the file and userId
+  }
+
+
+
+  getToken(): string {
+    return localStorage.getItem('token') || ''; // Return the token from localStorage (or an empty string if not available)
+  }
+  setToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+  }
+  clearToken(): void {
+    localStorage.removeItem(this.tokenKey);
   }
 
 
