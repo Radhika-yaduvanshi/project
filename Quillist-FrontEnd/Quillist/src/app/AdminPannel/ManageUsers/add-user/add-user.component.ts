@@ -67,9 +67,11 @@ export class AddUserComponent implements OnInit {
 
     // console.log('Form Submitted!', formData);
     // formData.append('user', JSON.stringify(userData));
+    
 
     this.userService.registerUser(userData).subscribe({
       next: (response) => {
+        
         console.log('User registered successfully', response);
         alert('User registered successfully');
       },

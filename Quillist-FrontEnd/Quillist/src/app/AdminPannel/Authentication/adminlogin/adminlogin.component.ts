@@ -24,7 +24,7 @@ export class AdminloginComponent implements OnInit {
   ) {
     // Initialize loginForm directly in the constructor
     this.loginForm = this.fb.group({
-      userName: ['', [Validators.required, Validators.required]],
+      email: ['', [Validators.required, Validators.required]],
       password: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
@@ -42,46 +42,11 @@ export class AdminloginComponent implements OnInit {
       console.error('Form is invalid!');
     }
 
-    // const formdata = new FormData();
-    // formdata.append('userName', this.loginForm.get('userName')?.value);
-    // formdata.append('password', this.loginForm.get('password')?.value);
-
-    // this.userService.login(formdata).subscribe(
-    //   (response: any) => {
-    //     console.log('login successfull');
-
-    //       console.log('Login response:', response);
-
-    // if (response && response.token) {
-    //   console.log('token:', response.token);
-    //   // localStorage.setItem('userId', response.userName);
-    //   localStorage.setItem('token', response.token);  // Store the token in localStorage
-    //   this.router.navigate(['/admin']);  // Navigate to the admin page
-    // } else {
-    //   console.error('Token not found in the response');
-    //   this.errmsg = 'Failed to retrieve token.';
-    // }
-    //   },
-    //   (error) => {
-    //     console.log('Login Failed');
-    //     this.errmsg = 'Invalid username and password. please try again!!';
-    //   },
-    //   () => {
-    //     // Set loading to false once the request is completed
-    //     this.loading = false;
-    //   }
-    // );
-
-
-
-
-
-
-
-    // ========================new code from here+========================
     
   const loginData = {
-    userName: this.loginForm.get('email')?.value,
+    email: this.loginForm.get('email')?.value,
+
+
     password: this.loginForm.get('password')?.value
   };
 
