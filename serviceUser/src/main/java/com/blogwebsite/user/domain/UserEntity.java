@@ -33,6 +33,7 @@ public class UserEntity {
 	@Lob
 	private byte[] profilePhoto;
 
+	@Column(nullable = false,columnDefinition = "default 'USER'")
 	private String role;
 
 //	private String profilePhoto;

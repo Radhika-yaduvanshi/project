@@ -22,13 +22,13 @@ public class JwtService {
 	private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
 	
 	//generate jwt tocken for username
-		public String genearteTocken(String userName)
+		public String genearteTocken(String email)
 		{
 			System.out.println(logger.atInfo());
 			System.out.println("tocken generated..");
 			// Prepare claims for the token
 			Map<String, Object> claims=new HashMap<>();
-			return Jwts.builder().claims().add(claims).subject(userName).issuedAt(new Date(System.currentTimeMillis()))
+			return Jwts.builder().claims().add(claims).subject(email).issuedAt(new Date(System.currentTimeMillis()))
 	                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)).and().signWith(getSignKey())
 	                .compact();
 		}
@@ -73,5 +73,8 @@ public class JwtService {
 				String extractUserName = extractUserName(tocken);
 				//System.out.println(extractUserName.equals(userDetails.getUsername()) && !isExpired(tocken));
 				return extractUserName.equals(userDetails.getUsername()) && !isExpired(tocken);
+
+
 			}
+
 }

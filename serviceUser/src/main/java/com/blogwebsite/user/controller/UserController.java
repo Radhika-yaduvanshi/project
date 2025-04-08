@@ -2,6 +2,7 @@ package com.blogwebsite.user.controller;
 
 import com.blogwebsite.user.domain.LoginRequest;
 import com.blogwebsite.user.domain.LoginResponse;
+import com.blogwebsite.user.domain.UserEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -25,6 +26,11 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userImpl;
 
+	@GetMapping("/getByEmail/{email}")
+	public UserProxy UserByEmail(@PathVariable("email")  String email){
+		System.out.println("This is email in controller : "+email);
+		return userImpl.getUserByEmail(email);
+	}
 
 	@PostMapping("/loginReq") //working
 	public LoginResponse login(@RequestBody LoginRequest loginRequest)

@@ -103,8 +103,9 @@ public class UserServiceImpl implements UserService
 	@Override
 	public String registerUser(UserProxy user) {
 		UserEntity existingUser = userRepo.findByEmail(user.getEmail());  // Check email instead of username
-		if (existingUser.getEmail()==user.getEmail()) {
-			return "User with this email already exists!";
+
+		if(existingUser !=null && existingUser.getEmail().equals(user.getEmail())){
+			return  "User with email already exists ....";
 		}
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepo.save(helper.convert(user, UserEntity.class));
@@ -240,6 +241,14 @@ public class UserServiceImpl implements UserService
 
 		return new LoginResponse(loginRequest.getEmail(),jwtService.genearteTocken(loginRequest.getEmail()),(List<SimpleGrantedAuthority>) verified.getAuthorities());
 
+	}
+
+	@Override
+	public UserProxy getUserByEmail(String email) {
+		UserEntity userbyEmail = userRepo.findByEmail(email);
+		UserProxy user=helper.convert(userbyEmail,UserProxy.class);
+		System.out.println("Email in getuserby email id method : "+email);
+		return user;
 	}
 
 	@Override

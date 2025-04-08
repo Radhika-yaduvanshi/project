@@ -67,5 +67,7 @@ public interface UserService {
 	//login
 	public LoginResponse login(LoginRequest loginRequest);
 
+	public UserProxy getUserByEmail(String email);
+
 
 }
