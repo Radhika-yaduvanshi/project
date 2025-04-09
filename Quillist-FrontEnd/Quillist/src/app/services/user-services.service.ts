@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { jwtDecode } from 'jwt-decode'; // Correct import statement
+
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +22,11 @@ export class UserServicesService {
     return this.http.get<any[]>(`${this.apiUrl}/getAll`);
   }
 
+  // registerUser(userData: any): Observable<any> {
+  //   return this.http.post(`${this.apiUrl}/register`, userData, {
+  //     responseType: 'text',
+  //   });
+  // }
   registerUser(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, userData, {
       responseType: 'text',
@@ -44,8 +51,15 @@ export class UserServicesService {
   login(adminData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/loginReq`, adminData, {
       responseType: 'json',  // Ensure it's expecting JSON
+
+    // });
     }).pipe(
-      tap((response: any) => console.log('API Response:', response))  // Log the response here
+      tap((response: any) =>{
+        console.log('API Response:', response);
+        this.setToken(response.token)
+      } 
+    )
+       // Log the response here
     );
   }
   
@@ -85,6 +99,35 @@ export class UserServicesService {
   uploadProfilePhoto(formData: FormData): Observable<any> {
     const url = `${this.apiUrl}/user/uploadProfileImage/`; // Adjust URL as needed
     return this.http.post(url, formData); // Send the FormData object containing the file and userId
+  }
+
+
+  getUserIdFromToken(): string | null {
+    const token = localStorage.getItem('token')
+    console.log("token : in getUserIdFromToken : "+token);
+    
+    if (!token) {
+      return null; // If there's no token, return null
+    }
+
+    try {
+
+      const decodedToken: any = jwtDecode(token); // Decode the JWT token
+
+      console.log("real Token : "+token);
+      
+      console.log("Decoded Token : "+decodedToken);
+      console.log("id from toke is here : "+decodedToken.id);
+      const userId = decodedToken.sub || null;
+      console.log('User ID from token:', userId); 
+      
+      return decodedToken.id; // Extract the userId from the decoded token
+      console.log("id from token is here : "+decodedToken.id);
+      
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null; // Return null if there's an error decoding the token
+    }
   }
 
 

@@ -13,8 +13,8 @@ export class PostServiceService {
 
   private caturl = '/category';
 
-  createBlog(blogData: any, userId: number) {
-    return this.http.post(`${this.apiUrl}/save/${userId}`, blogData, {
+  createBlog(blogData: any, email: String) {
+    return this.http.post(`${this.apiUrl}/save/${email}`, blogData, {
       responseType: 'text',
     });
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PostServiceService } from '../../../services/post-service.service';
+import { UserServicesService } from '../../../services/user-services.service';
 
 interface Category {
   id: number;
@@ -18,7 +19,7 @@ export class CreatePostComponent implements OnInit {
   postContent: string = ''; // Store content from TinyMCE editor
   selectedCategory: number | string = ''; // Selected category ID
   categories: Category[] = []; // Categories array
-  userId = 6; // Assuming this is coming from a logged-in user
+  userId :string =""; // Assuming this is coming from a logged-in user
   submissionSuccess: boolean = false; // Track submission success
   submissionError: boolean = false; // Track submission error
 
@@ -55,11 +56,16 @@ export class CreatePostComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private blogService: PostServiceService
+    private blogService: PostServiceService,
+    private userService:UserServicesService
   ) {}
 
   ngOnInit(): void {
     this.getCategories();
+  this.userId = this.userService.getUserIdFromToken(); // Get the logged-in user's ID
+    if (!this.userId) {
+      console.error('User is not logged in or token is invalid');
+    }
   }
 
   getCategories() {
@@ -71,6 +77,7 @@ export class CreatePostComponent implements OnInit {
 
   onSubmit(blogForm: any): void {
     if (blogForm.valid) {
+      const userId = this.userId;
       const blogData = {
         title: this.postTitle,
         content: this.postContent,
@@ -80,7 +87,7 @@ export class CreatePostComponent implements OnInit {
         user_id: this.userId, // Assuming userId is 1
         // blogstatus: 'Approved', // Make sure the status is an enum value
       };
-      this.blogService.createBlog(blogData, this.userId).subscribe(
+      this.blogService.createBlog(blogData,userId).subscribe(
         (response) => {
           console.log('Blog created successfully:', response);
           this.submissionSuccess = true; // Set success flag

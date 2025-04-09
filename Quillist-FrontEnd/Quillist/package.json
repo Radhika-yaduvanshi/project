@@ -23,6 +23,7 @@
     "@ckeditor/ckeditor5-angular": "^9.1.0",
     "@ckeditor/ckeditor5-build-classic": "^44.3.0",
     "@tinymce/tinymce-angular": "^8.0.1",
+    "jwt-decode": "^4.0.0",
     "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.17.2",

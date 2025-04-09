@@ -91,10 +91,10 @@ import { customInterceptor } from './services/custom.interceptor';
 
     // ReactiveFormsModule,
   ],
-  // providers: [provideHttpClient(withInterceptors([customInterceptor]))],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: customInterceptor, multi: true },
-  ],
+  providers: [provideHttpClient(withInterceptors([customInterceptor]))],
+  // providers: [
+  //   { provide: HTTP_INTERCEPTORS, useClass: customInterceptor, multi: true },
+  // ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

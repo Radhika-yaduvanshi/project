@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserServicesService } from '../../../services/user-services.service';
 import { Router } from '@angular/router';
@@ -15,23 +15,32 @@ export class AdminloginComponent implements OnInit {
   password: any;
   loading: boolean = false;
   errmsg: string = '';
-  private tokenKey = 'auth-token';
+  // private tokenKey = 'auth-token';
+
+  fb=inject(FormBuilder);
+  userService=inject(UserServicesService);
+  router=inject(Router);
+
+  
+
 
   constructor(
-    private fb: FormBuilder,
-    private userService: UserServicesService,
-    private router: Router
+    // private fb: FormBuilder,
+    // private userService: UserServicesService,
+    // private router: Router
   ) {
     // Initialize loginForm directly in the constructor
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.required]],
+      email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(3)]],
-    });
+    })
+
   }
 
 
   ngOnInit(): void {
     console.log('admin Data : ' + this.loginForm.value);
+;
   }
 
   onSubmitUserData() {
@@ -45,8 +54,6 @@ export class AdminloginComponent implements OnInit {
     
   const loginData = {
     email: this.loginForm.get('email')?.value,
-
-
     password: this.loginForm.get('password')?.value
   };
 
