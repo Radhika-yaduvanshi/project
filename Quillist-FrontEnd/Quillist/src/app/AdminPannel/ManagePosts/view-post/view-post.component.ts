@@ -13,6 +13,8 @@ export class ViewPostComponent {
   filteredBlogs: any[] = [];
   searchQuery: string = '';
   errorMessage = '';
+  currentPage: number = 1;
+  postsPerPage: number = 5;
 
   constructor(
     private blogService: PostServiceService,
@@ -39,16 +41,17 @@ export class ViewPostComponent {
     );
   }
 
-  filterBlogs(): void {
-    this.filteredBlogs = this.blogs.filter(
-      (blog) =>
-        blog.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        blog.categoryName
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase()) ||
-        blog.authorName.toLowerCase().includes(this.searchQuery.toLowerCase())
+
+  filterBlogs() {
+    this.filteredBlogs = this.blogs.filter(blog => 
+      blog.title.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
+    this.currentPage = 1;  // Reset to the first page after filtering
+    // this.applyPagination();
   }
+
+
+
 
   deleteBlog(blogId: number, index: number): void {
     if (confirm('Are you sure you want to delete this blog?')) {

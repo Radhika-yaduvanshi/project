@@ -1,119 +1,160 @@
-.author-info {
-    display: flex;
-    align-items: center;
-  }
-  
-  .author-profile-pic {
-    width: 40px;
-    height: 40px;
-    object-fit: cover; /* Ensures the image fits well within the circle */
-  }
-  
-  .author-name {
-    font-weight: bold;
-    margin-left: 10px;
-  }
+/* Global Styling */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7fa;
+  margin: 0;
+  padding: 0;
+}
 
-  /* Author Info Container */
-.author-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  /* Author's Profile Picture */
-  .author-profile-pic {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ddd;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Author Name Styling */
-  .author-details {
-    margin-left: 15px;
-  }
-  
-  .author-name {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  /* Responsive Design for Author Info */
-  @media (max-width: 768px) {
-    .author-info {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .author-profile-pic {
-      width: 60px;
-      height: 60px;
-    }
-  
-    .author-name {
-      font-size: 1.1rem;
-    }
-  }
-  /* Styling for the Blog Title */
-.blog-title {
-    text-align: center; /* Center the title */
-    font-size: 2rem; /* Larger font size for the title */
-    font-weight: bold; /* Make the title bold */
-    color: #333; /* Dark text color for readability */
-    margin-top: 20px; /* Add some space above the title */
-    margin-bottom: 20px; /* Add some space below the title */
-    text-transform: uppercase; /* Make the title uppercase for added emphasis */
-    letter-spacing: 1px; /* Slight letter spacing for a cleaner look */
-    font-family: 'Arial', sans-serif; /* Use a clean sans-serif font */
-  }
-  
-  /* Optional: Responsive font size for mobile devices */
-  @media (max-width: 768px) {
-    .blog-title {
-      font-size: 1.8rem; /* Slightly smaller font size for smaller screens */
-    }
-  }
+/* Container Styling */
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
 
-  /* Author Profile Card Styling */
+/* Author Info Styling */
+.author-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.author-profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #3498db;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Fallback image if user does not have a profile picture */
+.author-profile-pic {
+  object-fit: cover;
+}
+
+.author-profile-pic:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.author-name {
+  font-size: 1.25rem;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.author-name:hover {
+  color: #3498db;
+}
+
+/* Author's Profile Card */
 .author-card {
-    width: 100%;
-    max-width: 1057px; /* Limit card width */
-    background-color: #f8f9fa; /* Light background for the card */
-    border-radius: 10px; /* Rounded corners for a smooth look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
-    border: none; /* No border */
-    margin-top: 15px;
+  width: 100%;
+  max-width: 1057px;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.author-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.author-details {
+  margin-left: 20px;
+}
+
+/* Blog Title Styling */
+.blog-title {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  font-family: 'Arial', sans-serif;
+  animation: fadeIn 1s ease-out;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation for Title */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Blog Content Styling */
+.blog-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.blog-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Button Styling */
+.btn-primary {
+  background-color: #3498db;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .author-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .author-profile-pic {
-    width: 80px; /* Set a fixed width for the profile picture */
-    height: 80px; /* Set a fixed height for the profile picture */
-    object-fit: cover; /* Ensure the image covers the area without distortion */
-    border-radius: 50%; /* Make the profile picture circular */
+    width: 60px;
+    height: 60px;
   }
-  
+
   .author-name {
-    font-size: 1.25rem; /* Font size for the author's name */
-    color: #333; /* Dark text color */
+    font-size: 1.1rem;
   }
-  
-  /* Responsive styling for smaller screens */
-  @media (max-width: 768px) {
-    .author-card {
-      max-width: 100%; /* Card takes up the full width on smaller screens */
-    }
-    .author-profile-pic {
-      width: 60px; /* Slightly smaller profile picture on mobile */
-      height: 60px; /* Same as width */
-    }
-    .author-name {
-      font-size: 1.1rem; /* Smaller font size for mobile */
-    }
+
+  .author-card {
+    width: 100%;
+    margin-top: 20px;
   }
-  
-  
-  
+
+  .blog-title {
+    font-size: 2.2rem;
+  }
+
+  .blog-content {
+    padding: 15px;
+  }
+}

@@ -1,47 +1,50 @@
 <div class="container">
-    <div *ngIf="blog">
-<!-- Blog Author and Profile -->
-<div class="author-info" *ngIf="author" class="d-flex align-items-center mb-4">
-    <!-- Author's Profile Card -->
-    <div class="author-card card p-3 d-flex align-items-center">
-      <div class="d-flex align-items-center">
-        <!-- Author's Profile Picture -->
-        <div class="author-profile">
-          <img 
-            *ngIf="author.profilePhoto" 
-            [src]="'data:image/jpeg;base64,' + author.profilePhoto" 
-            alt="Author's Profile Picture" 
-            class="author-profile-pic rounded-circle"
-          />
-        </div>
-        
-        <!-- Author's Name -->
-        <div class="author-details ms-3">
-          <span class="author-name fs-5 fw-bold text-dark">{{ author.userName }}</span>
+  <!-- Blog Author and Profile -->
+  <div *ngIf="blog">
+    <div *ngIf="author" class="author-info d-flex align-items-center mb-4">
+      <!-- Author's Profile Card -->
+      <div class="author-card card p-4 d-flex align-items-center shadow-lg">
+        <div class="d-flex align-items-center">
+          <!-- Author's Profile Picture -->
+          <div class="author-profile">
+            <img 
+              *ngIf="author.profilePhoto" 
+              [src]="'data:image/jpeg;base64,' + author.profilePhoto" 
+              alt="Author's Profile Picture" 
+              class="author-profile-pic rounded-circle"
+              onerror="this.src='https://via.placeholder.com/150';" 
+            />
+          </div>
+
+          <!-- Author's Name -->
+          <div class="author-details ms-3">
+            <span class="author-name fs-4 text-dark">{{ author.userName }}</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  
-<!-- Blog Title -->
-<h2 class="blog-title">{{ blog.title }}</h2>
 
-  
-      <!-- Blog Content -->
+    <!-- Blog Title -->
+    <h2 class="blog-title">{{ blog.title }}</h2>
+
+    <!-- Blog Content -->
+    <div class="blog-content">
       <div [innerHTML]="blog.safeContent"></div>
-  
-      <!-- Date Published -->
-      <p class="text-muted">
-        <small>Published on {{ blog.createdAt | date }}</small>
-      </p>
-  
-      <!-- Optional: Display a back button to return to the list of blog posts -->
-      <a [routerLink]="['/manage-posts/view-post']" class="btn btn-primary">Back to Blog List</a>
     </div>
-  
-    <!-- Display error message if blog or author is not found -->
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
+
+    <!-- Date Published -->
+    <p class="text-muted text-center">
+      <small>Published on {{ blog.createdAt | date }}</small>
+    </p>
+
+    <!-- Optional: Display a back button to return to the list of blog posts -->
+    <div class="text-center">
+      <a [routerLink]="['/manage-posts/view-post']" class="btn btn-primary shadow-lg">Back to Blog List</a>
     </div>
   </div>
-  
+
+  <!-- Display error message if blog or author is not found -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-4 text-center">
+    {{ errorMessage }}
+  </div>
+</div>
