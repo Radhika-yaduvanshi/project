@@ -26,6 +26,12 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userImpl;
 
+	@GetMapping("/getuserIdByEmail/{email}")
+	public  Integer getUserIdByEmail(@PathVariable("email") String email){
+		System.err.println("email id  is : "+email);
+		return  userImpl.getUserIdByEmail(email);
+	}
+
 	@GetMapping("/getByEmail/{email}")
 	public UserProxy UserByEmail(@PathVariable("email")  String email){
 		System.out.println("This is email in controller : "+email);

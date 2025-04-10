@@ -11,6 +11,7 @@ import java.util.Optional;
 import com.blogwebsite.user.authConfig.JwtService;
 import com.blogwebsite.user.domain.LoginRequest;
 import com.blogwebsite.user.domain.LoginResponse;
+import jakarta.persistence.EntityManager;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -249,6 +250,20 @@ public class UserServiceImpl implements UserService
 		UserProxy user=helper.convert(userbyEmail,UserProxy.class);
 		System.out.println("Email in getuserby email id method : "+email);
 		return user;
+	}
+
+	@Override
+	public Integer getUserIdByEmail(String email) {
+		UserEntity user =  userRepo.findByEmail(email);
+		System.out.println("User is : "+user);
+		System.err.println("User id is :"+user.getId());
+		if(user!=null){
+			return user.getId();
+
+		}
+		else{
+			return null;
+		}
 	}
 
 	@Override

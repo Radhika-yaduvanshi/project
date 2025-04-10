@@ -69,5 +69,7 @@ public interface UserService {
 
 	public UserProxy getUserByEmail(String email);
 
+	public Integer getUserIdByEmail(String email);
+
 
 }
