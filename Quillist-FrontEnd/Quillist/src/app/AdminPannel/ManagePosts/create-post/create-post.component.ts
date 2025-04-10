@@ -19,9 +19,12 @@ export class CreatePostComponent implements OnInit {
   postContent: string = ''; // Store content from TinyMCE editor
   selectedCategory: number | string = ''; // Selected category ID
   categories: Category[] = []; // Categories array
-  userId :string =""; // Assuming this is coming from a logged-in user
+  email: string = ' '; // Assuming this is coming from a logged-in user
+  userId: any;
   submissionSuccess: boolean = false; // Track submission success
   submissionError: boolean = false; // Track submission error
+
+  
 
   // public postContent: string = '';
   // submitPost() {
@@ -57,13 +60,22 @@ export class CreatePostComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private blogService: PostServiceService,
-    private userService:UserServicesService
+    private userService: UserServicesService
   ) {}
 
-  ngOnInit(): void {
+   ngOnInit():void {
     this.getCategories();
-  this.userId = this.userService.getUserIdFromToken(); // Get the logged-in user's ID
-    if (!this.userId) {
+    this.userService.getUserIdFromToken().subscribe({
+      next: (id) => {
+        this.userId = id;  // Set userId when the observable emits the value
+        console.log('User ID in ngOnInit: ' + this.userId);
+      },
+      error: (err) => {
+        console.error('Error fetching User ID', err);
+      }
+    });
+
+    if (!this.email) {
       console.error('User is not logged in or token is invalid');
     }
   }
@@ -76,19 +88,24 @@ export class CreatePostComponent implements OnInit {
   }
 
   onSubmit(blogForm: any): void {
+
+
+    if(this.userId){
+      console.log("USer id is in onsubmit method : "+this.userId);
     if (blogForm.valid) {
-      const userId = this.userId;
+      // const userId = this.userId;
       const blogData = {
         title: this.postTitle,
         content: this.postContent,
         category: {
           id: this.selectedCategory, // Send only the category ID here
         },
-        user_id: this.userId, // Assuming userId is 1
+        user_id:this.userId, // Assuming userId is 1
         // blogstatus: 'Approved', // Make sure the status is an enum value
       };
-      this.blogService.createBlog(blogData,userId).subscribe(
+      this.blogService.createBlog(blogData,this.userId).subscribe(
         (response) => {
+          console.log(this.email + 'This is the emial here in component');
           console.log('Blog created successfully:', response);
           this.submissionSuccess = true; // Set success flag
           this.submissionError = false; // Reset error flag
@@ -99,6 +116,9 @@ export class CreatePostComponent implements OnInit {
           this.submissionSuccess = false; // Reset success flag
         }
       );
+    }
+  }else {
+    console.error('User ID is not available');
     }
   }
 }

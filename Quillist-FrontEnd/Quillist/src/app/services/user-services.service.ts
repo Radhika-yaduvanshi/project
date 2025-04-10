@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, throwError } from 'rxjs';
 import { jwtDecode } from 'jwt-decode'; // Correct import statement
 
 
@@ -8,6 +8,8 @@ import { jwtDecode } from 'jwt-decode'; // Correct import statement
   providedIn: 'root',
 })
 export class UserServicesService {
+  userId: number|undefined  ;
+  // userId: number | undefined;
   constructor(private http: HttpClient) {}
 
   private apiUrl = '/user';
@@ -102,12 +104,13 @@ export class UserServicesService {
   }
 
 
-  getUserIdFromToken(): string | null {
+  getUserIdFromToken(): Observable<number>{
     const token = localStorage.getItem('token')
     console.log("token : in getUserIdFromToken : "+token);
     
+    
     if (!token) {
-      return null; // If there's no token, return null
+      return throwError(() => new Error('No token found'));
     }
 
     try {
@@ -116,17 +119,26 @@ export class UserServicesService {
 
       console.log("real Token : "+token);
       
+      
       console.log("Decoded Token : "+decodedToken);
-      console.log("id from toke is here : "+decodedToken.id);
-      const userId = decodedToken.sub || null;
-      console.log('User ID from token:', userId); 
+      // console.log("id from toke is here : "+decodedToken.id);
+      const email = decodedToken.sub 
+      console.log('User email from token:', email); 
+      this.http.get<number>(`${this.apiUrl}/getuserIdByEmail/${email}`).subscribe({
+        next:(id)=>{
+          this.userId=id;
+          console.log("User id Is : "+this.userId);
+          
+        },
+        error:(err)=>console.error("user Id fetch failed : ",err)
+      });
       
-      return decodedToken.id; // Extract the userId from the decoded token
-      console.log("id from token is here : "+decodedToken.id);
-      
+      // return decodedToken.id; // Extract the userId from the decoded token
+
+      return this.http.get<number>(`${this.apiUrl}/getuserIdByEmail/${email}`);
     } catch (error) {
       console.error('Error decoding token:', error);
-      return null; // Return null if there's an error decoding the token
+      return throwError(() => new Error('Invalid token'));
     }
   }
 

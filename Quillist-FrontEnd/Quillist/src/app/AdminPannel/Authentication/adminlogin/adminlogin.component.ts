@@ -40,6 +40,7 @@ export class AdminloginComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('admin Data : ' + this.loginForm.value);
+    
 ;
   }
 
