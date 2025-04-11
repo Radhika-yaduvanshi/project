@@ -17,9 +17,9 @@ public class BlogProxy {
 	private String title;
 	private String content;
 	
-	private BlogStatus blogstatus;
+//	private BlogStatus blogstatus;
 	
-	private Integer user_id;
+	private Integer userId;
 	
 	private CategoryProxy category;
 	

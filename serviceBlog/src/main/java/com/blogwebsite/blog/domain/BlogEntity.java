@@ -29,7 +29,7 @@ public class BlogEntity {
 	//blog have multiple images [ one to many ] - one blog can have multiple images
 	//blog category [ one to one] -one blog can relate to one category
 	
-	private Integer user_id;
+	private Integer userId;
 	
 //	@OneToMany(cascade = CascadeType.ALL)
 //	@JoinColumn(name = "blog_id")

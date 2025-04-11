@@ -10,7 +10,7 @@ public interface BlogService {
 	//crud on blog
 	
 	//create blog
-	public String createBlog(BlogProxy blogproxy,Integer userid); //user
+	public String createBlog(BlogProxy blogproxy,Integer id); //user
 	
 	//delete blog
 	public String deleteBlog(Integer id);
@@ -32,4 +32,8 @@ public interface BlogService {
 	String addCommentToBlog(Integer blogId, CommentProxy commentProxy);
 	
 	public List<BlogProxy> searchBlogByTitleAndCategory(BlogProxy blogProxy);
+	public String createBlog(BlogProxy blogproxy);
+
+
+	public List<BlogProxy> getBlogByUserId(Integer id);
 }

@@ -16,19 +16,35 @@ import com.blogwebsite.blog.proxy.BlogProxy;
 import com.blogwebsite.blog.proxy.CommentProxy;
 import com.blogwebsite.blog.service.impl.BlogServiceImpl;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/blog")
 public class BlogController {
 
 	@Autowired
 	private BlogServiceImpl blogImpl;
+
+
+	@GetMapping("/getBlogByUserId/{userId}")
+	public List<BlogProxy> getBlogByUserId(@PathVariable("userId") Integer userId){
+		return blogImpl.getBlogByUserId(userId);
+	}
 	
 	//create blog
 	@PostMapping("/save/{id}") //working -user
-	public ResponseEntity<?> saveBlog(@RequestBody BlogProxy blogProxy,@PathVariable("id") Integer id)
+	public ResponseEntity<?> saveBlog(@RequestBody BlogProxy blogProxy,@PathVariable("id") Integer id )
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(blogImpl.createBlog(blogProxy,id));
 	}
+
+//	@PostMapping("/save") //working -user
+//	public ResponseEntity<?> saveBlog(@RequestBody BlogProxy blogProxy)
+//	{
+//		System.err.println("here in controller of blog");
+//		System.err.println("details of blogproxy : "+blogProxy.getUser_id());
+//		return ResponseEntity.status(HttpStatus.CREATED).body(blogImpl.createBlog(blogProxy));
+//	}
 	
 	//delete blog
 	@DeleteMapping("/delete/{id}") //working -user
