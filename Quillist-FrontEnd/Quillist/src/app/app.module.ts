@@ -40,6 +40,8 @@ import { AdminloginComponent } from './AdminPannel/Authentication/adminlogin/adm
 import { ForgotPasswordComponent } from './AdminPannel/Authentication/forgot-password/forgot-password.component';
 import { WildCardComponent } from './wild-card/wild-card.component';
 import { customInterceptor } from './services/custom.interceptor';
+import { AdminDashboardComponent } from './AdminPannel/admin-dashboard/admin-dashboard.component';
+import { AdminProfileComponent } from './AdminPannel/admin-profile/admin-profile.component';
 
 
 // import { ReactiveFormsModule } from '@angular/forms';
@@ -69,7 +71,9 @@ import { customInterceptor } from './services/custom.interceptor';
     BlogDetailsComponent,
     AdminloginComponent,
     ForgotPasswordComponent,
-    WildCardComponent
+    WildCardComponent,
+    AdminDashboardComponent,
+    AdminProfileComponent
   ],
   imports: [
     BrowserModule,

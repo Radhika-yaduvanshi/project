@@ -26,6 +26,8 @@ export class BlogDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const blogId = this.route.snapshot.paramMap.get('id');
+    console.log("bllog id is : in blog-detail page : "+blogId);
+    
     if (blogId) {
       this.fetchBlogDetails(+blogId);
     }
@@ -42,7 +44,7 @@ export class BlogDetailsComponent implements OnInit {
 
           // Check if user_id exists and is valid
           if (data.user_id) {
-            this.fetchUserDetails(data.user_id);  // Assuming 'user_id' is available in the blog data
+            this.fetchUserDetails(data.userId);  // Assuming 'user_id' is available in the blog data
           } else {
             this.errorMessage = 'Author information is missing for this blog.';
           }
@@ -59,9 +61,12 @@ export class BlogDetailsComponent implements OnInit {
 
   fetchUserDetails(userId: number): void {
     this.userService.getUserById(userId).subscribe(
+   
       (user) => {
         if (user) {
           this.author = user;
+          console.log("user id is : "+userId);
+          
         } else {
           this.errorMessage = 'Failed to load author details.';
         }

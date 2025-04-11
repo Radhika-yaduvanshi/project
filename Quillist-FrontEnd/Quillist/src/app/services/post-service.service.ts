@@ -90,4 +90,11 @@ export class PostServiceService {
       responseType: 'text',
     });
   }
+
+
+  getBlogByUserId(id:number):Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiUrl}/getBlogByUserId/${id}`,{
+      responseType:'json',
+    });
+  }
 }

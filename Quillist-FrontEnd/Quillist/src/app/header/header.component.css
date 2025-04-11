@@ -35,6 +35,26 @@ body {
   flex: 1;
 }
 
+/* Styling for the profile button with round shape */
+.profile-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Width of the round button */
+  height: 50px; /* Height of the round button */
+  border-radius: 50%; /* Make it circular */
+  background-color: #d4d4d4; /* Background color */
+  overflow: hidden; /* Hide overflow to keep the circular shape */
+  padding: 0; /* Remove padding */
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image fits the circle */
+  border-radius: 50%; /* Make the image circular */
+}
+
 /* Styling for the buttons */
 a[mat-raised-button] {
   margin-left: 10px; /* Spacing between buttons */

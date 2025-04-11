@@ -1,0 +1,70 @@
+<div class="profile-container">
+  <!-- Profile Section -->
+  <div class="profile-header">
+    <div class="profile-image-container">
+      <img src="admin-profile2.png" alt="Profile Image" class="profile-image" />
+    </div>
+    <div class="profile-details">
+      <h2 class="profile-name">{{ author.userName }}</h2>
+      <p class="profile-email">{{ author.email }}</p>
+      <p class="profile-role">{{ author.role }}</p>
+    </div>
+  </div>
+
+      <!-- Edit Profile Button -->
+      <div class="edit-profile-btn-container">
+        <a [routerLink]="['/admin/edit-profile', authorId]" class="btn btn-primary edit-profile-btn">
+          <i class="fas fa-user-edit"></i> Edit Profile
+        </a>
+      </div>
+    <!-- </div> -->
+
+  <!-- Blogs Section -->
+  <div class="blog-section">
+    <h3 class="section-title">Blogs Created by Admin</h3>
+
+    <div class="blog-list">
+      <div class="blog-item" *ngFor="let blog of blogs">
+        <h5 class="card-title">{{ blog.title }}</h5>
+
+        <p class="card-text" [innerHTML]="blog.showFullContent ? blog.safeContent : getPreviewContent(blog.content)"></p>
+
+        <p class="text-muted">
+          <small>By {{ author?.userName }} on {{ blog.createdAt | date: 'mediumDate' }}</small>
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+          <a
+          [routerLink]="['/manage-posts/view-post', blog.id]"
+          class="btn btn-read-more btn-sm"
+        >
+          Read More
+        </a>
+        
+          <button
+            *ngIf="blog.showFullContent"
+            (click)="toggleContent(blog)"
+            class="btn btn-outline-secondary btn-sm"
+          >
+            Show Less
+          </button>
+
+          <button
+            class="btn btn-warning btn-sm"
+            [routerLink]="['/manage-posts/edit-post', blog.id]"
+          >
+            <i class="fas fa-edit"></i> Update
+          </button>
+
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteBlog(blog.id)"
+          >
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

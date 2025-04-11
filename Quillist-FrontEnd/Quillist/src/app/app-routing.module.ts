@@ -23,17 +23,25 @@ import { BlogDetailsComponent } from './AdminPannel/ManagePosts/blog-details/blo
 import { ForgotPasswordComponent } from './AdminPannel/Authentication/forgot-password/forgot-password.component';
 import { WildCardComponent } from './wild-card/wild-card.component';
 import { authGuard } from './services/auth.guard';
+import { AdminDashboardComponent } from './AdminPannel/admin-dashboard/admin-dashboard.component';
+import { AdminProfileComponent } from './AdminPannel/admin-profile/admin-profile.component';
 const routes: Routes = [
   {
     path: '',
     // component: AdminloginComponent,
     component: AdminComponent,
+    // component:AdminDashboardComponent,
     canActivate: [authGuard], 
     children: [
+      {
+        path: '', // 👈 default child
+        component: AdminDashboardComponent
+      },
       {
         path: 'manage-users',
         component: ManageUsersComponent,
         children: [
+          // { path: '', component: AdminDashboardComponent },
           { path: '', redirectTo: 'view-users', pathMatch: 'full' },
           { path: 'add-user', component: AddUserComponent },
           { path: 'view-user', component: ViewUserComponent },
@@ -79,6 +87,7 @@ const routes: Routes = [
         component: ManageCategoriesComponent,
         children: [
           { path: '', redirectTo: 'view-post', pathMatch: 'full' },
+          { path: 'admin-profile',component:AdminProfileComponent},
           { path: 'add-comments', component: AddCategoriesComponent },
           { path: 'view-comments', component: ViewCategoriesComponent },
           { path: 'delete-comments', component: DeleteCategoriesComponent },
@@ -93,8 +102,10 @@ const routes: Routes = [
   // { path: 'manage-categories', component: ManageCategoriesComponent },
   // { path: 'manage-posts', component: ManagePostsComponent },
   { path: 'manage-themes', component: ManageThemesComponent },
+  { path: 'admin-profile', component: AdminProfileComponent },
   { path: 'manage-comments', component: ManageCommentsComponent },
   { path: 'moderation', component: ModerationComponent },
+  { path: 'dashboard', component: AdminDashboardComponent },
   { path:'**',component: WildCardComponent}
 ];
 

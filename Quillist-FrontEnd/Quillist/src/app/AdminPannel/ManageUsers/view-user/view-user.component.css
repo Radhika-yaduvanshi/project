@@ -1,119 +1,88 @@
-.author-info {
-    display: flex;
-    align-items: center;
-  }
-  
-  .author-profile-pic {
-    width: 40px;
-    height: 40px;
-    object-fit: cover; /* Ensures the image fits well within the circle */
-  }
-  
-  .author-name {
-    font-weight: bold;
-    margin-left: 10px;
-  }
+/* Container Styling */
+.user-table-container {
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
 
-  /* Author Info Container */
-.author-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  /* Author's Profile Picture */
-  .author-profile-pic {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ddd;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Author Name Styling */
-  .author-details {
-    margin-left: 15px;
-  }
-  
-  .author-name {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  /* Responsive Design for Author Info */
-  @media (max-width: 768px) {
-    .author-info {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .author-profile-pic {
-      width: 60px;
-      height: 60px;
-    }
-  
-    .author-name {
-      font-size: 1.1rem;
-    }
-  }
-  /* Styling for the Blog Title */
-.blog-title {
-    text-align: center; /* Center the title */
-    font-size: 2rem; /* Larger font size for the title */
-    font-weight: bold; /* Make the title bold */
-    color: #333; /* Dark text color for readability */
-    margin-top: 20px; /* Add some space above the title */
-    margin-bottom: 20px; /* Add some space below the title */
-    text-transform: uppercase; /* Make the title uppercase for added emphasis */
-    letter-spacing: 1px; /* Slight letter spacing for a cleaner look */
-    font-family: 'Arial', sans-serif; /* Use a clean sans-serif font */
-  }
-  
-  /* Optional: Responsive font size for mobile devices */
-  @media (max-width: 768px) {
-    .blog-title {
-      font-size: 1.8rem; /* Slightly smaller font size for smaller screens */
-    }
-  }
+.table-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2f3542;
+  margin-bottom: 25px;
+  text-align: center;
+}
 
-  /* Author Profile Card Styling */
-.author-card {
-    width: 100%;
-    max-width: 1057px; /* Limit card width */
-    background-color: #f8f9fa; /* Light background for the card */
-    border-radius: 10px; /* Rounded corners for a smooth look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
-    border: none; /* No border */
-    margin-top: 15px;
-  }
-  
-  .author-profile-pic {
-    width: 80px; /* Set a fixed width for the profile picture */
-    height: 80px; /* Set a fixed height for the profile picture */
-    object-fit: cover; /* Ensure the image covers the area without distortion */
-    border-radius: 50%; /* Make the profile picture circular */
-  }
-  
-  .author-name {
-    font-size: 1.25rem; /* Font size for the author's name */
-    color: #333; /* Dark text color */
-  }
-  
-  /* Responsive styling for smaller screens */
-  @media (max-width: 768px) {
-    .author-card {
-      max-width: 100%; /* Card takes up the full width on smaller screens */
-    }
-    .author-profile-pic {
-      width: 60px; /* Slightly smaller profile picture on mobile */
-      height: 60px; /* Same as width */
-    }
-    .author-name {
-      font-size: 1.1rem; /* Smaller font size for mobile */
-    }
-  }
-  
-  
-  
+/* Table Wrapper */
+.table-wrapper {
+  overflow-x: auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom Table Styles */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.custom-table thead {
+  background-color: #2f3542;
+  color: #fff;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 16px 20px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.custom-table th.text-right,
+.custom-table td.text-right {
+  text-align: right;
+}
+
+.custom-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background 0.3s ease;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* Avatar Styling */
+.user-avatar {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Delete Button */
+.delete-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Pagination */
+.pagination-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
