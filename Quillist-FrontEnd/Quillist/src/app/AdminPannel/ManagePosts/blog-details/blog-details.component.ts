@@ -8,10 +8,9 @@ import { DomSanitizer } from '@angular/platform-browser';
   selector: 'app-blog-details',
   standalone: false,
   templateUrl: './blog-details.component.html',
-  styleUrls: ['./blog-details.component.css']
+  styleUrls: ['./blog-details.component.css'],
 })
 export class BlogDetailsComponent implements OnInit {
-
   blog: any = null;
   author: any = null; // To store user details
   category: any = null; // To store category details
@@ -22,12 +21,12 @@ export class BlogDetailsComponent implements OnInit {
     private postService: PostServiceService,
     private userService: UserServicesService,
     private sanitizer: DomSanitizer
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const blogId = this.route.snapshot.paramMap.get('id');
-    console.log("bllog id is : in blog-detail page : "+blogId);
-    
+    console.log('bllog id is : in blog-detail page : ' + blogId);
+
     if (blogId) {
       this.fetchBlogDetails(+blogId);
     }
@@ -43,8 +42,8 @@ export class BlogDetailsComponent implements OnInit {
           };
 
           // Check if user_id exists and is valid
-          if (data.user_id) {
-            this.fetchUserDetails(data.userId);  // Assuming 'user_id' is available in the blog data
+          if (data.userId) {
+            this.fetchUserDetails(data.userId); // Assuming 'user_id' is available in the blog data
           } else {
             this.errorMessage = 'Author information is missing for this blog.';
           }
@@ -54,19 +53,18 @@ export class BlogDetailsComponent implements OnInit {
         }
       },
       (error) => {
-        this.errorMessage = 'Failed to load blog details. Please try again later.';
+        this.errorMessage =
+          'Failed to load blog details. Please try again later.';
       }
     );
   }
 
   fetchUserDetails(userId: number): void {
     this.userService.getUserById(userId).subscribe(
-   
       (user) => {
         if (user) {
           this.author = user;
-          console.log("user id is : "+userId);
-          
+          console.log('user id is : ' + userId);
         } else {
           this.errorMessage = 'Failed to load author details.';
         }

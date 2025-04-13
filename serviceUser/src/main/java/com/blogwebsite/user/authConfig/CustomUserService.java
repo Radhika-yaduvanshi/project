@@ -1,12 +1,13 @@
 package com.blogwebsite.user.authConfig;
 
 //import com.auth.config.CustomUser;
-import com.blogwebsite.user.authConfig.CustomUser;
+//import com.blogwebsite.user.authConfig.CustomUser;
 import com.blogwebsite.user.domain.UserEntity;
 import com.blogwebsite.user.proxy.UserProxy;
 import com.blogwebsite.user.repository.UserRepo;
 import com.blogwebsite.user.utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -43,7 +44,13 @@ public class CustomUserService implements UserDetailsService
 			throw  new UsernameNotFoundException("User not found with email : " +email);
 		}
 
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+//		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+		return new User(user.getEmail(), user.getPassword(), new ArrayList<>());
+
+		//we also can return custom-user->CustomUser(user)
+		//but here we are returning spring's default user
+
+
 	}
 	
 	

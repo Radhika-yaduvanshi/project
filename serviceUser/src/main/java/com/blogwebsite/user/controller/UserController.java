@@ -26,6 +26,32 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userImpl;
 
+
+	//email
+	// 1. Send OTP to Email
+	@PostMapping("/send-otp")
+	public ResponseEntity<String> sendOtp(@RequestParam String email) {
+		String otp = userImpl.generateAndSendOtp(email);
+		return ResponseEntity.ok("OTP sent successfully to your email.");
+	}
+
+	// 2. Verify OTP
+	@PostMapping("/verify-otp")
+	public ResponseEntity<String> verifyOtp(@RequestParam String email, @RequestParam String otp) {
+		boolean isVerified = userImpl.verifyOtp(email, otp);
+		if (isVerified) {
+			return ResponseEntity.ok("OTP verified successfully.");
+		} else {
+			return ResponseEntity.badRequest().body("Invalid or expired OTP.");
+		}
+	}
+
+
+
+
+
+
+
 	@GetMapping("/getuserIdByEmail/{email}")
 	public  Integer getUserIdByEmail(@PathVariable("email") String email){
 		System.err.println("email id  is : "+email);

@@ -45,7 +45,7 @@ public class Config
 		http.csrf(csrf->csrf.disable());
 //		http.authorizeHttpRequests(auth->auth.requestMatchers("/","/user/saveUser","/user/generate","/extractAll/**","/dateEx/**","/user/loginReq","/user/register",
 //				"/generateOTP").permitAll().
-		http.authorizeHttpRequests(auth->auth.requestMatchers("/user/generate","/user/loginReq","/user/register","/user/getByEmail","/blog/save/**","/user/getById/**","/user/getByEmail/**","/user/getUserIdByEmail/**").permitAll().
+		http.authorizeHttpRequests(auth->auth.requestMatchers("/user/generate","/user/loginReq","/user/register","/user/getByEmail","/blog/save/**","/user/getById/**","/user/getByEmail/**","/user/getUserIdByEmail/**","/user/register-with-image","/user/send-otp","user/verify-otp").permitAll().
 				anyRequest().authenticated());
 		http.httpBasic(Customizer.withDefaults());
 		http.exceptionHandling(auth->auth.authenticationEntryPoint(jwtEntryPoint));

@@ -1,0 +1,38 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <h2 class="profile-title">Profile Details</h2>
+    <div class="profile-field">
+      <label>Name:</label>
+      <input
+        type="text"
+        [(ngModel)]="user.name"
+        placeholder="Enter your name"
+      />
+    </div>
+    <div class="profile-field">
+      <label>Email:</label>
+      <input
+        type="email"
+        [(ngModel)]="user.email"
+        placeholder="Enter your email"
+      />
+    </div>
+    <div class="profile-field">
+      <label>Phone:</label>
+      <input
+        type="text"
+        [(ngModel)]="user.phone"
+        placeholder="Enter your phone"
+      />
+    </div>
+    <div class="profile-field">
+      <label>Address:</label>
+      <input
+        type="text"
+        [(ngModel)]="user.address"
+        placeholder="Enter your address"
+      />
+    </div>
+    <button class="save-button" (click)="saveProfile()">Save</button>
+  </div>
+</div>

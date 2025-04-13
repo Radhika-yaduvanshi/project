@@ -29,6 +29,32 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
+@media (max-width: 600px) {
+  .author-profile-pic {
+    width: 60px;
+    height: 60px;
+  }
+}
+.blog-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 30px 0;
+  color: #2c3e50;
+}
+.btn-primary {
+  background-color: #3498db;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
 
 /* Fallback image if user does not have a profile picture */
 .author-profile-pic {
@@ -62,6 +88,12 @@ body {
   padding: 20px;
   transition: all 0.3s ease;
 }
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7fa;
+  margin: 0;
+  padding: 0;
+}
 
 .author-card:hover {
   transform: translateY(-5px);
@@ -86,6 +118,14 @@ body {
   animation: fadeIn 1s ease-out;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
 }
+.blog-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
 
 /* Animation for Title */
 @keyframes fadeIn {
@@ -100,14 +140,14 @@ body {
 }
 
 /* Blog Content Styling */
-.blog-content {
+/* .blog-content {
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
   transition: all 0.3s ease;
-}
+} */
 
 .blog-content:hover {
   transform: translateY(-5px);

@@ -1,5 +1,6 @@
 package com.blogwebsite.user.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -33,8 +34,14 @@ public class UserEntity {
 	@Lob
 	private byte[] profilePhoto;
 
-	@Column(nullable = false,columnDefinition = "default 'USER'")
+	@Column(columnDefinition = "VARCHAR(255) DEFAULT 'USER'", nullable = false)
 	private String role;
+
+	@Column(name = "otp")
+	private String otp;
+
+	@Column(name = "otp_requested_time")
+	private LocalDateTime otpRequestedTime;
 
 //	private String profilePhoto;
 	

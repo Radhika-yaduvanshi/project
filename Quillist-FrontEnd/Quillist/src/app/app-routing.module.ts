@@ -31,11 +31,11 @@ const routes: Routes = [
     // component: AdminloginComponent,
     component: AdminComponent,
     // component:AdminDashboardComponent,
-    canActivate: [authGuard], 
+    canActivate: [authGuard],
     children: [
       {
         path: '', // 👈 default child
-        component: AdminDashboardComponent
+        component: AdminDashboardComponent,
       },
       {
         path: 'manage-users',
@@ -87,7 +87,7 @@ const routes: Routes = [
         component: ManageCategoriesComponent,
         children: [
           { path: '', redirectTo: 'view-post', pathMatch: 'full' },
-          { path: 'admin-profile',component:AdminProfileComponent},
+          { path: 'admin-profile', component: AdminProfileComponent },
           { path: 'add-comments', component: AddCategoriesComponent },
           { path: 'view-comments', component: ViewCategoriesComponent },
           { path: 'delete-comments', component: DeleteCategoriesComponent },
@@ -102,11 +102,15 @@ const routes: Routes = [
   // { path: 'manage-categories', component: ManageCategoriesComponent },
   // { path: 'manage-posts', component: ManagePostsComponent },
   { path: 'manage-themes', component: ManageThemesComponent },
-  { path: 'admin-profile', component: AdminProfileComponent },
+  {
+    path: 'admin-profile',
+    canActivate: [authGuard],
+    component: AdminProfileComponent,
+  },
   { path: 'manage-comments', component: ManageCommentsComponent },
   { path: 'moderation', component: ModerationComponent },
   { path: 'dashboard', component: AdminDashboardComponent },
-  { path:'**',component: WildCardComponent}
+  { path: '**', component: WildCardComponent },
 ];
 
 @NgModule({

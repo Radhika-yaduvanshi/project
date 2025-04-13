@@ -5,8 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import com.blogwebsite.user.authConfig.JwtService;
 import com.blogwebsite.user.domain.LoginRequest;
@@ -21,6 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -38,6 +43,10 @@ import com.blogwebsite.user.repository.UserRepo;
 import com.blogwebsite.user.service.UserService;
 import com.blogwebsite.user.utils.Helper;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
 
 @Service
 public class UserServiceImpl implements UserService
@@ -64,10 +73,129 @@ public class UserServiceImpl implements UserService
 	@Autowired
 	private JwtService jwtService;
 
+	@Autowired
+	private JavaMailSender mailSender;
+
+//	@Autowired
+//	private EmailService emailService;
+
+
 	//private final String blogUrl="http://localhost:8088/blog/";
 
 	@Value("${file.upload-dir}")
 	private String uploadDir;
+
+
+
+
+	//generate and send otp methods
+
+	@Override
+	public String generateAndSendOtp(String email) {
+
+		UserEntity userEntity= userRepo.findByEmail(email);
+		System.out.println("email from user entity to send otp : "+email+"========================================");
+		if(userEntity != null){
+			String otp = String.format("%06d", new Random().nextInt(999999));
+			System.out.println("Otp is : "+otp);
+
+			UserEntity user=userRepo.findByEmail(email);
+			System.out.println("USer form email is : "+user);
+
+			user.setOtp(otp);
+			user.setOtpRequestedTime(LocalDateTime.now());
+			userRepo.save(user);
+			System.out.println("USer after save : "+user);
+
+			sendOtpEmail(email,otp);
+			return  otp;
+		}else{
+			throw new RuntimeException("User not found with email: " + email);
+		}
+	}
+
+	private void sendOtpEmail(String email,String otp){
+		try{
+			MimeMessage mimeMailMessage = mailSender.createMimeMessage();
+			MimeMessageHelper helper= new MimeMessageHelper(mimeMailMessage,"utf-8");
+
+			String subject= "Password Reset OTP";
+			String content= "Dear User,<br><br>Your OTP for password reset is: <b>" + otp + "</b><br><br>Regards,<br>Radhika Yadav";
+
+			helper.setText(content,true);
+			helper.setTo(email);
+			helper.setSubject(subject);
+			helper.setFrom("quillist001@gmail.com");
+			mailSender.send(mimeMailMessage);
+
+
+        }catch (Exception ex){
+			throw new RuntimeException("Failed to send OTP email", ex);
+
+		}
+	}
+
+
+	//varify OTP
+
+	public boolean verifyOtp(String email, String otp) {
+		UserEntity user = userRepo.findByEmail(email);
+		if (user == null) {
+			throw new RuntimeException("User not found");
+		}
+
+		if (user.getOtp() == null) {
+			throw new RuntimeException("OTP not generated yet");
+		}
+
+		if (user.getOtp().equals(otp)) {
+			// Optional: You can check for expiry here if you want
+			user.setOtp(null);
+			user.setOtpRequestedTime(null);
+			userRepo.save(user);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	//chagne password
+
+	public void changePassword(String email, String newPassword) {
+		UserEntity user = userRepo.findByEmail(email);
+		if (user == null) {
+			throw new RuntimeException("User not found");
+		}
+
+		user.setPassword(passwordEncoder.encode(newPassword));
+		// Clear OTP after password reset
+		user.setOtp(null);
+		user.setOtpRequestedTime(null);
+		userRepo.save(user);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	public String saveImage(MultipartFile file) throws IOException {
 
@@ -265,6 +393,8 @@ public class UserServiceImpl implements UserService
 			return null;
 		}
 	}
+
+
 
 	@Override
 	public String generateTocken(UserEntity user) {

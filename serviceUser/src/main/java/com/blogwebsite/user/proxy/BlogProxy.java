@@ -1,5 +1,6 @@
 package com.blogwebsite.user.proxy;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.blogwebsite.user.enumeration.BlogStatus;
@@ -23,4 +24,8 @@ public class BlogProxy {
 	private CategoryProxy category;
 	
 	private List<CommentProxy> comments;
+
+	private String otp;
+	private LocalDateTime otpRequestedTime;
 }
+

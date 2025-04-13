@@ -72,4 +72,7 @@ public interface UserService {
 	public Integer getUserIdByEmail(String email);
 
 
+	public  String generateAndSendOtp(String email);
+
+
 }
