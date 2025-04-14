@@ -7,28 +7,34 @@
         <div class="d-flex align-items-center">
           <!-- Author's Profile Picture -->
           <div class="author-profile">
-            <img 
-              *ngIf="author.profilePhoto" 
-              [src]="'data:image/jpeg;base64,' + author.profilePhoto" 
-              alt="Author's Profile Picture" 
+            <img
+              *ngIf="author.profilePhoto"
+              [src]="'data:image/jpeg;base64,' + author.profilePhoto"
+              alt="Author's Profile Picture"
               class="author-profile-pic rounded-circle"
-              onerror="this.src=' admin-profile2.png'" 
+              onerror="this.src=' admin-profile2.png'"
             />
           </div>
-
-          <p class="text-muted">
+          
+          <!-- <p class="text-muted">
             <small>
                {{ blog.views }} views
             </small>
           </p>
-          
+           -->
 
           <!-- Author's Name -->
           <div class="author-details ms-3">
-            <span class="author-name fs-4 text-dark">{{ author.userName }}</span>
+            <span class="author-name fs-4 text-dark author-name">{{
+              author.userName
+            }}</span>
           </div>
         </div>
       </div>
+    </div>
+    <div class="author-details ms-3">
+
+      <span class="author-name fs-4 text-dark total-views">Total Views: {{ blog.views }}</span>
     </div>
 
     <!-- Blog Title -->
@@ -46,7 +52,11 @@
 
     <!-- Optional: Display a back button to return to the list of blog posts -->
     <div class="text-center">
-      <a [routerLink]="['/manage-posts/view-post']" class="btn btn-primary shadow-lg">Back to Blog List</a>
+      <a
+        [routerLink]="['/manage-posts/view-post']"
+        class="btn btn-primary shadow-lg"
+        >Back to Blog List</a
+      >
     </div>
   </div>
 

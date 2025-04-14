@@ -198,3 +198,13 @@ body {
     padding: 15px;
   }
 }
+/* Adding margin between the two spans */
+.total-views {
+  margin-right: 550px; /* Adjust the value as needed */
+}
+
+/* .author-name {
+  /* Optionally, you can add any additional styles here */
+/* } */ 
+
+
