@@ -4,6 +4,7 @@ import com.blogwebsite.blog.domain.BlogEntity;
 import com.blogwebsite.blog.domain.BlogImage;
 import com.blogwebsite.blog.repository.BlogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,6 +56,13 @@ public class BlogController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Blog not found");
 		}
 	}
+	@GetMapping("/most-viewed-blogs")
+	public ResponseEntity<List<BlogEntity>> getmostViewedBlogs() {
+		// Fetch blogs sorted by views in descending order
+		List<BlogEntity> blogs = blogRepo.findAll(Sort.by(Sort.Order.desc("views")));
+		return ResponseEntity.ok(blogs);
+	}
+
 
 
 	@GetMapping("/getBlogByUserId/{userId}")
