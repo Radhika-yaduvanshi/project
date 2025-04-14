@@ -45,6 +45,8 @@ public class BlogController {
 
 		if (blogOpt.isPresent()) {
 			BlogEntity blog = blogOpt.get();
+			if (blog.getViews() == null) {
+				blog.setViews(0);}
 			blog.setViews(blog.getViews() + 1); // 👈 Increment view
 			blogRepo.save(blog);          // Save updated blog
 
