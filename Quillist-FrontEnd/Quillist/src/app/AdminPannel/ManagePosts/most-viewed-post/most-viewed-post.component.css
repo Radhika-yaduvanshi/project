@@ -1,0 +1,154 @@
+     /* Global Styling */
+     body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fa;
+        margin: 0;
+        padding: 0;
+      }
+  
+      .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+  
+      h2 {
+        text-align: center;
+        font-size: 2.2rem;
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 30px;
+      }
+  
+      /* Search Bar Styling */
+      .search-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto 30px;
+      }
+  
+      .search-bar {
+        padding-left: 45px;
+        padding-right: 20px;
+        border-radius: 30px;
+        height: 50px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+  
+      .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #7f8c8d;
+      }
+  
+      /* Blog Card Styling */
+      .blog-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+  
+      .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      }
+  
+      .blog-image {
+        width: 200px;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+  
+      .blog-content {
+        flex-grow: 1;
+        margin-left: 20px;
+      }
+  
+      .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 15px;
+      }
+  
+      .badge {
+        font-size: 14px;
+        background-color: #3498db;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+      }
+  
+      .card-text {
+        font-size: 1rem;
+        color: #7f8c8d;
+        margin-bottom: 15px;
+      }
+  
+      .text-muted {
+        font-size: 0.9rem;
+        color: #95a5a6;
+      }
+  
+      .btn-outline-primary {
+        border-radius: 30px;
+        padding: 8px 20px;
+        font-weight: 500;
+      }
+  
+      .btn-delete {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+  
+      .btn-delete:hover {
+        background: #c0392b;
+      }
+  
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .blog-card {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+  
+        .blog-image {
+          width: 100%;
+          height: auto;
+          margin-bottom: 15px;
+        }
+  
+        .card-title {
+          font-size: 1.3rem;
+        }
+  
+        .card-text {
+          font-size: 0.95rem;
+        }
+  
+        .btn-outline-primary {
+          width: 100%;
+          text-align: center;
+        }
+      }

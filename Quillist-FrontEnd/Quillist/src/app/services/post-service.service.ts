@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from '../AdminPannel/ManageCategories/add-categories/add-categories.component';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root',
@@ -108,6 +109,10 @@ export class PostServiceService {
 
   incrementView(blogId: number) {
     return this.http.put(`${this.apiUrl}/${blogId}/view`,{});
+  }
+
+  mostViewdBlogs():any{
+    return this.http.get(`${this.apiUrl}/most-viewed-blogs`,{responseType:'json'})
   }
   
 }

@@ -42,6 +42,7 @@ import { WildCardComponent } from './wild-card/wild-card.component';
 import { customInterceptor } from './services/custom.interceptor';
 import { AdminDashboardComponent } from './AdminPannel/admin-dashboard/admin-dashboard.component';
 import { AdminProfileComponent } from './AdminPannel/admin-profile/admin-profile.component';
+import { MostViewedPostComponent } from './AdminPannel/ManagePosts/most-viewed-post/most-viewed-post.component';
 
 
 // import { ReactiveFormsModule } from '@angular/forms';
@@ -73,7 +74,8 @@ import { AdminProfileComponent } from './AdminPannel/admin-profile/admin-profile
     ForgotPasswordComponent,
     WildCardComponent,
     AdminDashboardComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    MostViewedPostComponent
   ],
   imports: [
     BrowserModule,

@@ -25,6 +25,7 @@ import { WildCardComponent } from './wild-card/wild-card.component';
 import { authGuard } from './services/auth.guard';
 import { AdminDashboardComponent } from './AdminPannel/admin-dashboard/admin-dashboard.component';
 import { AdminProfileComponent } from './AdminPannel/admin-profile/admin-profile.component';
+import { MostViewedPostComponent } from './AdminPannel/ManagePosts/most-viewed-post/most-viewed-post.component';
 const routes: Routes = [
   {
     path: '',
@@ -57,6 +58,7 @@ const routes: Routes = [
           { path: 'view-post', component: ViewPostComponent },
           { path: 'view-post/:id', component: BlogDetailsComponent },
           { path: 'delete-post', component: DeletePostComponent },
+          { path: 'most-viewed-post', component: MostViewedPostComponent },
         ],
       },
       {
