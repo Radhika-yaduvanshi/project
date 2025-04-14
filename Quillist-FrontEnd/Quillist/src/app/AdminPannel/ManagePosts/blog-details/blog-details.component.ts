@@ -15,6 +15,7 @@ export class BlogDetailsComponent implements OnInit {
   author: any = null; // To store user details
   category: any = null; // To store category details
   errorMessage: string = '';
+  // views:any; 
 
   constructor(
     private route: ActivatedRoute,
@@ -32,32 +33,92 @@ export class BlogDetailsComponent implements OnInit {
     }
   }
 
-  fetchBlogDetails(blogId: number): void {
-    this.postService.getBlogById(blogId).subscribe(
-      (data) => {
-        if (data) {
-          this.blog = {
-            ...data,
-            safeContent: this.sanitizer.bypassSecurityTrustHtml(data.content), // Sanitize HTML content
-          };
+//   fetchBlogDetails(blogId: number): void {
+//     this.postService.incrementView(blogId).subscribe(() =>{
 
-          // Check if user_id exists and is valid
-          if (data.userId) {
-            this.fetchUserDetails(data.userId); // Assuming 'user_id' is available in the blog data
-          } else {
-            this.errorMessage = 'Author information is missing for this blog.';
+      
+//       // console.log("blog id in view increment : "+blogId);
+      
+//     this.postService.getBlogById(blogId).subscribe(
+//       (data) => {
+
+        
+//         if (data) {
+//           // this.views=data.views,
+//           console.log("views "+this.views)
+//           this.blog = {
+//             ...data,
+//             views:data.views,
+//             safeContent: this.sanitizer.bypassSecurityTrustHtml(data.content), // Sanitize HTML content
+//             // console.log("views of blog : "+data.views);
+         
+//             // console.log("views : "+this.views);
+//           };
+
+//           // Check if user_id exists and is valid
+//           if (data.userId) {
+//             this.fetchUserDetails(data.userId); // Assuming 'user_id' is available in the blog data
+//           } else {
+//             this.errorMessage = 'Author information is missing for this blog.';
+//           }
+
+//           // Store category if needed
+//           this.category = data.category;
+//         }
+//       },
+//       (error) => {
+//         this.errorMessage =
+//           'Failed to load blog details. Please try again later.';
+//       }
+//     );
+//     // this.postService.incrementView(blogId).subscribe();
+//   })
+// }
+fetchBlogDetails(blogId: number): void {
+  this.postService.incrementView(blogId).subscribe({
+    next: () => {
+      console.log("View count incremented for blog ID:", blogId);
+
+      // Now fetch updated blog details
+      this.postService.getBlogById(blogId).subscribe({
+        next: (data) => {
+          if (data) {
+            console.log("data : ",data.views);
+            
+            this.blog = {
+              ...data,
+              
+              safeContent: this.sanitizer.bypassSecurityTrustHtml(data.content),
+            };
+            if (data.views !== undefined) {
+              console.log("✅ View count from backend:", data.views);
+            } else {
+              console.warn("⚠️ View count is undefined in backend response.");
+            }
+            this.category = data.category;
+            console.log("views data now: "+data);
+            
+
+            if (data.userId) {
+              this.fetchUserDetails(data.userId);
+            } else {
+              this.errorMessage = 'Author information is missing for this blog.';
+            }
+
+            console.log("Updated view count:", data.views);
           }
+        },
+        error: () => {
+          this.errorMessage = 'Failed to load blog details. Please try again later.';
+        },
+      });
+    },
+    error: () => {
+      this.errorMessage = 'Failed to increment view count.';
+    },
+  });
+}
 
-          // Store category if needed
-          this.category = data.category;
-        }
-      },
-      (error) => {
-        this.errorMessage =
-          'Failed to load blog details. Please try again later.';
-      }
-    );
-  }
 
   fetchUserDetails(userId: number): void {
     this.userService.getUserById(userId).subscribe(

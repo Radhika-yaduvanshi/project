@@ -231,12 +231,36 @@
       <div class="row">
         <div class="col-12" *ngFor="let blog of filteredBlogs; let i = index">
           <div class="blog-card">
-            <!-- Blog Image -->
-            <img
-              [src]="blog.imageUrl || 'https://via.placeholder.com/200x130'"
+            <!-- Blog Image  -->
+           <img
+              [src]="blog.imageUrl || 'image.png'"
               alt="Blog Image"
               class="blog-image"
             />
+            <div *ngIf="mainImage" class="main-blog-image mb-4">
+              <!-- <img 
+                [src]="'data:image/jpeg;base64,' + mainImage.imageData" 
+                class="img-fluid rounded shadow"
+                alt="Blog Main Image"
+                onerror="this.src='fallback-image.jpg'"
+              /> -->
+              <!-- <img [src]="'data:image/jpeg;base64,' + image.imageData" /> -->
+<!-- 
+              <img
+  [src]="blog.mainImage || 'fallback.jpg'"
+  alt="Blog Image"
+  class="blog-image"
+/>
+ -->
+<!-- Display the first image as the title image preview -->
+<!-- <div *ngIf="firstImage">
+  <h5>Preview Title Image</h5>
+  <img [src]="firstImage" alt="Title Image Preview" class="img-thumbnail" style="max-width: 200px;">
+</div> -->
+
+
+            </div>
+            
 
             <!-- Blog Content -->
             <div class="blog-content">
@@ -254,6 +278,7 @@
               <a [routerLink]="['/manage-posts/view-post', blog.id]" class="btn btn-outline-primary btn-sm">
                 Read More
               </a>
+              <p>Views : {{blog.views}}</p>
 
               <button *ngIf="blog.showFullContent" (click)="toggleContent(blog)" class="btn btn-outline-primary btn-sm">
                 Show Less

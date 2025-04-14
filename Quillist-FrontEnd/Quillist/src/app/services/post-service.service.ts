@@ -97,4 +97,17 @@ export class PostServiceService {
       responseType:'json',
     });
   }
+
+
+  //get title image 
+
+  getTitleImage(blogId:number):Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/title-image/${blogId}`)
+  }
+
+
+  incrementView(blogId: number) {
+    return this.http.put(`${this.apiUrl}/${blogId}/view`,{});
+  }
+  
 }

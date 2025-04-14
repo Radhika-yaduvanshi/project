@@ -15,6 +15,7 @@ export class ViewPostComponent {
   errorMessage = '';
   currentPage: number = 1;
   postsPerPage: number = 5;
+mainImage: any;
 
   constructor(
     private blogService: PostServiceService,
@@ -23,18 +24,49 @@ export class ViewPostComponent {
 
   ngOnInit(): void {
     this.fetchBlogs();
+    // this.blogService.getTitleImage(blogId).subscribe(blog => {
+    //   this.blog = blog;
+    //   this.mainImage = blog.images?.find(img => img.isMain); // this line
+    // });
+
   }
 
   fetchBlogs(): void {
     this.blogService.getAllBlogs().subscribe(
+      // (data) => {
+      //   this.blogs = data;
+      //   this.filteredBlogs = data.map((blog) => ({
+      //     ...blog,
+      //     safeContent: this.sanitizer.bypassSecurityTrustHtml(blog.content),
+      //     showFullContent: false, // Initially, only show the truncated version
+      //     mainImage: 'fallback.jpg'
+
+          
+
+      //   }));
+      // },
       (data) => {
         this.blogs = data;
-        this.filteredBlogs = data.map((blog) => ({
-          ...blog,
-          safeContent: this.sanitizer.bypassSecurityTrustHtml(blog.content),
-          showFullContent: false, // Initially, only show the truncated version
-        }));
+  
+        this.filteredBlogs = data.map((blog) => {
+          const enhancedBlog = {
+            ...blog,
+            safeContent: this.sanitizer.bypassSecurityTrustHtml(blog.content),
+            showFullContent: false,
+            mainImage: 'fallback.jpg' // default fallback until image loads
+          };
+  
+          // Fetch the title image for this blog
+          this.blogService.getTitleImage(blog.id).subscribe((image) => {
+            if (image?.imageData) {
+              enhancedBlog.mainImage = 'data:image/jpeg;base64,' + image.imageData;
+            }
+          });
+  
+          return enhancedBlog;
+        });
       },
+      
       (error) => {
         this.errorMessage = 'Failed to load blogs. Please try again later.';
       }

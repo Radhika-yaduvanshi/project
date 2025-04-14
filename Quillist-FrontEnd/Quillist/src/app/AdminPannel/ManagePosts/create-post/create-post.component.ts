@@ -23,6 +23,7 @@ export class CreatePostComponent implements OnInit {
   userId: any;
   submissionSuccess: boolean = false; // Track submission success
   submissionError: boolean = false; // Track submission error
+  firstImage: string | null = null; 
 
   
 
@@ -47,8 +48,12 @@ export class CreatePostComponent implements OnInit {
         // Ensure the file is an image
         if (file && file.type.startsWith('image/')) {
           const reader = new FileReader();
-          reader.onload = function (e: any) {
+          reader.onload =  (e: any) =>{//here removed function keyword before (e:any)
             callback(e.target.result, { alt: file.name });
+
+            if (!this.firstImage) {
+              this.firstImage = e.target.result; // Store the base64 data of the image
+            }
           };
           reader.readAsDataURL(file); // Convert the file to base64
         }
@@ -101,6 +106,7 @@ export class CreatePostComponent implements OnInit {
           id: this.selectedCategory, // Send only the category ID here
         },
         user_id:this.userId, // Assuming userId is 1
+        titleImage: this.firstImage,
         // blogstatus: 'Approved', // Make sure the status is an enum value
       };
       this.blogService.createBlog(blogData,this.userId).subscribe(
