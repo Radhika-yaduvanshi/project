@@ -20,8 +20,12 @@ public class BlogEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String title;
+//	@Lob
+//	private String titleImage;
 	@Column(columnDefinition = "LONGTEXT")
 	private String content;
+	private Integer views ; // 👈 this tracks the views
+
 	//private String category;
 //	@Enumerated(EnumType.STRING)
 //	private BlogStatus blogstatus;
@@ -42,5 +46,10 @@ public class BlogEntity {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "blog_id")
 	private List<Comment> comments;
+
+//	//for title image
+//	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
+//	private List<BlogImage> images;
+
 
 }

@@ -16,7 +16,8 @@ public class BlogProxy {
 	private Integer id;
 	private String title;
 	private String content;
-	
+	private Integer views ;
+
 //	private BlogStatus blogstatus;
 	
 	private Integer userId;

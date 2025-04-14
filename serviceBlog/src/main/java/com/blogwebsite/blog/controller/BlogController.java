@@ -1,5 +1,8 @@
 package com.blogwebsite.blog.controller;
 
+import com.blogwebsite.blog.domain.BlogEntity;
+import com.blogwebsite.blog.domain.BlogImage;
+import com.blogwebsite.blog.repository.BlogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import com.blogwebsite.blog.proxy.CommentProxy;
 import com.blogwebsite.blog.service.impl.BlogServiceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/blog")
@@ -24,6 +28,31 @@ public class BlogController {
 
 	@Autowired
 	private BlogServiceImpl blogImpl;
+
+	@Autowired
+	private BlogRepo blogRepo;
+
+
+	//titile image
+	@GetMapping("title-image/{blogId}")
+	public BlogImage getTitleImage(@PathVariable("blogId") Integer blogId){
+		return blogImpl.getMainImageForBlog(blogId);
+	}
+
+	@PutMapping("/{id}/view")
+	public ResponseEntity<?> incrementViews(@PathVariable("id") Integer id) {
+		Optional<BlogEntity> blogOpt = blogRepo.findById(id);
+
+		if (blogOpt.isPresent()) {
+			BlogEntity blog = blogOpt.get();
+			blog.setViews(blog.getViews() + 1); // 👈 Increment view
+			blogRepo.save(blog);          // Save updated blog
+
+			return ResponseEntity.ok(blog);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Blog not found");
+		}
+	}
 
 
 	@GetMapping("/getBlogByUserId/{userId}")

@@ -3,6 +3,8 @@ package com.blogwebsite.blog.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.blogwebsite.blog.domain.BlogImage;
+import com.blogwebsite.blog.repository.BlogImageRepo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,9 @@ public class BlogServiceImpl implements BlogService
 	
 	@Autowired
 	private UserClient userClient;
+
+	@Autowired
+	private BlogImageRepo blogImageRepo;
 	
 	@Override
 	public String createBlog(BlogProxy blogproxy,Integer id) {
@@ -221,4 +226,14 @@ public class BlogServiceImpl implements BlogService
 
 		return helper.convertList(blog,BlogProxy.class);
 	}
+
+
+
+
+	//for title image
+	public BlogImage getMainImageForBlog(Integer blogId) {
+		return blogImageRepo.findFirstByBlogIdAndIsMainTrue(blogId)
+				.orElse(null);
+	}
+
 }
