@@ -26,6 +26,7 @@ import { authGuard } from './services/auth.guard';
 import { AdminDashboardComponent } from './AdminPannel/admin-dashboard/admin-dashboard.component';
 import { AdminProfileComponent } from './AdminPannel/admin-profile/admin-profile.component';
 import { MostViewedPostComponent } from './AdminPannel/ManagePosts/most-viewed-post/most-viewed-post.component';
+import { EditProfileComponent } from './AdminPannel/edit-profile/edit-profile.component';
 const routes: Routes = [
   {
     path: '',
@@ -94,6 +95,7 @@ const routes: Routes = [
           { path: 'view-comments', component: ViewCategoriesComponent },
           { path: 'delete-comments', component: DeleteCategoriesComponent },
           { path: 'update-comments', component: UpdateCategoriesComponent },
+          
         ],
       },
     ],
@@ -109,6 +111,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     component: AdminProfileComponent,
   },
+  { path: 'edit-profile', component: EditProfileComponent },
   { path: 'manage-comments', component: ManageCommentsComponent },
   { path: 'moderation', component: ModerationComponent },
   { path: 'dashboard', component: AdminDashboardComponent },

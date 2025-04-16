@@ -1,0 +1,74 @@
+/* Center container and add top margin */
+.container {
+    max-width: 600px;
+    margin: 146px auto; /* center + space from top */
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading styles */
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* Label styles */
+  .form-label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+    color: #333;
+  }
+  
+  /* Input styles */
+  .form-control {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 10px 14px;
+    font-size: 15px;
+    margin-top: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+  
+  /* Focus state */
+  .form-control:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Margin between input blocks */
+  .mb-3 {
+    margin-bottom: 20px;
+  }
+  
+  /* Submit button styles */
+  .btn-primary {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  /* Hover effect */
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .container {
+      padding: 30px 20px;
+      margin: 40px 16px;
+    }
+  }
+  

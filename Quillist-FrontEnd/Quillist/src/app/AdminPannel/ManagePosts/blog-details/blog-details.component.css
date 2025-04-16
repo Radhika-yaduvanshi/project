@@ -1,4 +1,6 @@
 /* Global Styling */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css');
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f4f7fa;
@@ -206,5 +208,42 @@ body {
 /* .author-name {
   /* Optionally, you can add any additional styles here */
 /* } */ 
+
+.comment {
+  background-color: #f9f9f9;
+  border-left: 4px solid #0d6efd;
+}
+
+.replies .reply {
+  background-color: #f1f1f1;
+  border-left: 2px solid #6c757d;
+}
+
+.comment-form {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid #f1f1f1;
+}
+
+.comment-form button {
+  width: 100%;
+}
+
+.star-rating {
+  font-size: 1.8rem;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.star-rating .bi-star-fill {
+  color: gold;
+}
+
+.star-rating .bi-star:hover,
+.star-rating .bi-star-fill:hover {
+  color: darkorange;
+}
+
+
 
 

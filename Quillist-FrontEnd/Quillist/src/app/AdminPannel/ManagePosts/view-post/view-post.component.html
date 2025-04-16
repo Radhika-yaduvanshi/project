@@ -280,10 +280,28 @@
               </a>
               <p>Views : {{blog.views}}</p>
 
+              <!-- Star Rating (UI Only) -->
+
+
+
               <button *ngIf="blog.showFullContent" (click)="toggleContent(blog)" class="btn btn-outline-primary btn-sm">
                 Show Less
               </button>
+
+              <div class="rating-stars">
+                <div class="stars">
+                  <i class="fas fa-star filled"></i>
+                  <i class="fas fa-star filled"></i>
+                  <i class="fas fa-star filled"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p class="rating-text">3 / 5</p>
+              </div>
+
             </div>
+                <!-- Star Rating Section (UI Only) -->
+
 
             <!-- Delete Button -->
             <button
@@ -292,10 +310,17 @@
             >
               <i class="fas fa-trash"></i> Delete
             </button>
+            
           </div>
+          
         </div>
+
       </div>
+      
     </div>
+
+
+
     
 
     <!-- Bootstrap JS -->

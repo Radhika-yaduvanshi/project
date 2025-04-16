@@ -152,3 +152,37 @@
         text-align: center;
       }
     }
+
+    /* Star Rating UI Inside Blog Card */
+.rating-stars {
+  position: absolute;
+  top: 190px;
+  left: 859px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 6px 10px;
+  border-radius: 8px;
+  text-align: center;
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
+  width: 140px; /* Increased from 100px */
+}
+
+.rating-stars .stars {
+  display: flex;
+  gap: 4px;
+}
+
+.rating-stars i {
+  font-size: 1rem;
+  color: #ccc;
+  /* width: 100; */
+}
+
+.rating-stars i.filled {
+  color: #f1c40f;
+}
+
+.rating-stars .rating-text {
+  font-size: 0.8rem;
+  margin: 0;
+  color: #555;
+}

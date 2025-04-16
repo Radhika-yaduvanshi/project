@@ -4,18 +4,24 @@ import { PostServiceService } from '../../../services/post-service.service';
 import { UserServicesService } from '../../../services/user-services.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
+
 @Component({
   selector: 'app-blog-details',
   standalone: false,
   templateUrl: './blog-details.component.html',
   styleUrls: ['./blog-details.component.css'],
 })
+
+
 export class BlogDetailsComponent implements OnInit {
   blog: any = null;
   author: any = null; // To store user details
   category: any = null; // To store category details
   errorMessage: string = '';
   // views:any; 
+averageRating: number = 0;
+userId: number = 1; // For demo, use logged-in user from auth later
+
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +37,47 @@ export class BlogDetailsComponent implements OnInit {
     if (blogId) {
       this.fetchBlogDetails(+blogId);
     }
+
+    if (blogId) {
+      this.fetchBlogDetails(+blogId);
+      this.fetchAverageRating(+blogId); // <-- fetch average rating
+    }
+    
   }
+
+  selectedRating: number = 0;
+hoveredRating: number = 0;
+stars = Array(5).fill(0);
+
+setRating(rating: number) {
+  this.selectedRating = rating;
+  // You can also emit this rating to the backend here
+  if(this.blog?.id){
+    this.postService.rateBlog(this.userId, this.blog.id, rating).subscribe({
+      next: (response) => {
+        console.log("Rating submitted!", response);
+        this.fetchAverageRating(this.blog.id); // Refresh avg rating
+      },
+      error: (err) => {
+        console.error("Error submitting rating", err);
+      }
+    })
+  }
+}
+fetchAverageRating(blogId: number): void {
+  this.postService.getAverageRating(blogId).subscribe({
+    next: (avg) => {
+      this.averageRating = avg;
+    },
+    error: (err) => {
+      console.error("Error fetching average rating", err);
+    }
+  });
+}
+
+hoverRating(rating: number) {
+  this.hoveredRating = rating;
+}
 
 //   fetchBlogDetails(blogId: number): void {
 //     this.postService.incrementView(blogId).subscribe(() =>{
@@ -136,4 +182,13 @@ fetchBlogDetails(blogId: number): void {
       }
     );
   }
+
+
+
+
+
+  //Ratings 
+
+
+
 }

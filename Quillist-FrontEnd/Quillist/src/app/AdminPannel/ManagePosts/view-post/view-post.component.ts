@@ -17,6 +17,9 @@ export class ViewPostComponent {
   postsPerPage: number = 5;
 mainImage: any;
 
+  ratings: any[] = [];
+  averageRating: number = 0;
+
   constructor(
     private blogService: PostServiceService,
     private sanitizer: DomSanitizer

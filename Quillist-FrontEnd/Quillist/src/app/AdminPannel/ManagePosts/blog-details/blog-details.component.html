@@ -73,3 +73,122 @@
     {{ errorMessage }}
   </div>
 </div>
+
+<!-- Rating Section
+<div class="rating-section my-4">
+  <h5>Rate this blog:</h5>
+  <div class="star-rating">
+    <i 
+      *ngFor="let star of stars; let i = index" 
+      class="bi" 
+      [ngClass]="{
+        'bi-star-fill': i < selectedRating,
+        'bi-star': i >= selectedRating
+      }"
+      (click)="setRating(i + 1)"
+      (mouseover)="hoverRating(i + 1)"
+      (mouseleave)="hoverRating(0)"
+    ></i>
+  </div>
+</div> -->
+
+<!-- Rating Section -->
+<div class="rating-section my-4">
+  <h5>Rate this blog:</h5>
+  <div class="star-rating">
+    <i 
+      *ngFor="let star of stars; let i = index" 
+      class="bi"
+      [ngClass]="{
+        'bi-star-fill': i < (hoveredRating || selectedRating),
+        'bi-star': i >= (hoveredRating || selectedRating)
+      }"
+      (click)="setRating(i + 1)"
+      (mouseover)="hoverRating(i + 1)"
+      (mouseleave)="hoverRating(0)"
+      style="font-size: 1.5rem; color: gold; cursor: pointer;"
+    ></i>
+  </div>
+  <div class="mt-2 text-muted">
+    Average Rating: {{ averageRating.toFixed(1) }} / 5
+  </div>
+</div>
+
+
+
+    <!-- Comments Section -->
+    <div class="comments-section mt-5">
+    
+
+        <!-- Optionally, you can add a comment form here -->
+    <div class="comment-form mt-4">
+      <h5>Leave a Comment:</h5>
+      <textarea class="form-control" rows="4" placeholder="Write your comment..."></textarea>
+      <button class="btn btn-primary mt-2">Submit Comment</button>
+    </div>
+<br>
+ 
+  <!-- Display error message if blog or author is not found -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-4 text-center">
+    {{ errorMessage }}
+  </div>
+  <h4 class="mb-3">Comments (3)</h4> <!-- You can dynamically adjust this -->
+      <!-- Comment 1 -->
+      <div class="comment card mb-3 p-3 shadow-sm">
+        <div class="d-flex align-items-start">
+          <!-- Commenter's profile -->
+          <img
+            src="female-profile1.png"
+            class="rounded-circle me-3"
+            alt="User photo"
+            width="45"
+            height="45"
+          />
+
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center">
+              <strong>Radhika Yadav</strong>
+              <small class="text-muted">2025-04-15</small>
+            </div>
+            <p class="mb-2">Great blog post! I really enjoyed the insights on travel tips.</p>
+
+            <!-- Replies (optional) -->
+            <div class="replies ms-4 mt-2">
+              <div class="reply border-start ps-3 mt-2">
+                <strong>Riya ||</strong>
+                <small class="text-muted ms-2">2025-04-16</small>
+                <p class="mb-1">I agree, the tips are really useful! Looking forward to more posts.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <!-- Comment 3 -->
+      <div class="comment card mb-3 p-3 shadow-sm">
+        <div class="d-flex align-items-start">
+          <!-- Commenter's profile -->
+          <img
+            src="admin-profile2.png"
+            class="rounded-circle me-3"
+            alt="User photo"
+            width="45"
+            height="45"
+          />
+
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center">
+              <strong>Rahul</strong>
+              <small class="text-muted">2025-04-17</small>
+            </div>
+            <p class="mb-2">Great insights! I’m planning a similar trip next summer.</p>
+
+            <!-- No replies here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  

@@ -14,6 +14,8 @@ export class PostServiceService {
 
   private caturl = '/category';
 
+  private ratings = '/ratings';  
+
   createBlog(blogData: any, userId: number) {
     return this.http.post(`${this.apiUrl}/save/${userId}`, blogData, {
       responseType: 'text',
@@ -115,4 +117,23 @@ export class PostServiceService {
     return this.http.get(`${this.apiUrl}/most-viewed-blogs`,{responseType:'json'})
   }
   
+
+
+
+
+  //ratigns 
+
+  rateBlog(userId: number, blogId: number, ratingValue: number): Observable<any> {
+    // Using the proxy URL for ratings
+    const url = `${this.ratings}?userId=${userId}&blogId=${blogId}&ratingValue=${ratingValue}`;
+    return this.http.post(url, {});  // POST body is empty because params are in URL
+  }
+
+  getAverageRating(blogId: number): Observable<number> {
+    return this.http.get<number>(`${this.ratings}/average/${blogId}`);
+  }
+
+  getRatingsForBlog(blogId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.ratings}/blog/${blogId}`);
+  }
 }

@@ -43,6 +43,7 @@ import { customInterceptor } from './services/custom.interceptor';
 import { AdminDashboardComponent } from './AdminPannel/admin-dashboard/admin-dashboard.component';
 import { AdminProfileComponent } from './AdminPannel/admin-profile/admin-profile.component';
 import { MostViewedPostComponent } from './AdminPannel/ManagePosts/most-viewed-post/most-viewed-post.component';
+import { EditProfileComponent } from './AdminPannel/edit-profile/edit-profile.component';
 
 
 // import { ReactiveFormsModule } from '@angular/forms';
@@ -75,7 +76,8 @@ import { MostViewedPostComponent } from './AdminPannel/ManagePosts/most-viewed-p
     WildCardComponent,
     AdminDashboardComponent,
     AdminProfileComponent,
-    MostViewedPostComponent
+    MostViewedPostComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,
