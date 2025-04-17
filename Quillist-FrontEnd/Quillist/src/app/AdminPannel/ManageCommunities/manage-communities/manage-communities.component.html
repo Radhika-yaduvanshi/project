@@ -1,19 +1,77 @@
-<!-- <div class="community-list">
-  <h2><i class="fas fa-users"></i> Explore Communities</h2>
-  <div class="grid">
-    <div class="card" *ngFor="let community of communities">
-      <h3>{{ community.name }}</h3>
-      <p>{{ community.description }}</p>
-      <button
-        *ngIf="!community.joined && !community.pending"
-        (click)="requestToJoin(community)"
-      >
-        Request to Join
-      </button>
-      <span *ngIf="community.pending" class="pending-text"
-        >Pending Approval</span
-      >
-      <span *ngIf="community.joined" class="joined-text">Joined</span>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Categories</title>
+    <style>
+      /* Space between sidebar and content */
+      .content-container {
+        margin-left: 270px; /* More space from sidebar */
+        padding: 30px;
+        height: 100vh;
+        overflow-y: auto;
+        background: #f8f9fa; /* Light, clean background */
+        border-radius: 10px;
+      }
+
+      h3 {
+        margin-bottom: 20px;
+        color: #343a40;
+        font-size: 24px;
+      }
+
+      /* Button container */
+      .nav-buttons {
+        display: flex;
+        gap: 20px; /* Increased spacing */
+        margin-bottom: 20px;
+      }
+
+      /* Common button styling */
+      .nav-buttons a {
+        text-decoration: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        border: none;
+        cursor: pointer;
+      }
+
+      /* Classy Gradient Buttons */
+      .accent-button {
+        background: linear-gradient(135deg, #ff7eb3, #ff4081);
+        color: white;
+      }
+
+      .warn-button {
+        background: linear-gradient(135deg, #ff7b72, #f44336);
+        color: white;
+      }
+
+      /* Hover Effect */
+      .nav-buttons a:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content-container">
+      <h3>Manage Categories</h3>
+
+      <div class="nav-buttons">
+        <a class="accent-button" routerLink="add-communitites">Add Community</a>
+        <a class="warn-button" routerLink="view-communitites"
+          >View All Communities</a
+        >
+      </div>
+
+      <!-- Child Routes Render Here -->
+      <router-outlet></router-outlet>
     </div>
-  </div>
-</div> -->
+  </body>
+</html>

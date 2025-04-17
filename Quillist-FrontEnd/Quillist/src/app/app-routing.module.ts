@@ -27,6 +27,10 @@ import { AdminDashboardComponent } from './AdminPannel/admin-dashboard/admin-das
 import { AdminProfileComponent } from './AdminPannel/admin-profile/admin-profile.component';
 import { MostViewedPostComponent } from './AdminPannel/ManagePosts/most-viewed-post/most-viewed-post.component';
 import { EditProfileComponent } from './AdminPannel/edit-profile/edit-profile.component';
+import { AddCommunitiesComponent } from './AdminPannel/ManageCommunities/add-communities/add-communities.component';
+import { ManageCommunitiesComponent } from './AdminPannel/ManageCommunities/manage-communities/manage-communities.component';
+import { ViewCommunititesComponent } from './AdminPannel/ManageCommunities/view-communitites/view-communitites.component';
+import { CommunityDetailComponent } from './AdminPannel/ManageCommunities/community-detail/community-detail.component';
 const routes: Routes = [
   {
     path: '',
@@ -75,14 +79,14 @@ const routes: Routes = [
       },
       {
         // from here modificatin is pending
-        path: 'manage-themes',
-        component: ManageCategoriesComponent,
+        path: 'manage-community',
+        component: ManageCommunitiesComponent,
         children: [
-          { path: '', redirectTo: 'view-post', pathMatch: 'full' },
-          { path: 'add-themes', component: AddCategoriesComponent },
-          { path: 'view-themes', component: ViewCategoriesComponent },
-          { path: 'delete-themes', component: DeleteCategoriesComponent },
-          { path: 'update-themes', component: UpdateCategoriesComponent },
+          { path: '', redirectTo: 'view-communities', pathMatch: 'full' },
+          { path: 'add-communities', component: AddCommunitiesComponent },
+          { path: 'view-communities', component: ViewCommunititesComponent },
+          { path: 'community-detail', component: CommunityDetailComponent },
+          // { path: 'update-themes', component: UpdateCategoriesComponent },
         ],
       },
       {
@@ -95,7 +99,6 @@ const routes: Routes = [
           { path: 'view-comments', component: ViewCategoriesComponent },
           { path: 'delete-comments', component: DeleteCategoriesComponent },
           { path: 'update-comments', component: UpdateCategoriesComponent },
-          
         ],
       },
     ],

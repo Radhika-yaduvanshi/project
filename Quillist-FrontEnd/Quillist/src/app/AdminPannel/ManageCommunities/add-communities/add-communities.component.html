@@ -1,40 +1,7 @@
-<!-- create-community.component.html
-<head>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-  />
-</head>
-<div class="create-community-container">
-  <div class="create-community-card">
-    <h2><i class="fas fa-plus-circle"></i> Create New Community</h2>
-    <form (ngSubmit)="createCommunity()" #communityForm="ngForm">
-      <div class="form-group">
-        <label for="name">Community Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          [(ngModel)]="newCommunity.name"
-          required
-          placeholder="Enter community name"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea
-          id="description"
-          name="description"
-          [(ngModel)]="newCommunity.description"
-          required
-          placeholder="Write a short description"
-        ></textarea>
-      </div>
-
-      <button type="submit" [disabled]="!communityForm.form.valid">
-        Create Community
-      </button>
-    </form>
-  </div>
-</div> -->
+<!-- AddCommunitiesComponent.html -->
+<div class="add-community-form">
+  <h3>Create a New Community</h3>
+  <form>
+    <!-- Form fields for adding community -->
+  </form>
+</div>

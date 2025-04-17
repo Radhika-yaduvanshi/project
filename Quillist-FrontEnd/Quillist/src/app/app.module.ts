@@ -32,10 +32,15 @@ import { ViewCategoriesComponent } from './AdminPannel/ManageCategories/view-cat
 import { UpdateCategoriesComponent } from './AdminPannel/ManageCategories/update-categories/update-categories.component';
 import { DeleteCategoriesComponent } from './AdminPannel/ManageCategories/delete-categories/delete-categories.component';
 import { AddUserComponent } from './AdminPannel/ManageUsers/add-user/add-user.component';
-import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BlogDetailsComponent } from './AdminPannel/ManagePosts/blog-details/blog-details.component';
-import { ReactiveFormsModule } from '@angular/forms';  // Import ReactiveFormsModule
+import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
 import { AdminloginComponent } from './AdminPannel/Authentication/adminlogin/adminlogin.component';
 import { ForgotPasswordComponent } from './AdminPannel/Authentication/forgot-password/forgot-password.component';
 import { WildCardComponent } from './wild-card/wild-card.component';
@@ -44,7 +49,10 @@ import { AdminDashboardComponent } from './AdminPannel/admin-dashboard/admin-das
 import { AdminProfileComponent } from './AdminPannel/admin-profile/admin-profile.component';
 import { MostViewedPostComponent } from './AdminPannel/ManagePosts/most-viewed-post/most-viewed-post.component';
 import { EditProfileComponent } from './AdminPannel/edit-profile/edit-profile.component';
-
+import { CommunityDetailComponent } from './AdminPannel/ManageCommunities/community-detail/community-detail.component';
+import { ViewCommunititesComponent } from './AdminPannel/ManageCommunities/view-communitites/view-communitites.component';
+import { AddCommunitiesComponent } from './AdminPannel/ManageCommunities/add-communities/add-communities.component';
+import { ManageCommunitiesComponent } from './AdminPannel/ManageCommunities/manage-communities/manage-communities.component';
 
 // import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
@@ -78,6 +86,12 @@ import { EditProfileComponent } from './AdminPannel/edit-profile/edit-profile.co
     AdminProfileComponent,
     MostViewedPostComponent,
     EditProfileComponent,
+    CommunityDetailComponent,
+    ViewCommunititesComponent,
+    CommunityDetailComponent,
+    AddCommunitiesComponent,
+    ViewCommunititesComponent,
+    ManageCommunitiesComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,7 +109,7 @@ import { EditProfileComponent } from './AdminPannel/edit-profile/edit-profile.co
     EditorModule,
     HttpClientModule,
     NgxPaginationModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
 
     // ReactiveFormsModule,
   ],

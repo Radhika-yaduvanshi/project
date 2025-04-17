@@ -1,0 +1,16 @@
+/* Adjust main container to account for sidebar */
+.community-dashboard-container {
+    margin-left: 260px; /* Slightly more than sidebar width */
+    padding: 20px;
+  }
+  
+  .btn-group button {
+    min-width: 180px;
+    margin: 8px;
+  }
+  
+  h2 {
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+  
