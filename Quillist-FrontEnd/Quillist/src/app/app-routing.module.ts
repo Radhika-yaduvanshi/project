@@ -29,8 +29,8 @@ import { MostViewedPostComponent } from './AdminPannel/ManagePosts/most-viewed-p
 import { EditProfileComponent } from './AdminPannel/edit-profile/edit-profile.component';
 import { AddCommunitiesComponent } from './AdminPannel/ManageCommunities/add-communities/add-communities.component';
 import { ManageCommunitiesComponent } from './AdminPannel/ManageCommunities/manage-communities/manage-communities.component';
-import { ViewCommunititesComponent } from './AdminPannel/ManageCommunities/view-communitites/view-communitites.component';
 import { CommunityDetailComponent } from './AdminPannel/ManageCommunities/community-detail/community-detail.component';
+import { ViewCommunitiesComponent } from './AdminPannel/ManageCommunities/view-communities/view-communities.component';
 const routes: Routes = [
   {
     path: '',
@@ -82,9 +82,9 @@ const routes: Routes = [
         path: 'manage-community',
         component: ManageCommunitiesComponent,
         children: [
-          { path: '', redirectTo: 'view-communities', pathMatch: 'full' },
+          // { path: '', redirectTo: 'view-communities', pathMatch: 'full' },
           { path: 'add-communities', component: AddCommunitiesComponent },
-          { path: 'view-communities', component: ViewCommunititesComponent },
+          { path: 'view-communities', component: ViewCommunitiesComponent },
           { path: 'community-detail', component: CommunityDetailComponent },
           // { path: 'update-themes', component: UpdateCategoriesComponent },
         ],

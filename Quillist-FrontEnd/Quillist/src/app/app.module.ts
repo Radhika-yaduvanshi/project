@@ -50,9 +50,9 @@ import { AdminProfileComponent } from './AdminPannel/admin-profile/admin-profile
 import { MostViewedPostComponent } from './AdminPannel/ManagePosts/most-viewed-post/most-viewed-post.component';
 import { EditProfileComponent } from './AdminPannel/edit-profile/edit-profile.component';
 import { CommunityDetailComponent } from './AdminPannel/ManageCommunities/community-detail/community-detail.component';
-import { ViewCommunititesComponent } from './AdminPannel/ManageCommunities/view-communitites/view-communitites.component';
 import { AddCommunitiesComponent } from './AdminPannel/ManageCommunities/add-communities/add-communities.component';
 import { ManageCommunitiesComponent } from './AdminPannel/ManageCommunities/manage-communities/manage-communities.component';
+import { ViewCommunitiesComponent } from './AdminPannel/ManageCommunities/view-communities/view-communities.component';
 
 // import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
@@ -87,11 +87,10 @@ import { ManageCommunitiesComponent } from './AdminPannel/ManageCommunities/mana
     MostViewedPostComponent,
     EditProfileComponent,
     CommunityDetailComponent,
-    ViewCommunititesComponent,
     CommunityDetailComponent,
     AddCommunitiesComponent,
-    ViewCommunititesComponent,
     ManageCommunitiesComponent,
+    ViewCommunitiesComponent,
   ],
   imports: [
     BrowserModule,

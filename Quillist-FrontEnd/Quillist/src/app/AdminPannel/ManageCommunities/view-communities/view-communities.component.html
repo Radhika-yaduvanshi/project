@@ -1,0 +1,30 @@
+<div class="container mt-5">
+  <h3 class="text-center mb-4">All Communities</h3>
+
+  <!-- Display Success Message if any -->
+  <!-- <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div> -->
+
+  <!-- Display List of Communities -->
+  <div class="row">
+    <div *ngFor="let community of communities" class="col-md-4 mb-4">
+      <!-- Card for each community -->
+      <div class="community-card card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ community.title }}</h5>
+          <p class="card-text">{{ community.description }}</p>
+          <!-- <p><strong>Status:</strong> {{ community.isActive ? 'Active' : 'Inactive' }}</p> -->
+          <!-- <button class="btn-custom btn-view-community" (click)="viewCommunity(community.id)">View Community</button> -->
+          <button class="btn-custom btn-view-community">View Community</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No communities found message -->
+  <ng-template #noCommunities>
+    <p class="text-center">No communities found.</p>
+  </ng-template>
+</div>

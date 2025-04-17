@@ -43,22 +43,28 @@ public class CommunityImpl implements CommunityService{
 
 //		Community community1=helper.convert(communityProxy,Community.class);
 		UserProxy owner =  userClient.getUserByUserId(uid);
-		if (owner == null) {
-			throw new RuntimeException("User not found!");
+		Community existing = communityRepo.findByTitle(communityProxy.getTitle());
+		if (existing != null) {
+			throw new RuntimeException("Community with this title already exists!");
 		}
-		Community community = new Community();
-		Community newcommunity=null;
-		if(owner!=null) {
-			Integer Ownerid = owner.getId();
+			if (owner == null) {
+				throw new RuntimeException("User not found!");
+			}
+			Community community = new Community();
+//		Community newcommunity=null;
+			if (owner != null) {
+				Integer Ownerid = owner.getId();
 
-			community.setOwnerId(Ownerid);
-			 newcommunity = helper.convert(communityProxy, Community.class);
-			newcommunity.setCreatedAt(LocalDateTime.now());
-			newcommunity.setIsActive(true);
-			communityRepo.save(newcommunity);
-		}
-		
-		return helper.convert(newcommunity, CommunityProxy.class);
+
+				community = helper.convert(communityProxy, Community.class);
+
+				community.setOwnerId(Ownerid);
+				community.setCreatedAt(LocalDateTime.now());
+				community.setIsActive(communityProxy.getIsActive());
+				communityRepo.save(community);
+			}
+
+		return helper.convert(community, CommunityProxy.class);
 	}
 
 
@@ -89,13 +95,15 @@ public class CommunityImpl implements CommunityService{
 	public String UpdateCommunity(Integer id, CommunityProxy communityProxy) {
 
 		Optional<Community> community=communityRepo.findById(id);
+		UserProxy owner =userClient.getUserByUserId(id);
+		Integer ownerId=owner.getId();
 		System.out.println("This is community------>"+community);
 		System.out.println(community.isPresent());
 		if(community.isPresent()){
 			Community realcommunity =community.get();
 			realcommunity.setTitle(communityProxy.getTitle());
 			realcommunity.setDescription(communityProxy.getDescription());
-			realcommunity.setOwnerId(communityProxy.getOwnerId());
+			realcommunity.setOwnerId(ownerId);
 			realcommunity.setIsActive(communityProxy.getIsActive());
 
 			communityRepo.save(helper.convert(realcommunity,Community.class));
