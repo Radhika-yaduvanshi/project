@@ -31,6 +31,8 @@ import { AddCommunitiesComponent } from './AdminPannel/ManageCommunities/add-com
 import { ManageCommunitiesComponent } from './AdminPannel/ManageCommunities/manage-communities/manage-communities.component';
 import { CommunityDetailComponent } from './AdminPannel/ManageCommunities/community-detail/community-detail.component';
 import { ViewCommunitiesComponent } from './AdminPannel/ManageCommunities/view-communities/view-communities.component';
+import { CommunityDashboardComponent } from './AdminPannel/ManageCommunities/community-dashboard/community-dashboard.component';
+import { CreateCommunityPostComponent } from './AdminPannel/ManageCommunities/create-community-post/create-community-post.component';
 const routes: Routes = [
   {
     path: '',
@@ -82,11 +84,18 @@ const routes: Routes = [
         path: 'manage-community',
         component: ManageCommunitiesComponent,
         children: [
-          // { path: '', redirectTo: 'view-communities', pathMatch: 'full' },
+          { path: '', redirectTo: 'community-dashboard', pathMatch: 'full' },
           { path: 'add-communities', component: AddCommunitiesComponent },
           { path: 'view-communities', component: ViewCommunitiesComponent },
           { path: 'community-detail', component: CommunityDetailComponent },
-          // { path: 'update-themes', component: UpdateCategoriesComponent },
+          { path: 'community-dashboard', component: CommunityDashboardComponent },
+          {
+            path: 'community-detail/:id',
+            component: CommunityDetailComponent
+          },
+          { path: 'crate-community-post/:communityId', component: CreateCommunityPostComponent },
+
+
         ],
       },
       {

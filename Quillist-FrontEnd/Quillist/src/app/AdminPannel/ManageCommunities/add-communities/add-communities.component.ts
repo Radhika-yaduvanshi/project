@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserServicesService } from '../../../services/user-services.service';
 import { PostServiceService } from '../../../services/post-service.service';
 import { CommunityServiceService } from '../../../services/community-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-communities',
@@ -13,12 +14,14 @@ import { CommunityServiceService } from '../../../services/community-service.ser
 export class AddCommunitiesComponent implements OnInit {
   successMessage: string = '';
   userId: number | null = null;
+  
   communityForm!: FormGroup<any>;
 
   userService = inject(UserServicesService);
   postService = inject(PostServiceService);
   communityService = inject(CommunityServiceService);
   fb = inject(FormBuilder);
+  router=inject(Router)
 
   constructor() {}
 
@@ -55,6 +58,8 @@ export class AddCommunitiesComponent implements OnInit {
               this.communityForm.reset(); // optional
               console.log('community data : ' + formData.value);
               this.communityForm.reset();
+              this.router.navigate(['/manage-community/community-dashboard']); // Redirect to community dashboard
+
             },
           });
       },

@@ -1,4 +1,4 @@
-package com.serviceCommunity.repository;
+package com.serviceCommunity.service;
 
 
 
@@ -11,7 +11,7 @@ public interface BlogService {
 	//crud on blog
 	
 	//create blog
-	public String createBlog(BlogProxy blogproxy, Integer id); //user
+	public String createBlog(BlogProxy blogproxy, Integer id,Integer communityId); //user
 	
 	//delete blog
 	public String deleteBlog(Integer id);
@@ -37,4 +37,6 @@ public interface BlogService {
 
 
 	public List<BlogProxy> getBlogByUserId(Integer id);
+
+	public List<BlogProxy> getBlogByCommunityId(Integer communityId);
 }

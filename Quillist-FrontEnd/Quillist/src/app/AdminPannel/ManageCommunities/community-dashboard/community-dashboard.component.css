@@ -1,0 +1,185 @@
+/* styles.css */
+/* styles.css */
+
+/* Importing Bootstrap CSS */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css');
+/* styles.css */
+
+/* Importing Angular Material theme */
+@import url('https://cdn.jsdelivr.net/npm/@angular/material@12.0.0/prebuilt-themes/indigo-pink.css');
+/* styles.css */
+
+/* Importing Bootstrap */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css');
+
+/* Importing Angular Material theme */
+@import url('https://cdn.jsdelivr.net/npm/@angular/material@12.0.0/prebuilt-themes/indigo-pink.css');
+
+.body {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Stats Box Styles */
+  .stat-box {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f0f4f8;
+  }
+  
+  .stat-box i {
+    color: #007bff;
+  }
+  
+  /* Dashboard Title */
+  h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  /* Create Post Button */
+  .create-post-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+  }
+  
+  .create-post-btn .btn {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+  }
+  
+  /* Posts Grid */
+  .card {
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .card img {
+    border-radius: 10px;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  
+  /* Spacing for the posts */
+  .row {
+    margin-top: 30px;
+  }
+  
+  @media (max-width: 768px) {
+    .row {
+      margin-top: 15px;
+    }
+  }
+/* General Styles */
+.community-card {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  
+  .create-post-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+  }
+  
+  .create-post-btn .btn {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+  }
+  /* Custom Button Styles */
+.btn-custom {
+    background-color: #007bff; /* Bootstrap Primary Blue */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+  }
+  
+  .btn-custom:hover,
+  .btn-custom:focus {
+    background-color: #0056b3;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 86, 179, 0.25);
+  }
+  
+  /* Variant: Outline Button */
+  .btn-outline-custom {
+    background-color: transparent;
+    color: #007bff;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-outline-custom:hover {
+    background-color: #007bff;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+  }
+  
+  /* Optional: Light Button Variant */
+  .btn-light-custom {
+    background-color: #e9f3ff;
+    color: #007bff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-light-custom:hover {
+    background-color: #d0e6ff;
+    color: #0056b3;
+  }
+  
+  

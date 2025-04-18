@@ -22,6 +22,12 @@ export class CommunityServiceService {
     return this.http.post<any>(`${this.apiUrl}/cratecommunity/${userId}`, communityData);
   }
 
+     // Create a new community
+     createCommunityPost(userId: number,CommunityId:number, communityData: any): Observable<any> {
+      return this.http.post<any>(`${this.apiUrl}/save/${userId}/${CommunityId}`, communityData);
+    }
+  
+
   // Get all communities
   getAllCommunities(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/getallcommunity`);
@@ -50,6 +56,10 @@ export class CommunityServiceService {
   // Get all communities for a specific user
   getCommunitiesByUserId(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/getcommunitybyuserid/${userId}`);
+  }
+
+  getCommunityPostByCommunityId(communityId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/getBlogByCommunityId/${communityId}`);
   }
 
 

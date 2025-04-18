@@ -25,6 +25,11 @@ public class BlogEntity {
 	private Integer views ; // 👈 this tracks the views
 	private Integer userId;
 
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "community_id") // foreign key colum
+	private Community community;
+
 	//private String category;
 //	@Enumerated(EnumType.STRING)
 //	private BlogStatus blogstatus;

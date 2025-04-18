@@ -1,5 +1,6 @@
 package com.serviceCommunity.proxy;
 
+import com.serviceCommunity.entity.Community;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,9 @@ public class BlogProxy {
 //	private BlogStatus blogstatus;
 	
 	private Integer userId;
-	
+	private CommunityProxy community;
+
+
 //	private CategoryProxy category;
 //
 //	private List<CommentProxy> comments;

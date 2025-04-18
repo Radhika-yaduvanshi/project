@@ -53,6 +53,8 @@ import { CommunityDetailComponent } from './AdminPannel/ManageCommunities/commun
 import { AddCommunitiesComponent } from './AdminPannel/ManageCommunities/add-communities/add-communities.component';
 import { ManageCommunitiesComponent } from './AdminPannel/ManageCommunities/manage-communities/manage-communities.component';
 import { ViewCommunitiesComponent } from './AdminPannel/ManageCommunities/view-communities/view-communities.component';
+import { CommunityDashboardComponent } from './AdminPannel/ManageCommunities/community-dashboard/community-dashboard.component';
+import { CreateCommunityPostComponent } from './AdminPannel/ManageCommunities/create-community-post/create-community-post.component';
 
 // import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
@@ -91,6 +93,8 @@ import { ViewCommunitiesComponent } from './AdminPannel/ManageCommunities/view-c
     AddCommunitiesComponent,
     ManageCommunitiesComponent,
     ViewCommunitiesComponent,
+    CommunityDashboardComponent,
+    CreateCommunityPostComponent,
   ],
   imports: [
     BrowserModule,
