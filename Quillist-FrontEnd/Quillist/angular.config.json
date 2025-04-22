@@ -1,18 +1,18 @@
 {
     "/user": {
-      "target": "http://localhost:8087",
+      "target": "http://localhost:555/gateway",
       "secure": false,
       "changeOrigin": true,
       "logLevel": "debug" 
     },
     "/blog": {
-      "target": "http://localhost:8088",
+      "target": "http://localhost:555/gateway",
       "secure": false,
       "changeOrigin": true,
       "logLevel": "debug"
     },
     "/category": {
-      "target": "http://localhost:8088",
+      "target": "http://localhost:555/gateway",
       "secure": false,
       "changeOrigin": true,
       "logLevel": "debug"

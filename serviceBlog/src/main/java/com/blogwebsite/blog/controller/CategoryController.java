@@ -26,6 +26,7 @@ public class CategoryController {
 	@PostMapping("/add")
 	public ResponseEntity<?> addCategory(@RequestBody CategoryProxy categoryProxy)
 	{
+		System.out.println("🚀 Incoming category: " + categoryProxy);
 		return ResponseEntity.status(HttpStatus.OK).body(categoryService.createCategory(categoryProxy));
 	}
 	

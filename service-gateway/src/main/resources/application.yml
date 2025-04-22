@@ -24,6 +24,15 @@ spring:
             - AuthenticationFilter
 
 
+        - id: SERVICEBLOG-CATEGORY
+          uri: lb://SERVICEBLOG
+          predicates:
+            - Path=${my-gateway}/category/**
+          filters:
+            - StripPrefix=1
+            - AuthenticationFilter
+
+
         - id: SERVICEUSER
           uri: lb://SERVICEUSER
           predicates:

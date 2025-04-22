@@ -5,7 +5,15 @@ import jakarta.ws.rs.core.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
+
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
@@ -17,6 +25,9 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     @Autowired
     private jwtUtil jwtUtil;
+
+//    @Autowired
+//    private AESUtil AESUtil;
 
     public AuthenticationFilter() {
         super(Config.class);
@@ -51,6 +62,73 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     throw new RuntimeException("un authorized access to application");
                 }
             }
+
+
+
+            //code for dcryption=====
+
+
+            // Decryption logic
+//            String path = exchange.getRequest().getPath().toString();
+//            // Skip decryption for unencrypted routes
+//            if (path.contains("/loginReq") || path.contains("/register")) {
+//                return chain.filter(exchange);
+//            }
+
+            // Decryption logic
+            String path = exchange.getRequest().getPath().toString();
+            // Skip decryption for unencrypted routes
+            if (path.contains("/loginReq") || path.contains("/register")) {
+                return chain.filter(exchange);
+            }
+
+            // Handle decryption only for POST or PUT requests
+            if (exchange.getRequest().getMethod() == HttpMethod.POST || exchange.getRequest().getMethod() == HttpMethod.PUT) {
+                return DataBufferUtils.join(exchange.getRequest().getBody())
+                        .flatMap(dataBuffer -> {
+                            byte[] bytes = new byte[dataBuffer.readableByteCount()];
+                            dataBuffer.read(bytes);
+                            DataBufferUtils.release(dataBuffer);
+
+                            String encryptedBody = new String(bytes, StandardCharsets.UTF_8);
+                            System.err.println("Encrypted Body: " + encryptedBody);
+                            String decryptedBody;
+
+                            try {
+                                // Decrypting the body using AESUtil with the correct parameters
+                                decryptedBody = AESUtil.decrypt(encryptedBody, "MySecretKey12345", "MySecretKey12345");
+                                System.err.println("Decrypted Body: " + decryptedBody);
+                            } catch (Exception e) {
+                                System.err.println("Decryption failed: " + e.getMessage());
+                                // If decryption fails, continue without modifying the body
+                                return chain.filter(exchange);
+                            }
+
+                            // Create new body with decrypted data
+                            byte[] newBody = decryptedBody.getBytes(StandardCharsets.UTF_8);
+                            Flux<DataBuffer> bodyFlux = Flux.just(exchange.getResponse().bufferFactory().wrap(newBody));
+
+
+
+                            // Mutate the request to set the decrypted body
+                            ServerHttpRequest mutatedRequest = new ServerHttpRequestDecorator(exchange.getRequest()) {
+                                @Override
+                                public Flux<DataBuffer> getBody() {
+                                    return bodyFlux;
+                                }
+                            };
+
+                            System.out.println("✅ Decrypted request body: " + decryptedBody);
+
+                            return chain.filter(exchange.mutate().request(mutatedRequest).build());
+                        });
+            }
+
+
+            //ending dcryption code
+
+
+
             return chain.filter(exchange);
         });
     }

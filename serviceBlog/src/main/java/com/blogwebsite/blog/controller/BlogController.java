@@ -74,6 +74,7 @@ public class BlogController {
 	@PostMapping("/save/{id}") //working -user
 	public ResponseEntity<?> saveBlog(@RequestBody BlogProxy blogProxy,@PathVariable("id") Integer id )
 	{
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(blogImpl.createBlog(blogProxy,id));
 	}
 
